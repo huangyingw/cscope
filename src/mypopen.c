@@ -48,7 +48,7 @@
 # define CLOSE_ON_EXEC 1
 #endif
 
-static char const rcsid[] = "$Id: mypopen.c,v 1.11 2002/08/15 16:07:07 broeker Exp $";
+static char const rcsid[] = "$Id: mypopen.c,v 1.12 2004/02/12 18:14:05 broeker Exp $";
 
 static pid_t popen_pid[20];
 static RETSIGTYPE (*tstat)(int);
@@ -148,15 +148,15 @@ mypopen(char *cmd, char *mode)
 				(void) close(poptr - popen_pid);
 		}
 		stdio = tst(0, 1);
-		(void) close(myside);
-		(void) close(stdio);
+		close(myside);
+		close(stdio);
 #if V9
-		(void) dup2(yourside, stdio);
+		dup2(yourside, stdio);
 #else
-		(void) fcntl(yourside, F_DUPFD, stdio);
+		fcntl(yourside, F_DUPFD, stdio);
 #endif
-		(void) close(yourside);
-		(void) execlp(shell, mybasename(shell), "-c", cmd, 0);
+		close(yourside);
+		execlp(shell, mybasename(shell), "-c", cmd, (void *)0);
 		_exit(1);
 	} else if (pid > 0)
 		tstat = signal(SIGTSTP, SIG_DFL);
