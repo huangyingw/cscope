@@ -44,7 +44,7 @@
 #include "global.h"
 #include "vp.h"		/* vpdirs and vpndirs */
 
-static char const rcsid[] = "$Id: dir.c,v 1.11 2001/07/05 16:47:04 broeker Exp $";
+static char const rcsid[] = "$Id: dir.c,v 1.12 2001/07/09 14:58:25 petr Exp $";
 
 #define	DIRSEPS	" ,:"	/* directory list separators */
 #define	DIRINC	10	/* directory list size increment */
@@ -201,7 +201,8 @@ includedir(char *dirlist)
 			
 			/* compute its path from higher view path source dirs */
 			for (i = 1; i < nvpsrcdirs; ++i) {
-				(void) sprintf(path, "%s/%s", srcdirs[i], dir);
+				(void) snprintf(path, PATHLEN+1,
+						"%s/%s", srcdirs[i], dir);
 				addincdir(dir, path);
 			}
 		}
