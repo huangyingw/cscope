@@ -43,7 +43,7 @@
 #endif
 #include <regex.h>
 
-static char const rcsid[] = "$Id: find.c,v 1.9 2000/05/31 16:54:10 petr Exp $";
+static char const rcsid[] = "$Id: find.c,v 1.10 2001/04/26 16:21:33 petr Exp $";
 
 /* most of these functions have been optimized so their innermost loops have
  * only one test for the desired character by putting the char and 
@@ -585,7 +585,7 @@ findinit(char *pattern)
 	BOOL	isregexp = NO;
 	int	i;
 	char	*s;
-	unsigned c;
+	unsigned char c;	/* HBB 20010427: changed uint to uchar */
 
 	/* HBB: be nice: free regexp before allocating a new one */
 	if(isregexp_valid == YES)
@@ -674,8 +674,8 @@ findinit(char *pattern)
 		/* compress the string pattern for matching */
 		s = cpattern;
 		for (i = 0; (c = pattern[i]) != '\0'; ++i) {
-			if (dicode1[c] && dicode2[(unsigned) pattern[i + 1]]) {
-				c = (0200 - 2) + dicode1[c] + dicode2[(unsigned) pattern[i + 1]];
+			if (IS_A_DICODE(c, pattern[i + 1])) {
+				c = DICODE_COMPRESS(c, pattern[i + 1]);
 				++i;
 			}
 			*s++ = c;
