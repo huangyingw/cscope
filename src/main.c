@@ -51,7 +51,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.7 2000/04/22 21:18:12 uzi Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -79,6 +79,7 @@ BOOL	invertedindex;		/* the database has an inverted index */
 BOOL	isuptodate;		/* consider the crossref up-to-date */
 BOOL	kernelmode;		/* don't use DFLT_INCDIR - bad for kernels */
 BOOL	linemode;		/* use line oriented user interface */
+BOOL	recurse_dir = NO;	/* recurse dirs when searching for src files */
 char	*namefile;		/* file of file names */
 char	*newinvname;		/* new inverted index file name */
 char	*newinvpost;		/* new inverted index postings file name */
@@ -219,6 +220,9 @@ main(int argc, char **argv)
 				break;
 			case 'U':	/* assume some files have changed */
 				fileschanged = YES;
+				break;
+			case 'R':
+				recurse_dir = YES;
 				break;
 			case 'f':	/* alternate cross-reference file */
 			case 'F':	/* symbol reference lines file */
