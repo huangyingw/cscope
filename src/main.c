@@ -56,7 +56,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.12 2000/05/31 16:54:10 petr Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.13 2000/10/02 17:36:24 petr Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -1328,16 +1328,11 @@ void
 movefile(char *new, char *old)
 {
 	(void) unlink(old);
-	if (link(new, old) == -1) {
+	if (rename(new, old) == -1) {
 		(void) myperror("cscope");
-		posterr("cscope: cannot link file %s to file %s\n",
+		posterr("cscope: cannot rename file %s to file %s\n",
 			new, old);
 		myexit(1);
-	}
-	if (unlink(new) == -1) {
-		(void) myperror("cscope");
-		posterr( "cscope: cannot unlink file %s\n", new);
-		errorsfound = YES;
 	}
 }
 
