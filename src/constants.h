@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: constants.h,v 1.2 2000/05/03 22:02:10 petr Exp $ */
+/* $Id: constants.h,v 1.3 2000/05/11 14:41:27 petr Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -130,6 +130,8 @@
 #define TERMINFO	1
 #endif
 
+
+#ifndef __FreeBSD__	// Prevent search issues in cscope.out
 #if !TERMINFO
 #ifndef KEY_BREAK
 #define	KEY_BREAK	0400	/* easier to define than to add #if around the use */
@@ -151,5 +153,7 @@
 #else
 #define	erasechar()	(_tty.sg_erase)			/* equivalent */
 #define	killchar()	(_tty.sg_kill)			/* equivalent */
-#endif
-#endif
+#endif	// if UNIXPC
+
+#endif	// if !TERMINFO
+#endif	// ifndef __FreeBSD__
