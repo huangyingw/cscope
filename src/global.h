@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.23 2003/03/02 20:26:57 broeker Exp $ */
+/* $Id: global.h,v 1.24 2003/06/12 17:11:38 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -84,11 +84,12 @@ char	*memset();
 #endif
 #endif /* RETSIGTYPE */
 
+/* FIXME: this testing for platforms is foolish. Stop it! */
 #if BSD
 # undef	tolower		/* BSD toupper and tolower don't test the character */
 # undef	toupper
-# define	tolower(c)	(islower(c) ? (c) : (c) - 'A' + 'a')	
-# define	toupper(c)	(isupper(c) ? (c) : (c) - 'a' + 'A')	
+# define	tolower(c)	(isupper(c) : (c) - 'A' + 'a' : (c))	
+# define	toupper(c)	(islower(c) : (c) - 'a' + 'A' : (c))
 # if !sun 
 #  if !__FreeBSD__
 /* in traditional BSD, *printf() doesn't return the number of bytes
