@@ -45,7 +45,7 @@ BOOL	unixpcmouse = NO;	/* running with a mouse on the Unix PC? */
 static int uw_hs, uw_vs;	/* character height and width */
 #endif
 
-static char const rcsid[] = "$Id: mouse.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
+static char const rcsid[] = "$Id: mouse.c,v 1.2 2000/05/03 19:07:09 petr Exp $";
 
 typedef	struct {			/* menu */
 	char	*text;
@@ -186,8 +186,9 @@ loadmenu(MENU *menu)
 		(void) printf("\033[6;1X\033[9;1X");
 		for (i = 0; menu[i].text != NULL; ++i) {
 			len = strlen(menu[i].text);
-			(void) printf("\033[%d;%dx%s%s", len, len + strlen(menu[i].value), 
-				menu[i].text, menu[i].value);
+			(void) printf("\033[%d;%dx%s%s", len,
+				      (int) (len + strlen(menu[i].value)), 
+				      menu[i].text, menu[i].value);
 		}
 		loaded = menu;
 	}

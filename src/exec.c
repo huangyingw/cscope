@@ -42,11 +42,11 @@
 #include <sys/types.h>      /* pid_t */
 #include <curses.h>
 
-static char const rcsid[] = "$Id: exec.c,v 1.5 2000/04/26 08:48:21 uzi Exp $";
+static char const rcsid[] = "$Id: exec.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
 
-static	SIGTYPE	(*oldsigquit)();	/* old value of quit signal */
-static	SIGTYPE	(*oldsighup)();		/* old value of hangup signal */
-static	SIGTYPE	(*oldsigstp)();
+static	RETSIGTYPE	(*oldsigquit)();	/* old value of quit signal */
+static	RETSIGTYPE	(*oldsighup)();		/* old value of hangup signal */
+static	RETSIGTYPE	(*oldsigstp)();
 
 static	int	join(pid_t p);
 static	int	myexecvp(char *a, char **args);
@@ -61,7 +61,7 @@ int
 execute(char *a, ...)	/* note: "exec" is already defined on u370 */
 {
 	va_list	ap;
-	int	exitcode;
+	int	exitcode = -1;	/* initialize, to avoid warning */
 	char	*argv[BUFSIZ];
 	pid_t	p;
 	pid_t	myfork();
@@ -98,7 +98,6 @@ execute(char *a, ...)	/* note: "exec" is already defined on u370 */
 static int
 myexecvp(char *a, char **args)
 {
-	int	i;
 	char	msg[MSGLEN + 1];
 	
 	/* modify argv[0] to reference the last component of its path name */

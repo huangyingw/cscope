@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: library.h,v 1.2 2000/04/21 00:11:02 petr Exp $ */
+/* $Id: library.h,v 1.1 2000/04/27 16:33:47 petr Exp $ */
 
 /* library function return value declarations */
 
@@ -48,8 +48,8 @@ char	*basename(char *path);
 char	*compath(char *pathname);
 char	*egrepinit(char *egreppat);
 char	*logdir(char *name);
-char	*mycalloc(int nelem, int size);
-char	*mymalloc(int size);
+void	*mycalloc(int nelem, int size);
+void	*mymalloc(int size);
 void	*myrealloc(void *p, int size);
 char	*stralloc(char *s);
 FILE	*mypopen(char *cmd, char *mode);

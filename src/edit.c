@@ -38,7 +38,7 @@
 #include <curses.h>
 #include "global.h"
 
-static char const rcsid[] = "$Id: edit.c,v 1.2 2000/04/21 00:11:02 petr Exp $";
+static char const rcsid[] = "$Id: edit.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
 
 /* edit this displayed reference */
 
@@ -110,10 +110,10 @@ edit(char *file, char *linenum)
 		
 		/* get it to pause after displaying a file smaller than the screen
 		   length */
-		(void) execute(editor, editor, plusnum, file, "/dev/null", (char *) 0);
+		(void) execute(editor, editor, plusnum, file, "/dev/null", NULL);
 	}
 	else {
-		(void) execute(editor, editor, plusnum, file, (char *) 0);
+		(void) execute(editor, editor, plusnum, file, NULL);
 	}
 	clear();	/* redisplay screen */
 }

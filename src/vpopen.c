@@ -38,9 +38,9 @@
 #include "global.h"
 #include "vp.h"
 
-#define VP_READ	0
+#define OPENFLAG_READ	0
 
-static char const rcsid[] = "$Id: vpopen.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
+static char const rcsid[] = "$Id: vpopen.c,v 1.2 2000/05/03 19:07:09 petr Exp $";
 
 int
 vpopen(char *path, int oflag)
@@ -50,8 +50,8 @@ vpopen(char *path, int oflag)
 	int	i;
 
 	if ((returncode = myopen(path, oflag, 0666)) == -1 && path[0] != '/' &&
-	    oflag == VP_READ) {
-		vpinit((char *) 0);
+	    oflag == OPENFLAG_READ) {
+		vpinit(NULL);
 		for (i = 1; i < vpndirs; i++) {
 			(void) sprintf(buf, "%s/%s", vpdirs[i], path);
 			if ((returncode = myopen(buf, oflag, 0666)) != -1) {

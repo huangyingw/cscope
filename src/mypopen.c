@@ -36,17 +36,17 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "global.h"	/* pid_t, SIGTYPE, shell, and basename() */
+#include "global.h"	/* pid_t, RETSIGTYPE, shell, and basename() */
 
 #define	tst(a,b) (*mode == 'r'? (b) : (a))
 #define	RDR	0
 #define	WTR	1
 #define CLOSE_ON_EXEC	1
 
-static char const rcsid[] = "$Id: mypopen.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
+static char const rcsid[] = "$Id: mypopen.c,v 1.2 2000/05/03 19:07:09 petr Exp $";
 
 static pid_t popen_pid[20];
-static SIGTYPE (*tstat)();
+static RETSIGTYPE (*tstat)(int);
 
 int
 myopen(char *path, int flag, int mode)
@@ -126,7 +126,7 @@ pclose(FILE *ptr)
 	int f;
 	pid_t r;
 	int status;
-	SIGTYPE (*hstat)(), (*istat)(), (*qstat)();
+	RETSIGTYPE (*hstat)(int), (*istat)(int), (*qstat)(int);
 
 	f = fileno(ptr);
 	(void) fclose(ptr);

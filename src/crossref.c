@@ -39,7 +39,7 @@
 #include "global.h"
 #include <stdlib.h>
 
-static char const rcsid[] = "$Id: crossref.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
+static char const rcsid[] = "$Id: crossref.c,v 1.2 2000/05/03 19:07:09 petr Exp $";
 
 extern	int	myylineno;
 
@@ -292,7 +292,7 @@ putcrossref(void)
 					++i;
 				}
 				/* skip the rest of the keyword */
-				while (isalpha(yytext[i])) {
+				while (isalpha((unsigned char)yytext[i])) {
 					++i;
 				}
 				/* skip space after certain keywords */

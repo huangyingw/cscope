@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: constants.h,v 1.4 2000/04/22 09:50:50 uzi Exp $ */
+/* $Id: constants.h,v 1.1 2000/04/27 16:33:47 petr Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -131,9 +131,15 @@
 #endif
 
 #if !TERMINFO
+#ifndef KEY_BREAK
 #define	KEY_BREAK	0400	/* easier to define than to add #if around the use */
+#endif
+#ifndef KEY_ENTER
 #define	KEY_ENTER	0401
+#endif
+#ifndef KEY_BACKSPACE
 #define	KEY_BACKSPACE	0402
+#endif
 
 #if !sun
 #define cbreak()	crmode()			/* name change */
