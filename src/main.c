@@ -51,12 +51,13 @@
 /* defaults for unset environment variables */
 #define	EDITOR	"vi"
 #define	SHELL	"sh"
+#define LINEFLAG "+%s"	/* default: used by vi and emacs */
 #define TMPDIR	"/tmp"
 #ifndef DFLT_INCDIR
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.14 2000/10/02 19:45:49 petr Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.15 2000/10/27 11:35:01 broeker Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -66,7 +67,8 @@ char	dichar2[] = " tnerpla";		/* 8 most frequent second chars
 char	dicode1[256];		/* digraph first character code */
 char	dicode2[256];		/* digraph second character code */
 
-char	*editor, *home, *shell;	/* environment variables */
+char	*editor, *home, *shell, *lineflag;	/* environment variables */
+BOOL	lineflagafterfile;
 char	*argv0;			/* command name */
 BOOL	compress = YES;		/* compress the characters in the crossref */
 BOOL	dbtruncated;		/* database symbols are truncated to 8 chars */
@@ -306,9 +308,12 @@ nextarg:	;
 lastarg:
 	/* read the environment */
 	editor = mygetenv("EDITOR", EDITOR);
-	editor = mygetenv("VIEWER", editor);	/* use viewer if set */
+	editor = mygetenv("VIEWER", editor);		/* use viewer if set */
+	editor = mygetenv("CSCOPE_EDITOR", editor);	/* has last word */
 	home = getenv("HOME");
 	shell = mygetenv("SHELL", SHELL);
+	lineflag = mygetenv("CSCOPE_LINEFLAG", LINEFLAG);
+	lineflagafterfile = getenv("CSCOPE_LINEFLAG_AFTER_FILE")?1:0;
 	tmpdir = mygetenv("TMPDIR", TMPDIR);
 
 	/* XXX remove if/when clearerr() in dir.c does the right thing. */

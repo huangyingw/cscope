@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.9 2000/05/18 15:21:21 broeker Exp $ */
+/* $Id: global.h,v 1.11 2000/05/19 04:46:32 hops1 Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -93,7 +93,8 @@ extern	char	dicode1[];	/* digraph first character code */
 extern	char	dicode2[];	/* digraph second character code */
 
 /* main.c global data */
-extern	char	*editor, *home, *shell;	/* environment variables */
+extern	char	*editor, *home, *shell, *lineflag;	/* environment variables */
+extern 	BOOL	lineflagafterfile;
 extern	char	*argv0;		/* command name */
 extern	BOOL	compress;	/* compress the characters in the crossref */
 extern	BOOL	dbtruncated;	/* database symbols truncated to 8 chars */
