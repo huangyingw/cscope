@@ -39,12 +39,11 @@
 #include <stdlib.h>
 #include <sys/types.h>	/* needed by stat.h and dirent.h */
 #include <dirent.h>
-#include <stdlib.h>
 #include <sys/stat.h>	/* stat */
 #include "global.h"
 #include "vp.h"		/* vpdirs and vpndirs */
 
-static char const rcsid[] = "$Id: dir.c,v 1.17 2002/03/16 15:20:27 broeker Exp $";
+static char const rcsid[] = "$Id: dir.c,v 1.18 2003/04/29 14:08:45 broeker Exp $";
 
 #define	DIRSEPS	" ,:"	/* directory list separators */
 #define	DIRINC	10	/* directory list size increment */
@@ -503,7 +502,7 @@ scan_dir(const char *adir, BOOL recurse_dir)
 #else
 						 entry->d_ino != 0
 #endif
-						 && issrcfile(path)
+						 && issrcfile(mybasename(path))
 						 && infilelist(path) == NO) {
 					  addsrcfile(path);
 					}
@@ -525,7 +524,7 @@ issrcfile(char *file)
 
 	/* if there is a file suffix */
 	if ((s = strrchr(file, '.')) != NULL && *++s != '\0') {
-		
+
 		/* if an SCCS or versioned file */
 		if (file[1] == '.' && file + 2 != s) { /* 1 character prefix */
 			switch (*file) {
