@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.25 2003/09/15 11:02:36 broeker Exp $ */
+/* $Id: global.h,v 1.26 2004/01/08 14:07:20 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -88,8 +88,8 @@ char	*memset();
 #if BSD
 # undef	tolower		/* BSD toupper and tolower don't test the character */
 # undef	toupper
-# define	tolower(c)	(isupper(c) : (c) - 'A' + 'a' : (c))	
-# define	toupper(c)	(islower(c) : (c) - 'a' + 'A' : (c))
+# define	tolower(c)	(isupper(c) ? (c) - 'A' + 'a' : (c))	
+# define	toupper(c)	(islower(c) ? (c) - 'a' + 'A' : (c))
 # if !sun 
 #  if !__FreeBSD__
 /* in traditional BSD, *printf() doesn't return the number of bytes
