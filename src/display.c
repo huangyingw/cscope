@@ -54,7 +54,7 @@
 #include <errno.h>
 #include <stdarg.h>
 
-static char const rcsid[] = "$Id: display.c,v 1.16 2001/07/05 16:47:04 broeker Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.17 2001/07/09 14:00:25 broeker Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
@@ -461,6 +461,7 @@ search(void)
 	(void) freopen(temp1, "rb", refsfound);
 	nextline = 1;
 	totallines = 0;
+	disprefs = 0;
 	
 	/* see if it is empty */
 	if ((c = getc(refsfound)) == EOF) {
