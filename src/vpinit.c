@@ -41,7 +41,7 @@
 #include "global.h"
 #include "constants.h"
 
-static char const rcsid[] = "$Id: vpinit.c,v 1.3 2000/05/03 22:02:10 petr Exp $";
+static char const rcsid[] = "$Id: vpinit.c,v 1.4 2000/05/05 17:35:00 broeker Exp $";
 
 #if !NOMALLOC
 char	**vpdirs;	/* directories (including current) in view path */
@@ -50,8 +50,6 @@ char	vpdirs[MAXDIR][DIRLEN + 1];
 #define	MAXVPATH (MAXDIR * (DIRLEN + 1))
 #endif
 int	vpndirs;	/* number of directories in view path */
-
-extern	char	*argv0;	/* command name (must be set in main function) */
 
 void
 vpinit(char *currentdir)

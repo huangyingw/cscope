@@ -35,10 +35,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "library.h"
+#include "global.h"
 
-static char const rcsid[] = "$Id: alloc.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
-
-extern	char	*argv0;	/* command name (must be set in main function) */
+static char const rcsid[] = "$Id: alloc.c,v 1.2 2000/05/03 22:02:10 petr Exp $";
 
 static	void	*alloctest(void *p);
 
