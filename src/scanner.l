@@ -42,7 +42,7 @@
 
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 
-static char const rcsid[] = "$Id: scanner.l,v 1.2 2000/05/03 19:07:09 petr Exp $";
+static char const rcsid[] = "$Id: scanner.l,v 1.3 2000/05/03 22:02:10 petr Exp $";
 
 /* keyword text for fast testing of keywords in the scanner */
 extern	char	enumtext[];
@@ -216,8 +216,8 @@ number		\.?[0-9][.0-9a-fA-FlLuUxX]*
 			/* make sure there is room for the current brace count */
 			if (iflevel == miflevel) {
 				miflevel += IFLEVELINC;
-				maxifbraces = (int *) myrealloc(maxifbraces, miflevel * sizeof(int));
-				preifbraces = (int *) myrealloc(preifbraces, miflevel * sizeof(int));
+				maxifbraces = myrealloc(maxifbraces, miflevel * sizeof(int));
+				preifbraces = myrealloc(preifbraces, miflevel * sizeof(int));
 			}
 			/* push the current brace count */
 			preifbraces[iflevel] = braces;
@@ -590,8 +590,8 @@ initscanner(char *srcfile)
 	char	*s;
 	
 	if (maxifbraces == NULL) {
-		maxifbraces = (int *) mymalloc(miflevel * sizeof(int));
-		preifbraces = (int *) mymalloc(miflevel * sizeof(int));
+		maxifbraces = mymalloc(miflevel * sizeof(int));
+		preifbraces = mymalloc(miflevel * sizeof(int));
 	}
 	first = 0;		/* buffer index for first char of symbol */
 	last = 0;		/* buffer index for last char of symbol */

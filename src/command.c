@@ -41,7 +41,7 @@
 #include <fcntl.h>	/* O_RDONLY */
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.3 2000/05/03 19:07:09 petr Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.4 2000/05/03 22:02:10 petr Exp $";
 
 BOOL	caseless;		/* ignore letter case when searching */
 BOOL	*change;		/* change this line */
@@ -520,7 +520,7 @@ changestring(void)
 		return(NO);
 	}
 	/* create the line change indicators */
-	change = (BOOL *) mycalloc((unsigned) totallines, sizeof(BOOL));
+	change = mycalloc((unsigned) totallines, sizeof(BOOL));
 	changing = YES;
 	mousemenu();
 

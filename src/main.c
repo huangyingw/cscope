@@ -52,7 +52,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.5 2000/05/03 19:07:09 petr Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.6 2000/05/03 22:02:10 petr Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -410,7 +410,7 @@ lastarg:
 			exit(1);
 		}
 		/* get the source file list */
-		srcfiles = (char **) mymalloc(nsrcfiles * sizeof(char *));
+		srcfiles = mymalloc(nsrcfiles * sizeof(char *));
 		if (fileversion >= 9) {
 
 			/* allocate the string space */
@@ -480,7 +480,7 @@ lastarg:
 			sourcedir(s);
 		}
 		/* make the source file list */
-		srcfiles = (char **) mymalloc(msrcfiles * sizeof(char *));
+		srcfiles = mymalloc(msrcfiles * sizeof(char *));
 		makefilelist();
 		if (nsrcfiles == 0) {
 			(void) fprintf(stderr, "cscope: no source files found\n");
@@ -923,7 +923,7 @@ build(void)
 	firstfile = 0;
 	lastfile = nsrcfiles;
 	if (invertedindex == YES) {
-		srcoffset = (long *) mymalloc((nsrcfiles + 1) * sizeof(long));
+		srcoffset = mymalloc((nsrcfiles + 1) * sizeof(long));
 	}
 	for (;;) {
 
@@ -977,7 +977,7 @@ build(void)
 		firstfile = lastfile;
 		lastfile = nsrcfiles;
 		if (invertedindex == YES) {
-			srcoffset = (long *) myrealloc(srcoffset,
+			srcoffset = myrealloc(srcoffset,
 			    (nsrcfiles + 1) * sizeof(long));
 		}
 		/* sort the included file names */

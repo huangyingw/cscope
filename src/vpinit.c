@@ -41,7 +41,7 @@
 #include "global.h"
 #include "constants.h"
 
-static char const rcsid[] = "$Id: vpinit.c,v 1.2 2000/05/03 19:07:09 petr Exp $";
+static char const rcsid[] = "$Id: vpinit.c,v 1.3 2000/05/03 22:02:10 petr Exp $";
 
 #if !NOMALLOC
 char	**vpdirs;	/* directories (including current) in view path */
@@ -106,7 +106,7 @@ vpinit(char *currentdir)
 		}
 	}
 	/* create the source directory list */
-	vpdirs = (char **) mymalloc(vpndirs * sizeof(char *));
+	vpdirs = mymalloc(vpndirs * sizeof(char *));
 
 	/* don't change VPATH in the environment */
 	vpath = stralloc(vpath);
@@ -125,7 +125,7 @@ vpinit(char *currentdir)
 	}
 	/* convert the view path nodes to directories */
 	for (i = 0; i < vpndirs; ++i) {
-		s = (char *) mymalloc((strlen(vpdirs[i]) + strlen(suffix) + 1));
+		s = mymalloc((strlen(vpdirs[i]) + strlen(suffix) + 1));
 		(void) strcpy(s, vpdirs[i]);
 		(void) strcat(s, suffix);
 		vpdirs[i] = s;

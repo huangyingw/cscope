@@ -39,7 +39,7 @@
 #include "global.h"
 #include <stdlib.h>
 
-static char const rcsid[] = "$Id: crossref.c,v 1.2 2000/05/03 19:07:09 petr Exp $";
+static char const rcsid[] = "$Id: crossref.c,v 1.3 2000/05/03 22:02:10 petr Exp $";
 
 extern	int	myylineno;
 
@@ -108,7 +108,7 @@ crossref(char *srcfile)
 	fcnoffset = macrooffset = 0;
 	symbols = 0;
 	if (symbol == NULL) {
-		symbol = (struct symbol *) mymalloc(msymbols * sizeof(struct symbol));
+		symbol = mymalloc(msymbols * sizeof(struct symbol));
 	}
 	for (;;) {
 		
@@ -176,7 +176,7 @@ savesymbol(int token, int num)
 	/* make sure there is room for the symbol */
 	if (symbols == msymbols) {
 		msymbols += SYMBOLINC;
-		symbol = (struct symbol *) myrealloc((char *) symbol,
+		symbol = myrealloc(symbol,
 		    msymbols * sizeof(struct symbol));
 	}
 	/* save the symbol */

@@ -47,7 +47,7 @@
 #include <time.h>
 #include <errno.h>      /* sys_errlist 18-Apr-2000 hops */
 
-static char const rcsid[] = "$Id: display.c,v 1.5 2000/05/03 19:07:09 petr Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.6 2000/05/03 22:02:10 petr Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
@@ -130,7 +130,7 @@ dispinit(void)
 	}
 
 	/* allocate the displayed line array */
-	displine = (int *) mymalloc(mdisprefs * sizeof(int));
+	displine = mymalloc(mdisprefs * sizeof(int));
 }
 
 /* display a page of the references */
@@ -423,6 +423,7 @@ atchange(void)
 RETSIGTYPE
 jumpback(int sig)
 {
+	(void) sig;		/* 'use' sig, to avoid warning from compiler */
 	longjmp(env, 1);
 }
 
