@@ -44,7 +44,7 @@
 #include "global.h"
 #include "vp.h"		/* vpdirs and vpndirs */
 
-static char const rcsid[] = "$Id: dir.c,v 1.10 2001/03/27 14:09:19 broeker Exp $";
+static char const rcsid[] = "$Id: dir.c,v 1.11 2001/07/05 16:47:04 broeker Exp $";
 
 #define	DIRSEPS	" ,:"	/* directory list separators */
 #define	DIRINC	10	/* directory list size increment */
@@ -154,7 +154,7 @@ addsrcdir(char *dir)
 	struct	stat	statstruct;
 
 	/* make sure it is a directory */
-	if (stat(compath(dir), &statstruct) == 0 && 
+	if (lstat(compath(dir), &statstruct) == 0 && 
 	    (statstruct.st_mode & S_IFDIR)) {
 
 		/* note: there already is a source directory list */
@@ -218,7 +218,7 @@ addincdir(char *name, char *path)
 	struct	stat	statstruct;
 
 	/* make sure it is a directory */
-	if (stat(compath(path), &statstruct) == 0 && 
+	if (lstat(compath(path), &statstruct) == 0 && 
 	    (statstruct.st_mode & S_IFDIR)) {
 		if (incdirs == NULL) {
 			incdirs = mymalloc(mincdirs * sizeof(char *));
@@ -382,7 +382,7 @@ scan_dir(const char *adir, BOOL recurse_dir) {
 
 				sprintf(path,"%s/%s",adir,entry->d_name);
 
-				if(stat(path,&buf) == 0) {
+				if(lstat(path,&buf) == 0) {
 					file = entry->d_name;
 					if( recurse_dir 
                                             && (buf.st_mode & S_IFDIR) ) {
@@ -448,7 +448,7 @@ issrcfile(char *file)
 			
 				/* some directories have 2 character
 				   suffixes so make sure it is a file */
-				if (stat(file, &statstruct) == 0 && 
+				if (lstat(file, &statstruct) == 0 && 
 				    (statstruct.st_mode & S_IFREG)) {
 					return(YES);
 				}
@@ -460,7 +460,7 @@ issrcfile(char *file)
 						/* C++ template source */
 			   0) {
 				/* make sure it is a file */
-				if (stat(file, &statstruct) == 0 && 
+				if (lstat(file, &statstruct) == 0 && 
 					(statstruct.st_mode & S_IFREG)) {
 					return(YES);
 				}

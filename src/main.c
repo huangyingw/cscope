@@ -61,7 +61,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.23 2001/07/05 16:47:04 broeker Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.24 2001/07/09 14:00:25 broeker Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -312,7 +312,7 @@ lastarg:
 	}
 
 	/* make sure that tmpdir exists */
-	if (stat (tmpdir, &stat_buf))
+	if (lstat (tmpdir, &stat_buf))
 	{
 		fprintf (stderr, "cscope: Temporary directory %s does not exist or cannot be accessed\n", tmpdir);
 		fprintf (stderr, "cscope: Please create the directory or set the environment variable\ncscope: TMPDIR to a valid directory\n");
