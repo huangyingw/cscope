@@ -57,9 +57,14 @@
 #define	FMTVERSION	1	/* inverted index format version */
 #define	ZIPFSIZE	200	/* zipf curve size */
 
-static char const rcsid[] = "$Id: invlib.c,v 1.12 2001/07/05 13:47:54 broeker Exp $";
+static char const rcsid[] = "$Id: invlib.c,v 1.13 2001/07/05 14:31:00 broeker Exp $";
 
+#if DEBUG
+/* FIXME HBB 20010705: nowhere in the source is `invbreak' ever set to
+ * a value other than the (silent) initialization to zero. Pretty
+ * useless, that looks */
 int	invbreak;
+#endif
 
 static	int	boolready(void);
 static	int	invnewterm(void);

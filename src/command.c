@@ -45,7 +45,7 @@
 #include <fcntl.h>	/* O_RDONLY */
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.12 2001/06/01 12:43:24 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.13 2001/07/05 15:08:21 broeker Exp $";
 
 
 int	selecting;
@@ -62,11 +62,11 @@ static	char	pipeprompt[] = "Pipe to shell command: ";
 static	char	readprompt[] = "Read from file: ";
 static	char	toprompt[] = "To: ";
 
-void	atchange(void);
-BOOL	changestring(void);
-void	clearprompt(void);
-void	mark(int i);
-void	scrollbar(MOUSE *p);
+/* Internal prototypes: */
+static	BOOL	changestring(void);
+static	void	clearprompt(void);
+static	void	mark(int i);
+static	void	scrollbar(MOUSE *p);
 static	void	countrefs(void);
 
 /* execute the command */
@@ -537,7 +537,7 @@ command(int commandc)
 
 /* clear the prompt line */
 
-void
+static void
 clearprompt(void)
 {
 	(void) move(PRLINE, 0);
@@ -575,7 +575,7 @@ readrefs(char *filename)
 
 /* change one text string to another */
 
-BOOL
+static BOOL
 changestring(void)
 {
 	char	newfile[PATHLEN + 1];	/* new file name */
@@ -776,7 +776,7 @@ nochange:
 
 /* mark/unmark this displayed line to be changed */
 
-void
+static void
 mark(int i)
 {
 	int	j;
@@ -798,7 +798,7 @@ mark(int i)
 
 /* scrollbar actions */
 
-void
+static void
 scrollbar(MOUSE *p)
 {
 	/* reposition list if it makes sense */

@@ -41,7 +41,7 @@
 
 #include <stdlib.h>
 
-static char const rcsid[] = "$Id: crossref.c,v 1.8 2001/06/01 12:43:24 broeker Exp $";
+static char const rcsid[] = "$Id: crossref.c,v 1.9 2001/07/05 14:31:00 broeker Exp $";
 
 
 /* convert long to a string */
@@ -61,7 +61,6 @@ static char const rcsid[] = "$Id: crossref.c,v 1.8 2001/06/01 12:43:24 broeker E
 
 long	dboffset;		/* new database offset */
 BOOL	errorsfound;		/* prompt before clearing messages */
-long	fileindex;		/* source file name index */
 long	lineoffset;		/* source line database offset */
 long	npostings;		/* number of postings */
 int	nsrcoffset;             /* number of file name database offsets */

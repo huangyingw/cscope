@@ -46,9 +46,13 @@
 
 #define	OURBUFSIZ	160	/* renamed: avoid conflict with <stdio.h> */
 
-static char const rcsid[] = "$Id: logdir.c,v 1.2 2000/05/03 19:07:09 petr Exp $";
+static char const rcsid[] = "$Id: logdir.c,v 1.3 2000/05/03 22:02:10 petr Exp $";
 
 static char line[OURBUFSIZ+1];
+
+/* Internal prototypes: */
+static	char	*nextfield(char *p);
+
 
 static char *
 nextfield(char *p)

@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: invlib.h,v 1.3 2001/06/01 12:43:24 broeker Exp $ */
+/* $Id: invlib.h,v 1.4 2001/07/05 14:31:00 broeker Exp $ */
 
 
 #ifndef CSCOPE_INVLIB_H
@@ -112,7 +112,7 @@ void	invclose(INVCONTROL *invcntl);
 void	invdump(INVCONTROL *invcntl, char *term);
 long	invfind(INVCONTROL *invcntl, char *searchterm);
 int	invforward(INVCONTROL *invcntl);
-int	invopen(INVCONTROL *invcntl, char *invname, char *invpost, int stat);
+int	invopen(INVCONTROL *invcntl, char *invname, char *invpost, int status);
 long	invmake(char *invname, char *invpost, FILE *infile);
 long	invterm(INVCONTROL *invcntl, char *term);
 

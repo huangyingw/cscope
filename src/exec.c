@@ -49,11 +49,11 @@
 #include <curses.h>
 #endif
 
-static char const rcsid[] = "$Id: exec.c,v 1.5 2001/03/29 15:03:55 broeker Exp $";
+static char const rcsid[] = "$Id: exec.c,v 1.6 2001/07/05 14:31:00 broeker Exp $";
 
-static	RETSIGTYPE	(*oldsigquit)();	/* old value of quit signal */
-static	RETSIGTYPE	(*oldsighup)();		/* old value of hangup signal */
-static	RETSIGTYPE	(*oldsigstp)();
+static	RETSIGTYPE	(*oldsigquit)(int); /* old value of quit signal */
+static	RETSIGTYPE	(*oldsighup)(int); /* old value of hangup signal */
+static	RETSIGTYPE	(*oldsigstp)(int); /* old value of SIGTSTP */
 
 #ifndef __MSDOS__ /* none of these is needed, there */
 static	int	join(pid_t p);
