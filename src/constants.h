@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: constants.h,v 1.6 2001/04/24 17:42:23 petr Exp $ */
+/* $Id: constants.h,v 1.7 2001/06/01 12:43:24 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -43,7 +43,7 @@
 
 /* database output macros that update its offset */
 #define	dbputc(c)	(++dboffset, (void) putc(c, newrefs))
-#if Linux || BSD && !sun
+#if __DJGPP__ || Linux || BSD && !sun
 #define	dbfputs(s)	(dboffset += strlen(s), fputs(s, newrefs))
 #else
 #define	dbfputs(s)	(dboffset += fputs(s, newrefs))

@@ -63,7 +63,7 @@ char	*strchr();
 #define	FMTVERSION	1	/* inverted index format version */
 #define	ZIPFSIZE	200	/* zipf curve size */
 
-static char const rcsid[] = "$Id: invlib.c,v 1.10 2001/05/30 19:31:23 petr Exp $";
+static char const rcsid[] = "$Id: invlib.c,v 1.11 2001/06/01 12:31:00 broeker Exp $";
 
 int	invbreak;
 
@@ -514,13 +514,13 @@ invopen(INVCONTROL *invcntl, char *invname, char *invpost, int stat)
 		 * we need to check for 'cscope.in.out', rather than 'cscope.out.in': 
 		 * I.e, hack around our own violation of the inverse db naming convention */
 		if (!strcmp(invname, "cscope.out.in")) {
-			if ((invcntl->invfile = vpfopen(INVNAME, ((stat == 0) ? "r" : "r+")))) 
+			if ((invcntl->invfile = vpfopen(INVNAME, ((stat == 0) ? "rb" : "r+b")))) 
 				goto openedinvname;
 		/* more silliness: if you create the db with '-f cscope', then try to open 
 		 * it without '-f cscope', you'll fail unless we check for 'cscope.out.in'
 		 * here. */
 		} else if (!strcmp(invname, INVNAME)) {
-			if ((invcntl->invfile = vpfopen("cscope.out.in", ((stat == 0) ? "r" : "r+")))) 
+			if ((invcntl->invfile = vpfopen("cscope.out.in", ((stat == 0) ? "rb" : "r+b")))) 
 				goto openedinvname;
 		}	
 		invcannotopen(invname);
@@ -544,10 +544,10 @@ openedinvname:
 	if ((invcntl->postfile = vpfopen(invpost, ((stat == 0) ? "rb" : "r+b"))) == NULL) {
 		/* exact same naming convention hacks as above for invname */
 		if (!strcmp(invpost, "cscope.out.po")) {
-			if ((invcntl->postfile = vpfopen(INVPOST, ((stat == 0) ? "r" : "r+")))) 
+			if ((invcntl->postfile = vpfopen(INVPOST, ((stat == 0) ? "rb" : "r+b")))) 
 				goto openedinvpost;
 		} else if (!strcmp(invpost, INVPOST)) {
-			if ((invcntl->postfile = vpfopen("cscope.out.po",((stat == 0)?"r":"r+")))) 
+			if ((invcntl->postfile = vpfopen("cscope.out.po",((stat == 0)?"rb":"r+b")))) 
 				goto openedinvpost;
 		}
 		invcannotopen(invpost);
