@@ -42,10 +42,6 @@
 #define	RDR	0
 #define	WTR	1
 
-#if !defined(HAVE_SETMODE) && defined(HAVE__SETMODE)
-# define setmode _setmode
-#endif
-
 /* HBB 20010312: make this a bit safer --- don't blindly assume it's 1 */
 #ifdef FD_CLOEXEC
 # define CLOSE_ON_EXEC FD_CLOEXEC
@@ -53,7 +49,7 @@
 # define CLOSE_ON_EXEC 1
 #endif
 
-static char const rcsid[] = "$Id: mypopen.c,v 1.7 2001/07/05 15:08:21 broeker Exp $";
+static char const rcsid[] = "$Id: mypopen.c,v 1.8 2002/01/04 12:11:50 broeker Exp $";
 
 static pid_t popen_pid[20];
 static RETSIGTYPE (*tstat)(int);
@@ -107,11 +103,11 @@ myfopen(char *path, char *mode)
 
 	fp = fopen(path, mode);
 
-#if HAVE_SETMODE
+#ifdef SETMODE
 	if (! strchr(mode, 'b')) {
-		setmode(fileno(fp), O_TEXT);
+		SETMODE(fileno(fp), O_TEXT);
 	}
-#endif /* HAVE_SETMODE */
+#endif /* SETMODE */
 	
 #ifdef __DJGPP__ /* FIXME: test feature, not platform */
 	/* HBB 20010312: DOS GCC doesn't have FD_CLOEXEC (yet), so it 
