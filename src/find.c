@@ -36,6 +36,7 @@
  */
 
 #include "global.h"
+#include "scanner.h"		/* for token definitions */
 #if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
 #include <ncurses.h>
 #else
@@ -43,7 +44,7 @@
 #endif
 #include <regex.h>
 
-static char const rcsid[] = "$Id: find.c,v 1.10 2001/04/26 16:21:33 petr Exp $";
+static char const rcsid[] = "$Id: find.c,v 1.11 2001/04/30 15:45:40 broeker Exp $";
 
 /* most of these functions have been optimized so their innermost loops have
  * only one test for the desired character by putting the char and 

@@ -39,6 +39,7 @@
 #include "global.h"
 #include "vp.h"
 #include "version.h"	/* FILEVERSION and FIXVERSION */
+#include "scanner.h" 
 #include <stdlib.h>	/* atoi */
 #if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
 #include <ncurses.h>
@@ -58,7 +59,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.18 2001/03/29 15:03:55 broeker Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.19 2001/04/30 15:45:40 broeker Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -103,6 +104,8 @@ char	temp1[PATHLEN + 1];	/* temporary file name */
 char	temp2[PATHLEN + 1];	/* temporary file name */
 long	totalterms;		/* total inverted index terms */
 BOOL	trun_syms;		/* truncate symbols to 8 characters */
+char	tempstring[8192];	/* use this as a buffer, instead of 'yytext', 
+				 * which had better be left alone */
 
 static	BOOL	buildonly = NO;		/* only build the database */
 static	BOOL	fileschanged;		/* assume some files changed */
