@@ -36,10 +36,10 @@
 #define	strrchr	rindex
 #endif
 
-static char const rcsid[] = "$Id: basename.c,v 1.2 2000/04/21 00:11:02 petr Exp $";
+static char const rcsid[] = "$Id: basename.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
 
 char *
-basename(char *path)
+mybasename(char *path)
 {
 	char	*s, *strrchr();
 	

@@ -63,7 +63,7 @@ char	*strchr();
 #define	FMTVERSION	1	/* inverted index format version */
 #define	ZIPFSIZE	200	/* zipf curve size */
 
-static char const rcsid[] = "$Id: invlib.c,v 1.7 2000/05/09 13:34:35 broeker Exp $";
+static char const rcsid[] = "$Id: invlib.c,v 1.8 2000/05/18 15:21:21 broeker Exp $";
 
 int	invbreak;
 
@@ -123,7 +123,7 @@ invmake(char *invname, char *invpost, FILE *infile)
 	unsigned maxtermlen = 0;
 #endif
 	/* output file */
-	if ((outfile = vpfopen(invname, "w+")) == NULL) {
+	if ((outfile = vpfopen(invname, "w+b")) == NULL) {
 		invcannotopen(invname);
 		return(0);
 	}
@@ -131,7 +131,7 @@ invmake(char *invname, char *invpost, FILE *infile)
 	(void) fseek(outfile, (long) BUFSIZ, 0);
 
 	/* posting file  */
-	if ((fpost = vpfopen(invpost, "w")) == NULL) {
+	if ((fpost = vpfopen(invpost, "wb")) == NULL) {
 		invcannotopen(invpost);
 		return(0);
 	}
@@ -507,7 +507,7 @@ invopen(INVCONTROL *invcntl, char *invname, char *invpost, int stat)
 {
 	int	read_index;
 
-	if ((invcntl->invfile = vpfopen(invname, ((stat == 0) ? "r" : "r+"))) == NULL) {
+	if ((invcntl->invfile = vpfopen(invname, ((stat == 0) ? "rb" : "r+b"))) == NULL) {
 		invcannotopen(invname);
 		return(-1);
 	}
@@ -525,7 +525,7 @@ invopen(INVCONTROL *invcntl, char *invname, char *invpost, int stat)
 		(void) fprintf(stderr, "%s: inverted file is locked\n", argv0);
 		goto closeinv;
 	}
-	if ((invcntl->postfile = vpfopen(invpost, ((stat == 0) ? "r" : "r+"))) == NULL) {
+	if ((invcntl->postfile = vpfopen(invpost, ((stat == 0) ? "rb" : "r+b"))) == NULL) {
 		invcannotopen(invpost);
 		goto closeinv;
 	}

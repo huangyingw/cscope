@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.11 2000/05/19 04:46:32 hops1 Exp $ */
+/* $Id: global.h,v 1.12 2001/02/09 21:07:17 petr Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -293,8 +293,6 @@ int	egrep(char *file, FILE *output, char *format);
 int	getline(char s[], unsigned size, int firstchar, BOOL iscaseless);
 int	mygetch(void);
 int	myopen(char *path, int flag, int mode);
-int	vpopen(char *path, int oflag);
-int	vpaccess(char *path, mode_t amode);
 int	hash(char *ss);
 int	execute(char *a, ...);
 int 	yylex(void);

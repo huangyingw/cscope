@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: library.h,v 1.2 2000/05/03 22:02:10 petr Exp $ */
+/* $Id: library.h,v 1.3 2000/05/18 14:14:57 broeker Exp $ */
 
 /* library function return value declarations */
 
@@ -44,7 +44,7 @@
 #endif
 
 /* private library */
-char	*basename(char *path);
+char	*mybasename(char *path);
 char	*compath(char *pathname);
 char	*egrepinit(char *egreppat);
 char	*logdir(char *name);

@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: vp.h,v 1.2 2000/04/21 00:11:02 petr Exp $ */
+/* $Id: vp.h,v 1.1 2000/04/27 16:33:47 petr Exp $ */
 
 /*
  *	VPATH assumptions:
@@ -40,6 +40,20 @@
  */
 
 #define MAXPATH	200		/* max length for entire name */
+
+#include <fcntl.h>
+#include <sys/stat.h>
+
+/* In view of DOS portability, we may need the vale of the O_BINARY
+ * bit mask. On Unix platforms, it's not defined, nor is it needed -->
+ * set it to a no-op value */
+#ifndef O_BINARY
+# ifdef _O_BINARY
+#  define O_BINARY _O_BINARY
+# else
+#  define O_BINARY 0x00
+# endif
+#endif 
 
 #if !NOMALLOC
 extern	char	**vpdirs;	/* directories (including current) in view path */
@@ -51,3 +65,5 @@ extern	char	vpdirs[MAXDIR][DIRLEN + 1];
 extern	int	vpndirs;	/* number of directories in view path */
 
 void	vpinit(char *currentdir);
+int	vpopen(char *path, int oflag);
+int	vpaccess(char *path, mode_t amode);
