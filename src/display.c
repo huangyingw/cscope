@@ -54,7 +54,7 @@
 #include <errno.h>
 #include <stdarg.h>
 
-static char const rcsid[] = "$Id: display.c,v 1.19 2001/10/19 15:32:27 broeker Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.20 2002/03/13 18:54:40 broeker Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
@@ -162,17 +162,15 @@ display(void)
 #endif
 		move(0, COLS - (int) sizeof(helpstring));
 		addstr(helpstring);
-	}
-	/* if no references were found */
-	else if (totallines == 0) {
+	} else if (totallines == 0) {
+		/* if no references were found */
 		/* redisplay the last message */
 		addstr(lastmsg);
-	}
-	else {	/* display the pattern */
+	} else {
+		/* display the pattern */
 		if (changing == YES) {
 			printw("Change \"%s\" to \"%s\"", pattern, newpat);
-		}
-		else {
+		} else {
 			printw("%c%s: %s", toupper((unsigned char)fields[field].text2[0]),
 				fields[field].text2 + 1, pattern);
 		}
@@ -210,13 +208,13 @@ display(void)
 		if (field == SYMBOL || field == CALLEDBY || field == CALLING) {
 			width -= fcnlen + 1;
 		}
+
 		/* until the max references have been displayed or 
 		   there is no more room */
 		topline = nextline;
 		for (disprefs = 0, screenline = REFLINE;
-		    disprefs < mdisprefs && screenline <= lastdispline;
-		    ++disprefs, ++screenline) {
-			
+		     disprefs < mdisprefs && screenline <= lastdispline;
+		     ++disprefs, ++screenline) {
 			/* read the reference line */
 			if (fscanf(refsfound, "%s%s%s %[^\n]", file, function, 
 			    linenum, tempstring) < 4) {
@@ -228,23 +226,22 @@ display(void)
 			/* if no mouse, display the selection number */
 			if (mouse == YES) {
 				addch(' ');
-			}
-			else
+			} else {
 				printw("%c", dispchars[disprefs]);
+			}
 
 			/* display any change mark */
 			if (changing == YES && 
 			    change[topline + disprefs - 1] == YES) {
 				addch('>');
-			}
-			else {
+			} else {
 				addch(' ');
 			}
+
 			/* display the file name */
 			if (field == FILENAME) {
 				printw("%-*s ", filelen, file);
-			}
-			else {
+			} else {
 				/* if OGS, display the subsystem and book names */
 				if (ogs == YES) {
 					ogsnames(file, &subsystem, &book);
@@ -256,7 +253,8 @@ display(void)
 					printw("%-*.*s ", filelen, filelen,
 						pathcomponents(file, dispcomponents));
 				}
-			}
+			} /* else(field == FILENAME) */
+
 			/* display the function name */
 			if (field == SYMBOL || field == CALLEDBY || field == CALLING) {
 				printw("%-*.*s ", fcnlen, fcnlen, function);
@@ -265,16 +263,16 @@ display(void)
 				addch('\n');	/* go to next line */
 				continue;
 			}
+
 			/* display the line number */
 			printw("%*s ", numlen, linenum);
-
 			/* there may be tabs in egrep output */
 			while ((s = strchr(tempstring, '\t')) != NULL) {
 				*s = ' ';
 			}
+
 			/* display the source line */
 			s = tempstring;
-
 			for (;;) {
 				/* see if the source line will fit */
 				if ((i = strlen(s)) > width) {
@@ -309,6 +307,8 @@ display(void)
 					/* if this is the first displayed line,
 					   display what will fit on the screen */
 					if (topline == nextline -1) {
+						disprefs++;
+						/* break out of two loops */
 						goto endrefs;
 					}
 					
@@ -326,9 +326,8 @@ display(void)
 				}
 				/* indent the continued source line */
 				move(screenline, COLS - width);
-			}
-
-		}
+			} /* for(ever) */
+		} /* for(reference output lines) */
 	endrefs:
 		/* position the cursor for the message */
 		i = FLDLINE - 1;

@@ -53,6 +53,7 @@
 
 /* defaults for unset environment variables */
 #define	EDITOR	"vi"
+#define HOME	"/"     /* no $HOME --> use root directory */
 #define	SHELL	"sh"
 #define LINEFLAG "+%s"	/* default: used by vi and emacs */
 #define TMPDIR	"/tmp"
@@ -60,7 +61,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.26 2001/10/10 16:49:22 broeker Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.27 2002/07/28 15:40:07 broeker Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -297,7 +298,7 @@ lastarg:
 	editor = mygetenv("EDITOR", EDITOR);
 	editor = mygetenv("VIEWER", editor);		/* use viewer if set */
 	editor = mygetenv("CSCOPE_EDITOR", editor);	/* has last word */
-	home = getenv("HOME");
+	home = mygetenv("HOME", HOME);
 	shell = mygetenv("SHELL", SHELL);
 	lineflag = mygetenv("CSCOPE_LINEFLAG", LINEFLAG);
 	lineflagafterfile = getenv("CSCOPE_LINEFLAG_AFTER_FILE")?1:0;
