@@ -42,8 +42,9 @@
 #include "scanner.h"
 
 #include <stdlib.h>
+#include <sys/stat.h>
 
-static char const rcsid[] = "$Id: crossref.c,v 1.10 2001/07/05 16:47:04 broeker Exp $";
+static char const rcsid[] = "$Id: crossref.c,v 1.11 2001/07/09 14:00:25 broeker Exp $";
 
 
 /* convert long to a string */
@@ -92,7 +93,15 @@ crossref(char *srcfile)
 	int	length;		/* symbol length */
 	int	entry_no;		/* function level of the symbol */
 	int	token;			/* current token */
+	struct stat st;
 
+	if (! ((stat(srcfile, &st) == 0)
+	       && S_ISREG(st.st_mode))) {
+		cannotopen(srcfile);
+		errorsfound = YES;
+		return;
+	}
+	
 	entry_no = 0;
 	/* open the source file */
 	if ((yyin = myfopen(srcfile, "r")) == NULL) {
