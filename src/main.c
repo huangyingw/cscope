@@ -58,7 +58,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.16 2001/02/09 21:07:17 petr Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.17 2001/03/27 14:09:19 broeker Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -1359,7 +1359,9 @@ void
 entercurses(void)
 {
 	incurses = YES;
+#ifndef __MSDOS__ /* HBB 20010313 */
 	(void) nonl();		/* don't translate an output \n to \n\r */
+#endif
 	(void) cbreak();	/* single character input */
 	(void) noecho();	/* don't echo input characters */
 	(void) clear();		/* clear the screen */
@@ -1434,6 +1436,11 @@ longusage(void)
 void
 myexit(int sig)
 {
+	/* HBB 20010313; close file before unlinking it. Unix may not care
+	 * about that, but DOS absolutely needs it */
+	if (refsfound != NULL)
+		fclose(refsfound);
+	
 	/* remove any temporary files */
 	if (temp1[0] != '\0') {
 		(void) unlink(temp1);
