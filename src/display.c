@@ -47,7 +47,7 @@
 #include <time.h>
 #include <errno.h>      /* sys_errlist 18-Apr-2000 hops */
 
-static char const rcsid[] = "$Id: display.c,v 1.2 2000/05/02 21:41:48 petr Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.3 2000/05/03 14:18:51 petr Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
@@ -573,7 +573,11 @@ progress(const char *fmt, ...)
 		} else {		/* Arguments, print custom message */
 			va_start(ap, fmt);
 			start = now;
+#ifdef HAVE_VSNPRINTF
 			(void) vsnprintf(msg, MSGLEN + 1, fmt, ap);
+#else
+			(void) vsprintf(msg, fmt, ap);
+#endif
 			if (linemode == NO) postmsg(msg);
 			va_end(ap);
 		}
