@@ -45,7 +45,7 @@
 #endif
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.24 2004/10/27 11:32:46 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.25 2005/02/04 12:19:08 nhorman Exp $";
 
 
 int	selecting;
@@ -410,7 +410,7 @@ command(int commandc)
 		askforreturn();
 		entercurses();
 		break;
-
+#ifdef KEY_RESIZE
 	case KEY_RESIZE:
 		exitcurses();
 		initscr();
@@ -429,7 +429,7 @@ command(int commandc)
 		postmsg("");	/* clear any build progress message */
 		display();	/* display the version number and input fields */
 		break;
-
+#endif
 	case ctrl('L'):	/* redraw screen */
 #ifdef KEY_CLEAR
 	case KEY_CLEAR:
