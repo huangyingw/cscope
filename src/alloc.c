@@ -37,11 +37,13 @@
 #include "library.h"
 #include "global.h"
 
-static char const rcsid[] = "$Id: alloc.c,v 1.2 2000/05/03 22:02:10 petr Exp $";
+static char const rcsid[] = "$Id: alloc.c,v 1.3 2000/05/05 17:51:45 broeker Exp $";
 
 static	void	*alloctest(void *p);
 
-#ifdef __STDC__
+/* let autoconf find out if <stdlib.h> is available. This test will
+ * succeed more reliably than the defined(__STDC__) one I replaced */
+#if STDC_HEADERS
 #include <stdlib.h>
 # else
 char	*calloc(), *malloc(), *realloc(), *strcpy();
