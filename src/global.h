@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.18 2001/07/09 14:00:25 broeker Exp $ */
+/* $Id: global.h,v 1.19 2001/10/10 16:49:22 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -105,6 +105,25 @@ char	*memset();
 #  define HAVE_FIXKEYPAD
 # endif
 #endif
+
+/* HBB 20020103: Need to force text or binary mode opens on Cygwins,
+ * because of their "binary/text mode mount" silliness :-( */
+#ifndef O_TEXT
+# ifdef _O_TEXT
+#  define O_TEXT _O_TEXT
+# else
+#  define O_TEXT 0x00
+# endif
+#endif
+/* Same for binary mode --- moved here from vp.h */
+#ifndef O_BINARY
+# ifdef _O_BINARY
+#  define O_BINARY _O_BINARY
+# else
+#  define O_BINARY 0x00
+# endif
+#endif 
+
 
 typedef	enum	{		/* boolean data type */
 	NO,
