@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: vp.h,v 1.4 2002/01/04 12:11:50 broeker Exp $ */
+/* $Id: vp.h,v 1.5 2002/07/28 15:40:07 broeker Exp $ */
 
 /*
  *	VPATH assumptions:
@@ -53,6 +53,7 @@
 # include <fcntl.h>		/* needed for O_... open flags */
 #endif
 
+#include <sys/types.h>
 #include <sys/stat.h>
 
 #if !NOMALLOC
