@@ -54,7 +54,7 @@
 #include <errno.h>
 #include <stdarg.h>
 
-static char const rcsid[] = "$Id: display.c,v 1.18 2001/08/15 13:04:14 broeker Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.19 2001/10/19 15:32:27 broeker Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
@@ -482,7 +482,7 @@ search(void)
 				pattern);
 		}
 		else if (rc == REGCMPERROR) {
-			(void) sprintf(lastmsg, "Error in this regcmp(3X) regular expression: %s", 
+			(void) sprintf(lastmsg, "Error in this regcomp(3) regular expression: %s", 
 				pattern);
 			
 		}

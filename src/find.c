@@ -46,7 +46,7 @@
 #endif
 #include <regex.h>
 
-static char const rcsid[] = "$Id: find.c,v 1.12 2001/06/01 12:43:24 broeker Exp $";
+static char const rcsid[] = "$Id: find.c,v 1.13 2001/07/09 14:00:25 broeker Exp $";
 
 /* most of these functions have been optimized so their innermost loops have
  * only one test for the desired character by putting the char and 
@@ -658,7 +658,7 @@ findinit(char *pattern)
 			s[8] = '\0';
 		}
 		/* must be an exact match */
-		/* note: regcmp doesn't recognize ^*keypad$ as a syntax error
+		/* note: regcomp doesn't recognize ^*keypad$ as a syntax error
 		         unless it is given as a single arg */
 		(void) sprintf(buf, "^%s$", s);
 		if (regcomp (&regexp, buf, REG_EXTENDED | REG_NOSUB) != 0) {
