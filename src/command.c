@@ -45,7 +45,7 @@
 #include <fcntl.h>	/* O_RDONLY */
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.14 2001/07/05 16:47:04 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.15 2001/08/15 13:04:14 broeker Exp $";
 
 
 int	selecting;
@@ -569,7 +569,11 @@ readrefs(char *filename)
 			(void) putc(c, refsfound);
 		}
 		(void) fclose(file);
-		(void) freopen(temp1, "rb", refsfound);
+		(void) fclose(refsfound);
+		if ( (refsfound = myfopen(temp1, "rb")) == NULL) {
+			cannotopen(temp1);
+			return(NO);
+		}
 		countrefs();
 	}
 	return(YES);

@@ -54,7 +54,7 @@
 #include <errno.h>
 #include <stdarg.h>
 
-static char const rcsid[] = "$Id: display.c,v 1.17 2001/07/09 14:00:25 broeker Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.18 2001/08/15 13:04:14 broeker Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
@@ -444,7 +444,11 @@ search(void)
 				findcleanup();
 
 				/* append the non-global references */
-				(void) freopen(temp2, "rb", nonglobalrefs);
+				(void) fclose(nonglobalrefs);
+				if ( (nonglobalrefs = myfopen(temp2, "rb")) == NULL) {
+				  cannotopen(temp2);
+				  return(NO);
+				}
 				while ((c = getc(nonglobalrefs)) != EOF) {
 					(void) putc(c, refsfound);
 				}
@@ -458,7 +462,11 @@ search(void)
 	(void) lseek(symrefs, (long) 0, 0);
 	
 	/* reopen the references found file for reading */
-	(void) freopen(temp1, "rb", refsfound);
+	(void) fclose(refsfound);
+	if ( (refsfound = myfopen(temp1, "rb")) == NULL) {
+		cannotopen(temp1);
+		return(NO);
+	}
 	nextline = 1;
 	totallines = 0;
 	disprefs = 0;
@@ -745,10 +753,12 @@ writerefsfound(void)
 			cannotopen(temp1);
 			return(NO);
 		}
-	}
-	else if (freopen(temp1, "wb", refsfound) == NULL) {
-		postmsg("Cannot reopen temporary file");
-		return(NO);
+	} else {
+		(void) fclose(refsfound);
+		if ( (refsfound = myfopen(temp1, "wb")) == NULL) {
+			postmsg("Cannot reopen temporary file");
+			return(NO);
+		}
 	}
 	return(YES);
 }
