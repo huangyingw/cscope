@@ -43,7 +43,7 @@
 #endif
 #include <regex.h>
 
-static char const rcsid[] = "$Id: find.c,v 1.8 2000/05/18 15:21:21 broeker Exp $";
+static char const rcsid[] = "$Id: find.c,v 1.9 2000/05/31 16:54:10 petr Exp $";
 
 /* most of these functions have been optimized so their innermost loops have
  * only one test for the desired character by putting the char and 
@@ -497,10 +497,7 @@ findregexp(char *egreppat)
 			char *file = filepath(srcfiles[i]);
 			progress("Search", searchcount, nsrcfiles);
 			if (egrep(file, refsfound, "%s <unknown> %ld ") < 0) {
-				move(1, 0);
-				clrtoeol();
-				printw("Cannot open file %s", file);
-				refresh();
+				posterr ("Cannot open file %s", file);
 			}
 		}
 	}
