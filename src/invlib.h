@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: invlib.h,v 1.4 2001/07/05 14:31:00 broeker Exp $ */
+/* $Id: invlib.h,v 1.5 2001/07/05 16:47:04 broeker Exp $ */
 
 
 #ifndef CSCOPE_INVLIB_H
@@ -103,7 +103,6 @@ typedef	struct {
 
 extern	long	*srcoffset;	/* source file name database offsets */
 extern	int	nsrcoffset;	/* number of file name database offsets */
-extern	INVCONTROL invcontrol;	/* inverted file control structure */
 
 
 void	boolclear(void);

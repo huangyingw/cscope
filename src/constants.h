@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: constants.h,v 1.8 2001/07/05 13:47:54 broeker Exp $ */
+/* $Id: constants.h,v 1.9 2001/07/05 14:31:00 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -43,10 +43,6 @@
 #include "config.h"		/* Get OS defines */
 
 #define ctrl(x)	(x & 037)	/* control character macro */
-
-/* database output macros that update its offset */
-#define	dbputc(c)	(++dboffset, (void) putc(c, newrefs))
-#define	dbfputs(s)	(dboffset += strlen(s), fputs(s, newrefs))
 
 /* fast string equality tests (avoids most strcmp() calls) */
 #define	strequal(s1, s2)	(*(s1) == *(s2) && strcmp(s1, s2) == 0)

@@ -36,6 +36,8 @@
  */
 
 #include "global.h"
+#include "build.h"
+
 #ifdef CCS
 #include "sgs.h"	/* ESG_PKG and ESG_REL */
 #else
@@ -52,7 +54,7 @@
 #include <errno.h>
 #include <stdarg.h>
 
-static char const rcsid[] = "$Id: display.c,v 1.15 2001/06/01 12:43:24 broeker Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.16 2001/07/05 16:47:04 broeker Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */

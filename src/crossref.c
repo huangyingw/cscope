@@ -37,11 +37,13 @@
  */
 
 #include "global.h"
+
+#include "build.h"
 #include "scanner.h"
 
 #include <stdlib.h>
 
-static char const rcsid[] = "$Id: crossref.c,v 1.9 2001/07/05 14:31:00 broeker Exp $";
+static char const rcsid[] = "$Id: crossref.c,v 1.10 2001/07/05 16:47:04 broeker Exp $";
 
 
 /* convert long to a string */
