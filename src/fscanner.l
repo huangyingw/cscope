@@ -50,7 +50,7 @@
 
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 
-static char const rcsid[] = "$Id: scanner.l,v 1.4 2000/05/05 17:35:00 broeker Exp $";
+static char const rcsid[] = "$Id: fscanner.l,v 1.2 2001/06/01 12:43:24 broeker Exp $";
 
 int	first;	/* buffer index for first char of symbol */
 int	last;	/* buffer index for last char of symbol */
@@ -222,7 +222,7 @@ whitespace	[ \t\n]|{comment}
 			/* NOTREACHED */
 		}
 
-\#[ \t]*endif([ \t].*)?		{	/* #endif */
+\#[ \t]*endif(([ \t]|{comment}).*)?		{	/* #endif */
 			/* delay treatment of #endif depending on whether an
 			 * #if comes right after it, or not */
 			BEGIN(WAS_ENDIF);
