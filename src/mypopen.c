@@ -43,7 +43,7 @@
 #define	WTR	1
 #define CLOSE_ON_EXEC	1
 
-static char const rcsid[] = "$Id: mypopen.c,v 1.2 2000/05/03 19:07:09 petr Exp $";
+static char const rcsid[] = "$Id: mypopen.c,v 1.3 2000/05/03 22:02:10 petr Exp $";
 
 static pid_t popen_pid[20];
 static RETSIGTYPE (*tstat)(int);
@@ -62,7 +62,18 @@ myopen(char *path, int flag, int mode)
 	if(fd != -1 && (fcntl(fd, F_SETFD, CLOSE_ON_EXEC) != -1))
 		return(fd);
 
-	else return(-1);
+	else
+	{
+		// Ensure that if the fcntl fails and fd is valid, then
+		// the file is closed properly. In general this should
+		// not happen.
+		if (fd != -1)
+		{
+			close (fd);
+		}
+
+		return(-1);
+	}
 }
 
 FILE *
