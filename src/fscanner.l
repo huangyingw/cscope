@@ -50,7 +50,7 @@
 
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 
-static char const rcsid[] = "$Id: fscanner.l,v 1.6 2001/08/03 16:13:10 broeker Exp $";
+static char const rcsid[] = "$Id: fscanner.l,v 1.7 2001/08/27 13:35:25 broeker Exp $";
 
 int	first;	/* buffer index for first char of symbol */
 int	last;	/* buffer index for last char of symbol */
@@ -230,13 +230,6 @@ whitespace	[ \t\n]|{comment}
 			goto more;
 			/* NOTREACHED */
 		}
-<IN_PREPROC>.|\n			|
-<IN_PREPROC>{identifier}	{   /* unknown preprocessor line */
-			BEGIN(INITIAL);
-			goto more;
-			/* NOTREACHED */
-		}
-
 <IN_PREPROC>endif([^a-zA-Z0-9_$\n].*)?	{	/* #endif */
 			/* delay treatment of #endif depending on whether an
 			 * #if comes right after it, or not */
@@ -468,6 +461,13 @@ whitespace	[ \t\n]|{comment}
 			goto definition;
 			/* NOTREACHED */
 		}
+<IN_PREPROC>.|\n			|
+<IN_PREPROC>{identifier}	{   /* unknown preprocessor line */
+			BEGIN(INITIAL);
+			goto more;
+			/* NOTREACHED */
+		}
+
 class{whitespace}+{identifier}({whitespace}|{identifier}|[():])*\{	{	/* class definition */
 			classdef = YES;
 			tagdef =  'c';
