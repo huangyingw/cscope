@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: vp.h,v 1.1 2000/04/27 16:33:47 petr Exp $ */
+/* $Id: vp.h,v 1.2 2001/03/27 14:09:19 broeker Exp $ */
 
 /*
  *	VPATH assumptions:
@@ -38,6 +38,9 @@
  *		where each path name is followed by ':', '\n', or '\0'.
  *		Embedded blanks are considered part of the path.
  */
+
+#ifndef CSCOPE_VP_H
+#define CSCOPE_VP_H
 
 #define MAXPATH	200		/* max length for entire name */
 
@@ -67,3 +70,5 @@ extern	int	vpndirs;	/* number of directories in view path */
 void	vpinit(char *currentdir);
 int	vpopen(char *path, int oflag);
 int	vpaccess(char *path, mode_t amode);
+
+#endif /* CSCOPE_VP_H */

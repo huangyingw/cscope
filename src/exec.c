@@ -49,7 +49,7 @@
 #include <curses.h>
 #endif
 
-static char const rcsid[] = "$Id: exec.c,v 1.4 2001/03/27 14:09:19 broeker Exp $";
+static char const rcsid[] = "$Id: exec.c,v 1.5 2001/03/29 15:03:55 broeker Exp $";
 
 static	RETSIGTYPE	(*oldsigquit)();	/* old value of quit signal */
 static	RETSIGTYPE	(*oldsighup)();		/* old value of hangup signal */
@@ -73,7 +73,6 @@ execute(char *a, ...)	/* note: "exec" is already defined on u370 */
 	int	exitcode = -1;	/* initialize, to avoid warning */
 	char	*argv[BUFSIZ];
 	pid_t	p;
-	pid_t	myfork();
 
 	/* fork and exec the program or shell script */
 	endwin();	/* restore the terminal modes */

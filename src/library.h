@@ -30,21 +30,12 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: library.h,v 1.4 2001/03/27 14:09:19 broeker Exp $ */
-
-/* library function return value declarations */
+/* $Id: library.h,v 1.5 2001/06/01 12:43:24 broeker Exp $ */
 
 #ifndef CSCOPE_LIBRARY_H
 #define CSCOPE_LIBRARY_H
 
-#if BSD
-#define	strchr	index
-#define strrchr	rindex
-#undef	tolower		/* BSD toupper and tolower don't test the character */
-#undef	toupper
-#define	tolower(c)	(islower(c) ? (c) : (c) - 'A' + 'a')	
-#define	toupper(c)	(isupper(c) ? (c) : (c) - 'a' + 'A')	
-#endif
+#include <stdio.h>		/* need FILE* type def. */
 
 /* private library */
 char	*mybasename(char *path);

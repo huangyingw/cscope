@@ -32,16 +32,14 @@
 
 /* get a file's base name from its path name */
 
-#if BSD
-#define	strrchr	rindex
-#endif
+static char const rcsid[] = "$Id: basename.c,v 1.2 2001/03/27 14:09:19 broeker Exp $";
 
-static char const rcsid[] = "$Id: basename.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
+#include "global.h"
 
 char *
 mybasename(char *path)
 {
-	char	*s, *strrchr();
+	char	*s;
 	
 	if ((s = strrchr(path, '/')) != 0) {
 		return(s + 1);

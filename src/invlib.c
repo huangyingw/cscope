@@ -40,12 +40,6 @@
 #include <sys/shm.h>
 #define ERR  -1
 #endif
-#if BSD
-#define	strchr	index
-char	*strchr();
-#else
-#include <string.h>
-#endif
 #include "invlib.h"
 #include "global.h"
 
@@ -63,7 +57,7 @@ char	*strchr();
 #define	FMTVERSION	1	/* inverted index format version */
 #define	ZIPFSIZE	200	/* zipf curve size */
 
-static char const rcsid[] = "$Id: invlib.c,v 1.11 2001/06/01 12:31:00 broeker Exp $";
+static char const rcsid[] = "$Id: invlib.c,v 1.12 2001/07/05 13:47:54 broeker Exp $";
 
 int	invbreak;
 
@@ -564,7 +558,7 @@ openedinvpost:
 	invcntl->iindex = NULL;
 #if SHARE
 	if (invcntl->param.share == 1) {
-		key_t ftok(), shm_key;
+		key_t shm_key;
 		struct shmid_ds shm_buf;
 		int	shm_id;
 

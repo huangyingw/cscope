@@ -41,7 +41,7 @@
 
 #include <stdlib.h>
 
-static char const rcsid[] = "$Id: crossref.c,v 1.7 2001/04/30 15:45:40 broeker Exp $";
+static char const rcsid[] = "$Id: crossref.c,v 1.8 2001/06/01 12:43:24 broeker Exp $";
 
 
 /* convert long to a string */
@@ -232,7 +232,7 @@ putcrossref(void)
 	/* output the source line */
 	lineoffset = dboffset;
 	dboffset += fprintf(newrefs, "%d ", lineno);
-#if BSD && !sun && !__FreeBSD__
+#ifdef PRINTF_RETVAL_BROKEN
 	dboffset = ftell(newrefs); /* fprintf doesn't return chars written */
 #endif
 
