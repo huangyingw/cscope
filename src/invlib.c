@@ -60,7 +60,7 @@ char	*strchr();
 #define	FMTVERSION	1	/* inverted index format version */
 #define	ZIPFSIZE	200	/* zipf curve size */
 
-static char const rcsid[] = "$Id: invlib.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
+static char const rcsid[] = "$Id: invlib.c,v 1.2 2000/04/28 16:30:36 petr Exp $";
 
 extern	char	*argv0;	/* command name (must be set in main function) */
 int	invbreak;
@@ -180,7 +180,12 @@ invmake(char *invname, char *invpost, FILE *infile)
 		++totpost;
 #endif
 		s = (unsigned char *) strchr(line, SEP);
-		*s = '\0';
+		if (s != NULL) {
+			*s = '\0';
+		}
+		else {
+			continue;
+		}
 #if STATS
 		if ((i = strlen(line)) > maxtermlen) {
 			maxtermlen = i;
