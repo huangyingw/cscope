@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.21 2002/07/11 14:23:45 broeker Exp $ */
+/* $Id: global.h,v 1.22 2002/07/28 15:40:07 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -98,6 +98,10 @@ char	*memset();
 # endif /* !sun */
 #endif
 
+/* Un-comment this if you're on a filesystem that doesn't support
+ * filenames longer than 14 characters */
+/* HBB FIXME 20030302: should have an autoconf test for this: */
+/* #define SHORT_NAMES_ONLY */
 
 /* Just in case autoconf didn't correctly flag HAVE_FIXKEYPAD */
 #ifndef HAVE_FIXKEYPAD 

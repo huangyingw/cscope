@@ -61,7 +61,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.27 2002/07/28 15:40:07 broeker Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.28 2002/10/29 16:45:50 broeker Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -238,7 +238,7 @@ main(int argc, char **argv)
 				case 'f':	/* alternate cross-reference file */
 					reffile = s;
 					(void) strcpy(path, s);
-#if !BSD || sun	/* suns can access Amdahl databases */
+#ifdef SHORT_NAMES_ONLY 
 					/* System V has a 14 character limit */
 					s = mybasename(path);
 					if (strlen(s) > 11) {
