@@ -31,7 +31,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: egrep.y,v 1.3 2000/05/03 22:02:10 petr Exp $ */
+/* $Id: egrep.y,v 1.4 2000/05/18 15:11:09 broeker Exp $ */
 
 /*
  * egrep -- fine lines containing a regular expression
@@ -166,7 +166,9 @@ yyerror(char *s)
 static int
 yylex(void)
 {
-	extern int yylval;
+	/* HBB 20010327: shouldn't be needed: we're inside the Yacc
+	 * source itself */
+	/* extern int yylval; */ 
 	int cclcnt, x;
 	char c, d;
 	switch(c = nextch()) {
