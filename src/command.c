@@ -45,7 +45,7 @@
 #endif
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.20 2004/01/08 14:07:20 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.21 2004/02/14 18:25:15 broeker Exp $";
 
 
 int	selecting;
@@ -459,10 +459,19 @@ command(int commandc)
 			case '\r':
 			case '\n':
 				goto repeat;
-			default:
+			case ctrl('F'):
+			case ctrl('B'):
 				(void) myungetch(c);
 				atfield();
 				(void) clrtoeol();	/* clear current field */
+				break;
+			default:
+				(void) myungetch(c);
+				if (mygetline(pattern, newpat, COLS - fldcolumn - 1, '\0', caseless )) {
+					strcpy (pattern, newpat);
+					resetcmd();
+				}
+				goto repeat;
 				break;
 			}
 		}
