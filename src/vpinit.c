@@ -33,12 +33,14 @@
 /* vpinit - initialize vpdirs or update vpdirs based on currentdir */
 
 #include <stdio.h>	/* stderr */
+#include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "vp.h"
 #include "library.h"
 #include "constants.h"
 
-static char const rcsid[] = "$Id: vpinit.c,v 1.2 2000/04/21 00:11:02 petr Exp $";
+static char const rcsid[] = "$Id: vpinit.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
 
 #if !NOMALLOC
 char	**vpdirs;	/* directories (including current) in view path */

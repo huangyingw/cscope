@@ -60,7 +60,7 @@ char	*strchr();
 #define	FMTVERSION	1	/* inverted index format version */
 #define	ZIPFSIZE	200	/* zipf curve size */
 
-static char const rcsid[] = "$Id: invlib.c,v 1.2 2000/04/28 16:30:36 petr Exp $";
+static char const rcsid[] = "$Id: invlib.c,v 1.3 2000/04/28 20:55:20 petr Exp $";
 
 extern	char	*argv0;	/* command name (must be set in main function) */
 int	invbreak;
@@ -497,6 +497,7 @@ invnewterm(void)
 	return(1);
 }
 
+int
 invopen(INVCONTROL *invcntl, char *invname, char *invpost, int stat)
 {
 	int	read_index;
@@ -635,6 +636,7 @@ invstep(INVCONTROL *invcntl)
 }
 
 /** invforward moves forward one term in the inverted file  **/
+int
 invforward(INVCONTROL *invcntl)
 {
 	invstep(invcntl); 
@@ -649,6 +651,7 @@ invforward(INVCONTROL *invcntl)
 }
 
 /**  invterm gets the present term from the present logical block  **/
+int
 invterm(INVCONTROL *invcntl, char *term)
 {
 	ENTRY * entryptr;

@@ -39,7 +39,7 @@
 #include <curses.h>
 #include <regex.h>
 
-static char const rcsid[] = "$Id: find.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
+static char const rcsid[] = "$Id: find.c,v 1.2 2000/04/28 16:30:36 petr Exp $";
 
 /* most of these functions have been optimized so their innermost loops have
  * only one test for the desired character by putting the char and 
@@ -970,6 +970,7 @@ findcalledby(void)
 			break;
 		}
 	}
+	return NO;
 }
 
 /* find this term, which can be a regular expression */

@@ -45,7 +45,7 @@ BOOL	unixpcmouse = NO;	/* running with a mouse on the Unix PC? */
 static int uw_hs, uw_vs;	/* character height and width */
 #endif
 
-static char const rcsid[] = "$Id: mouse.c,v 1.2 2000/04/21 00:11:02 petr Exp $";
+static char const rcsid[] = "$Id: mouse.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
 
 typedef	struct {			/* menu */
 	char	*text;
@@ -53,26 +53,26 @@ typedef	struct {			/* menu */
 } MENU;
 
 static	MENU	mainmenu[] = {		/* main menu */
-	"Send",		"##\033s##\r",
-	"Repeat",	"\031",
-	"Edit All",	"\05",
-	"Rebuild",	"\022",
-	"Shell",	"!",
-	"Redraw",	"\f",
-	"Help",		"?",
-	"Exit",		"\04",
-	NULL,		NULL
+	{"Send",	"##\033s##\r"},
+	{"Repeat",	"\031"},
+	{"Edit All",	"\05"},
+	{"Rebuild",	"\022"},
+	{"Shell",	"!"},
+	{"Redraw",	"\f"},
+	{"Help",	"?"},
+	{"Exit",	"\04"},
+	{NULL,		NULL}
 };
 
 static	MENU	changemenu[] = {	/* change mode menu */
-	"Mark Screen",	"*",
-	"Mark All",	"a",
-	"Change",	"\04",
-	"No Change",	"\033",
-	"Shell",	"!",
-	"Redraw",	"\f",
-	"Help",		"?",
-	NULL,		NULL
+	{"Mark Screen",	"*"},
+	{"Mark All",	"a"},
+	{"Change",	"\04"},
+	{"No Change",	"\033"},
+	{"Shell",	"!"},
+	{"Redraw",	"\f"},
+	{"Help",	"?"},
+	{NULL,		NULL}
 };
 
 static	MENU	*loaded;		/* menu loaded */

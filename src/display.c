@@ -47,7 +47,7 @@
 #include <time.h>
 #include <errno.h>      /* sys_errlist 18-Apr-2000 hops */
 
-static char const rcsid[] = "$Id: display.c,v 1.3 2000/05/03 14:18:51 petr Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.4 2000/05/03 15:16:17 petr Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
@@ -96,16 +96,16 @@ static	struct	{		/* text of input fields */
 	char	*text2;
 	FP	findfcn;
 } fields[FIELDS + 1] = {	/* samuel has a search that is not part of the cscope display */
-	"Find this", "C symbol",			(FP) findsymbol,
-	"Find this", "global definition",		(FP) finddef,
-	"Find", "functions called by this function",	(FP) findcalledby,
-	"Find", "functions calling this function",	(FP) findcalling,
-	"Find this", "text string",			findstring,
-	"Change this", "text string",			findstring,
-	"Find this", "egrep pattern",			findregexp,
-	"Find this", "file",				(FP) findfile,
-	"Find", "files #including this file",		(FP) findinclude,
-	"Find all", "function definitions",		(FP) findallfcns,	/* samuel only */
+	{"Find this", "C symbol",			(FP) findsymbol},
+	{"Find this", "global definition",		(FP) finddef},
+	{"Find", "functions called by this function",	(FP) findcalledby},
+	{"Find", "functions calling this function",	(FP) findcalling},
+	{"Find this", "text string",			findstring},
+	{"Change this", "text string",			findstring},
+	{"Find this", "egrep pattern",			findregexp},
+	{"Find this", "file",				(FP) findfile},
+	{"Find", "files #including this file",		(FP) findinclude},
+	{"Find all", "function definitions",		(FP) findallfcns},	/* samuel only */
 };
 
 /* initialize display parameters */
@@ -420,7 +420,7 @@ atchange(void)
 
 /*ARGSUSED*/
 SIGTYPE
-jumpback(sig)
+jumpback(int sig)
 {
 	longjmp(env, 1);
 }

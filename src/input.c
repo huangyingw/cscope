@@ -38,8 +38,9 @@
 #include "global.h"
 #include <curses.h>
 #include <setjmp.h>	/* jmp_buf */
+#include <stdlib.h>
 
-static char const rcsid[] = "$Id: input.c,v 1.3 2000/04/22 09:50:50 uzi Exp $";
+static char const rcsid[] = "$Id: input.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
 
 static	jmp_buf	env;		/* setjmp/longjmp buffer */
 static	int	prevchar;	/* previous, ungotten character */
@@ -48,7 +49,7 @@ static	int	prevchar;	/* previous, ungotten character */
 
 /*ARGSUSED*/
 SIGTYPE
-catchint(sig)
+catchint(int sig)
 {
 	(void) signal(SIGINT, catchint);
 	longjmp(env, 1);

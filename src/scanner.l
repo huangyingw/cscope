@@ -42,7 +42,7 @@
 
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 
-static char const rcsid[] = "$Id: scanner.l,v 1.7 2000/04/26 16:34:08 petr Exp $";
+static char const rcsid[] = "$Id: scanner.l,v 1.1 2000/04/27 16:33:47 petr Exp $";
 
 /* keyword text for fast testing of keywords in the scanner */
 extern	char	enumtext[];
@@ -86,8 +86,10 @@ static	int	templateparens;		/* function template outer parentheses count */
 static	int	typedefbraces = -1;	/* initial typedef brace count */
 static	int	token;			/* token found */
 
+
 void	multicharconstant(char terminator);
 int	skipcomment_input(void);
+int	comment(void);
 
 #ifdef FLEX_SCANNER
 #define YY_INPUT(buf,result,max_size) \

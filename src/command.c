@@ -36,11 +36,12 @@
  */
 
 #include "global.h"
+#include <stdlib.h>
 #include <curses.h>	/* KEY_.* */
 #include <fcntl.h>	/* O_RDONLY */
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.2 2000/05/02 21:41:48 petr Exp $";
 
 BOOL	caseless;		/* ignore letter case when searching */
 BOOL	*change;		/* change this line */
@@ -57,7 +58,6 @@ void	atchange(void);
 BOOL	changestring(void);
 void	clearprompt(void);
 void	mark(int i);
-BOOL	readrefs(char *filename);
 void	scrollbar(MOUSE *p);
 static	void	countrefs(void);
 extern	void	editall(void);

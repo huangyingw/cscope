@@ -31,7 +31,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: egrep.y,v 1.3 2000/04/26 08:48:21 uzi Exp $ */
+/* $Id: egrep.y,v 1.1 2000/04/27 16:33:47 petr Exp $ */
 
 /*
  * egrep -- fine lines containing a regular expression
@@ -400,7 +400,7 @@ cstate(int v)
 	}
 }
 
-static
+static int
 member(int symb, int set, int torf)
 {
 	int i, num, pos;
@@ -411,7 +411,7 @@ member(int symb, int set, int torf)
 	return (!torf);
 }
 
-static
+static int
 notin(int n)
 {
 	int i, j, pos;
