@@ -50,7 +50,7 @@
 
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 
-static char const rcsid[] = "$Id: fscanner.l,v 1.4 2001/06/19 20:04:02 broeker Exp $";
+static char const rcsid[] = "$Id: fscanner.l,v 1.5 2001/06/25 12:13:18 broeker Exp $";
 
 int	first;	/* buffer index for first char of symbol */
 int	last;	/* buffer index for last char of symbol */
@@ -130,8 +130,9 @@ number		\.?[0-9][.0-9a-fA-FlLuUxX]*
 comment		"/*"([^*]*("*"+[^/])?)*"*/"
 whitespace	[ \t\n]|{comment}
 
-/* flex-only: stack of start conditions */
+/* flex options: stack of start conditions, and don't use yywrap() */
 %option stack
+%option noyywrap
 
 %start SDL
 %a 4000
