@@ -42,7 +42,7 @@
 #include "global.h"
 #include "vp.h"		/* vpdirs and vpndirs */
 
-static char const rcsid[] = "$Id: dir.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
+static char const rcsid[] = "$Id: dir.c,v 1.2 2000/04/27 17:35:12 petr Exp $";
 
 #define	DIRSEPS	" ,:"	/* directory list separators */
 #define	DIRINC	10	/* directory list size increment */
@@ -408,6 +408,18 @@ issrcfile(char *file)
 				   suffixes so make sure it is a file */
 				if (stat(file, &statstruct) == 0 && 
 				    (statstruct.st_mode & S_IFREG)) {
+					return(YES);
+				}
+			}
+		}
+		else if( s[3] == '\0' ) { /* 3 char suffix */
+			if( 
+			   (*s == 't' && s[1] == 'c' && s[2] == 'c' ) ||
+						/* C++ template source */
+			   0) {
+				/* make sure it is a file */
+				if (stat(file, &statstruct) == 0 && 
+					(statstruct.st_mode & S_IFREG)) {
 					return(YES);
 				}
 			}
