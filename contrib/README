@@ -1,6 +1,9 @@
 Contributed addons and wrappers for cscope
-$Id:$
+$Id: README,v 1.1 2000/04/21 23:36:26 hops1 Exp $
 
 ocs - wrapper for cscope providing database generation through recursive
        directory set (among other things) - docced in script itself.
         contributed from SCO osr5.
+
+webcscope - a web cgi interface to cscope. Contributed by Ragho Mahalingam,
+		using code from Dmitry Obukhovi and Steven E. Brenner.
