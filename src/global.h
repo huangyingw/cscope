@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.30 2004/04/30 12:09:14 broeker Exp $ */
+/* $Id: global.h,v 1.31 2004/04/30 15:31:42 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -349,6 +349,7 @@ void	cannotwrite(char *file);
 void	cannotopen(char *file);
 void	clearmsg(void);
 void	clearmsg2(void);
+void	countrefs(void);
 void	crossref(char *srcfile);
 void    dispinit(void);
 void	display(void);

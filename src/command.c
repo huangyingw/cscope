@@ -45,7 +45,7 @@
 #endif
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.22 2004/04/30 12:09:14 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.23 2004/04/30 15:24:18 broeker Exp $";
 
 
 int	selecting;
@@ -69,7 +69,6 @@ static	BOOL	changestring(void);
 static	void	clearprompt(void);
 static	void	mark(int i);
 static	void	scrollbar(MOUSE *p);
-static	void	countrefs(void);
 
 /* execute the command */
 
@@ -867,7 +866,7 @@ scrollbar(MOUSE *p)
 
 /* count the references found */
 
-static void
+void
 countrefs(void)
 {
 	char	*subsystem;		/* OGS subsystem name */
