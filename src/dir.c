@@ -44,7 +44,7 @@
 #include "global.h"
 #include "vp.h"		/* vpdirs and vpndirs */
 
-static char const rcsid[] = "$Id: dir.c,v 1.5 2000/05/03 22:02:10 petr Exp $";
+static char const rcsid[] = "$Id: dir.c,v 1.6 2000/09/18 15:47:01 petr Exp $";
 
 #define	DIRSEPS	" ,:"	/* directory list separators */
 #define	DIRINC	10	/* directory list size increment */
@@ -291,7 +291,9 @@ makefilelist(void)
 	}
 	/* if there is a file of source file names */
 	if (namefile != NULL) {
-		if ((names = vpfopen(namefile, "r")) == NULL) {
+		if (strcmp(namefile, "-") == 0)
+		    names = stdin;
+		else if ((names = vpfopen(namefile, "r")) == NULL) {
 			cannotopen(namefile);
 			myexit(1);
 		}
@@ -349,7 +351,10 @@ makefilelist(void)
 				errorsfound = YES;
 			}
 		}
-		(void) fclose(names);
+		if (names == stdin)
+		    clearerr(stdin);
+		else
+		    (void) fclose(names);
 		firstbuild = NO;
 		return;
 	}

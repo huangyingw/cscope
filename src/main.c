@@ -56,7 +56,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.11 2000/05/19 04:46:32 hops1 Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.12 2000/05/31 16:54:10 petr Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -310,6 +310,14 @@ lastarg:
 	home = getenv("HOME");
 	shell = mygetenv("SHELL", SHELL);
 	tmpdir = mygetenv("TMPDIR", TMPDIR);
+
+	/* XXX remove if/when clearerr() in dir.c does the right thing. */
+	if (namefile && strcmp(namefile, "-") == 0 && !buildonly)
+	{
+	    fprintf (stderr, "cscope: Must use -b if file list comes from stdin
+	    n");
+	    exit(1);
+	}
 
 	/* make sure that tmpdir exists */
 	if (stat (tmpdir, &stat_buf))
