@@ -37,11 +37,15 @@
 
 #include "global.h"
 #include <stdlib.h>
-#include <curses.h>	/* KEY_.* */
+#if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
+#include <ncurses.h>
+#else
+#include <curses.h>
+#endif
 #include <fcntl.h>	/* O_RDONLY */
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.8 2000/05/18 15:21:21 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.9 2000/05/19 04:34:58 hops1 Exp $";
 
 
 int	selecting;

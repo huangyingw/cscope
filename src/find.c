@@ -36,10 +36,14 @@
  */
 
 #include "global.h"
+#if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
+#include <ncurses.h>
+#else
 #include <curses.h>
+#endif
 #include <regex.h>
 
-static char const rcsid[] = "$Id: find.c,v 1.7 2000/05/18 14:14:57 broeker Exp $";
+static char const rcsid[] = "$Id: find.c,v 1.8 2000/05/18 15:21:21 broeker Exp $";
 
 /* most of these functions have been optimized so their innermost loops have
  * only one test for the desired character by putting the char and 

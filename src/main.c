@@ -39,7 +39,11 @@
 #include "global.h"
 #include "version.h"	/* FILEVERSION and FIXVERSION */
 #include <stdlib.h>	/* atoi */
-#include <curses.h>	/* stdscr and TRUE */
+#if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
+#include <ncurses.h>
+#else
+#include <curses.h>
+#endif
 #include <fcntl.h>	/* O_RDONLY */
 #include <sys/types.h>	/* needed by stat.h */
 #include <sys/stat.h>	/* stat */
@@ -52,7 +56,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.9 2000/05/18 15:21:21 broeker Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.11 2000/05/19 04:46:32 hops1 Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */

@@ -35,10 +35,14 @@
  *	file editing functions
  */
 
-#include <curses.h>
 #include "global.h"
+#if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
+#include <ncurses.h>
+#else
+#include <curses.h>
+#endif
 
-static char const rcsid[] = "$Id: edit.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
+static char const rcsid[] = "$Id: edit.c,v 1.2 2000/05/03 22:02:10 petr Exp $";
 
 /* edit this displayed reference */
 

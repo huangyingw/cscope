@@ -37,14 +37,18 @@
  */
 
 #include "global.h"
-#include <curses.h>	/* LINES needed by constants.h */
+#if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
+#include <ncurses.h>
+#else
+#include <curses.h>
+#endif
 /*
 	max num of lines of help screen -
 	this number needs to be increased if more than n help items are needed
 */
 #define MAXHELP	50	/* maximum number of help strings */
 
-static char const rcsid[] = "$Id: help.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
+static char const rcsid[] = "$Id: help.c,v 1.2 2000/05/17 21:57:29 petr Exp $";
 
 void
 help(void)

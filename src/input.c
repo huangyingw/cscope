@@ -36,11 +36,15 @@
  */
 
 #include "global.h"
+#if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
+#include <ncurses.h>
+#else
 #include <curses.h>
+#endif
 #include <setjmp.h>	/* jmp_buf */
 #include <stdlib.h>
 
-static char const rcsid[] = "$Id: input.c,v 1.3 2000/05/03 22:02:10 petr Exp $";
+static char const rcsid[] = "$Id: input.c,v 1.4 2000/05/19 04:34:58 hops1 Exp $";
 
 static	jmp_buf	env;		/* setjmp/longjmp buffer */
 static	int	prevchar;	/* previous, ungotten character */

@@ -41,14 +41,18 @@
 #else
 #include "version.h"	/* FILEVERSION and FIXVERSION */
 #endif
-#include <curses.h>	/* LINES, COLS */
+#if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
+#include <ncurses.h>
+#else
+#include <curses.h>
+#endif
 #include <setjmp.h>	/* jmp_buf */
 #include <stdarg.h>	/* va_list stuff */
 #include <time.h>
 #include <errno.h>
 #include <stdarg.h>
 
-static char const rcsid[] = "$Id: display.c,v 1.9 2000/05/18 14:14:57 broeker Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.11 2000/05/19 04:46:32 hops1 Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
