@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: vp.h,v 1.5 2002/07/28 15:40:07 broeker Exp $ */
+/* $Id: vp.h,v 1.6 2003/09/15 10:59:05 broeker Exp $ */
 
 /*
  *	VPATH assumptions:
@@ -65,7 +65,7 @@ extern	char	vpdirs[MAXDIR][DIRLEN + 1];
 #endif
 extern	int	vpndirs;	/* number of directories in view path */
 
-void	vpinit(char *currentdir);
+void	vpinit(char *current_dir);
 int	vpopen(char *path, int oflag);
 int	vpaccess(char *path, mode_t amode);
 
