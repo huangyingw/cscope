@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.26 2004/01/08 14:07:20 broeker Exp $ */
+/* $Id: global.h,v 1.27 2004/02/05 11:46:18 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -83,6 +83,10 @@ char	*memset();
 #define RETSIGTYPE void
 #endif
 #endif /* RETSIGTYPE */
+
+#ifndef HAVE_SIGHANDLER_T
+typedef RETSIGTYPE (*sighandler_t)(int);
+#endif
 
 /* FIXME: this testing for platforms is foolish. Stop it! */
 #if BSD

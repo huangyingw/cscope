@@ -47,7 +47,7 @@
 #include <sys/termios.h>
 #endif
 
-static char const rcsid[] = "$Id: input.c,v 1.8 2001/06/28 15:12:35 broeker Exp $";
+static char const rcsid[] = "$Id: input.c,v 1.9 2001/07/05 16:47:04 broeker Exp $";
 
 static	jmp_buf	env;		/* setjmp/longjmp buffer */
 static	int	prevchar;	/* previous, ungotten character */
@@ -79,7 +79,7 @@ myungetch(int c)
 int
 mygetch(void)
 {
-	RETSIGTYPE	(*savesig)(int); /* old value of signal */
+	sighandler_t savesig; /* old value of signal */
 	int	c;
 
 	/* change an interrupt signal to a break key character */
@@ -90,11 +90,9 @@ mygetch(void)
 		if(prevchar) {
 			c = prevchar;
 			prevchar = 0;
-		}
-		else
+		} else
 			c = getch();	/* get a character from the terminal */
-	}
-	else {	/* longjmp to here from signal handler */
+	} else {	/* longjmp to here from signal handler */
 		c = KEY_BREAK;
 	}
 	(void) signal(SIGINT, savesig);

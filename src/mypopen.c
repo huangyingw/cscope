@@ -48,7 +48,7 @@
 # define CLOSE_ON_EXEC 1
 #endif
 
-static char const rcsid[] = "$Id: mypopen.c,v 1.10 2002/07/28 15:40:07 broeker Exp $";
+static char const rcsid[] = "$Id: mypopen.c,v 1.11 2002/08/15 16:07:07 broeker Exp $";
 
 static pid_t popen_pid[20];
 static RETSIGTYPE (*tstat)(int);
@@ -176,7 +176,7 @@ mypclose(FILE *ptr)
 	int f;
 	pid_t r;
 	int status;
-	RETSIGTYPE (*hstat)(int), (*istat)(int), (*qstat)(int);
+	sighandler_t hstat, istat, qstat;
 
 #ifdef __DJGPP__ 
 	/* HBB 20010705: This system has its own pclose(), which we
