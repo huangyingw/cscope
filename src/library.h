@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: library.h,v 1.7 2001/07/05 15:08:21 broeker Exp $ */
+/* $Id: library.h,v 1.8 2001/07/05 16:47:04 broeker Exp $ */
 
 #ifndef CSCOPE_LIBRARY_H
 #define CSCOPE_LIBRARY_H
@@ -58,6 +58,7 @@ void	egrepcaseless(int i);
 /* FIXME HBB 20010705: these should never be here. We should just
  * #include the relevant header, instead.  Moreover, they don't seem
  * to be used, anyway ... */
+#if 0
 char	*regcmp(), *regex();
-
+#endif 
 #endif /* CSCOPE_LIBRARY_H */

@@ -36,6 +36,7 @@
  */
 
 #include "global.h"
+#include "build.h"		/* for rebuild() */
 #include <stdlib.h>
 #if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
 #include <ncurses.h>
@@ -45,7 +46,7 @@
 #include <fcntl.h>	/* O_RDONLY */
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.15 2001/08/15 13:04:14 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.16 2001/10/19 15:32:27 broeker Exp $";
 
 
 int	selecting;
