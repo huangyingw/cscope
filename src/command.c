@@ -46,7 +46,7 @@
 #include <fcntl.h>	/* O_RDONLY */
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.16 2001/10/19 15:32:27 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.17 2001/11/22 17:38:19 broeker Exp $";
 
 
 int	selecting;
@@ -378,6 +378,12 @@ command(int commandc)
 		/* if the ^ command, redirect output to a temp file */
 		if (commandc == '^') {
 			(void) strcat(strcat(newpat, " >"), temp2);
+			/* HBB 20020708: somebody might have even
+			 * their non-interactive default shells
+			 * complain about clobbering
+			 * redirections... --> delete before
+			 * overwriting */
+			remove(temp2);
 		}
 		exitcurses();
 		if ((file = mypopen(newpat, "w")) == NULL) {
