@@ -63,7 +63,7 @@ char	*strchr();
 #define	FMTVERSION	1	/* inverted index format version */
 #define	ZIPFSIZE	200	/* zipf curve size */
 
-static char const rcsid[] = "$Id: invlib.c,v 1.9 2001/03/27 14:09:19 broeker Exp $";
+static char const rcsid[] = "$Id: invlib.c,v 1.10 2001/05/30 19:31:23 petr Exp $";
 
 int	invbreak;
 
@@ -482,7 +482,9 @@ invnewterm(void)
 			nextsupfing += strlen(thisterm) + 1;
 		}
 	}
-	lastinblk -= (numwilluse - 8);
+	/* HBB 20010501: Fixed bug by replacing magic number '8' by
+	 * what it actually represents. */
+	lastinblk -= (numwilluse - 2 * sizeof(long));
 	iteminfo.e.offset = lastinblk;
 	iteminfo.e.size = len;
 	iteminfo.e.space = 0;
