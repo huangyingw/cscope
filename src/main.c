@@ -52,7 +52,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.7 2000/05/05 17:35:00 broeker Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.8 2000/05/17 21:57:29 petr Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -123,8 +123,6 @@ void	skiplist(FILE *oldrefs);
 static	void	build(void);
 static	void	usage(void);
 static	void	longusage(void);
-
-extern FILE *yyin, *yyout;
 
 int
 main(int argc, char **argv)
@@ -659,9 +657,6 @@ lastarg:
 		display();		/* update the display */
 	}
 	for (;;) {
-		extern int	selecting,
-				curdispline;
-
 		if (!selecting)
 			atfield();	/* move to the input field */
 

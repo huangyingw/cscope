@@ -39,7 +39,7 @@
 #include <curses.h>
 #include <regex.h>
 
-static char const rcsid[] = "$Id: find.c,v 1.6 2000/05/17 21:57:29 petr Exp $";
+static char const rcsid[] = "$Id: find.c,v 1.7 2000/05/18 14:14:57 broeker Exp $";
 
 /* most of these functions have been optimized so their innermost loops have
  * only one test for the desired character by putting the char and 
@@ -73,7 +73,6 @@ static	void	putline(FILE *output);
 static	void	putpostingref(POSTING *p, char *pat);
 static	void	putref(int seemore, char *file, char *func);
 static	void	putsource(int seemore, FILE *output);
-extern	POSTING	*boolfile(INVCONTROL *invcntl, long *num, int boolarg);
 
 /* find the symbol in the cross-reference */
 

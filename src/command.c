@@ -41,10 +41,10 @@
 #include <fcntl.h>	/* O_RDONLY */
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.6 2000/05/17 21:57:29 petr Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.7 2000/05/18 14:14:57 broeker Exp $";
 
 
-int   selecting;
+int	selecting;
 int   curdispline = 0;
 
 BOOL	caseless;		/* ignore letter case when searching */
@@ -474,7 +474,6 @@ command(int commandc)
 
 		if (selecting && !mouse)
 		{
-			extern char	dispchars[];
 			char		*c;
 
 			if ((c = strchr(dispchars, commandc)))
@@ -678,7 +677,6 @@ changestring(void)
 		default:
 		{
 			/* if a line was selected */
-			extern char	dispchars[];
 			char		*cc;
 
 			if ((cc = strchr(dispchars, c)))
