@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.31 2004/04/30 15:31:42 broeker Exp $ */
+/* $Id: global.h,v 1.32 2004/10/27 11:32:46 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -406,7 +406,6 @@ struct	cmd *prevcmd(void);
 struct	cmd *nextcmd(void);
 
 int	egrep(char *file, FILE *output, char *format);
-int	getline(char s[], unsigned size, int firstchar, BOOL iscaseless);
 int	mygetline(char p[], char s[], unsigned size, int firstchar, BOOL iscaseless);
 int	mygetch(void);
 int	hash(char *ss);
