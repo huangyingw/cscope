@@ -50,6 +50,7 @@
 #endif
 #include <sys/types.h>	/* needed by stat.h */
 #include <sys/stat.h>	/* stat */
+#include <signal.h>
 
 /* defaults for unset environment variables */
 #define	EDITOR	"vi"
@@ -61,7 +62,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.33 2004/04/30 15:31:43 broeker Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.34 2004/12/06 14:56:43 nhorman Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -121,6 +122,11 @@ static	void	usage(void);
 void	fixkeypad();
 #endif
 
+void sigwinch_handler(int sig, siginfo_t *info, void *unused)
+{
+	ungetch(KEY_RESIZE);
+}
+
 int
 main(int argc, char **argv)
 {
@@ -132,6 +138,7 @@ main(int argc, char **argv)
 	int	c, i;
 	pid_t	pid;
 	struct stat	stat_buf;
+	struct sigaction winch_action;
 	mode_t orig_umask;
 	
 	yyin = stdin;
@@ -139,6 +146,11 @@ main(int argc, char **argv)
 	/* save the command name for messages */
 	argv0 = argv[0];
 	
+	winch_action.sa_sigaction = sigwinch_handler;
+	sigemptyset(&winch_action.sa_mask);
+	winch_action.sa_flags = SA_SIGINFO;
+	sigaction(SIGWINCH,&winch_action,NULL);
+
 	/* set the options */
 	while (--argc > 0 && (*++argv)[0] == '-') {
 		/* HBB 20030814: add GNU-style --help and --version

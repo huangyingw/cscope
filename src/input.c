@@ -43,11 +43,12 @@
 #endif
 #include <setjmp.h>	/* jmp_buf */
 #include <stdlib.h>
+#include <errno.h>
 #if HAVE_SYS_TERMIOS_H
 #include <sys/termios.h>
 #endif
 
-static char const rcsid[] = "$Id: input.c,v 1.10 2004/02/12 18:14:05 broeker Exp $";
+static char const rcsid[] = "$Id: input.c,v 1.11 2004/04/30 12:09:14 broeker Exp $";
 
 static	jmp_buf	env;		/* setjmp/longjmp buffer */
 static	int	prevchar;	/* previous, ungotten character */
@@ -88,8 +89,15 @@ mygetch(void)
 		if(prevchar) {
 			c = prevchar;
 			prevchar = 0;
-		} else
-			c = getch();	/* get a character from the terminal */
+		} else {
+			c = -1;
+			while (c == -1) {
+				/* get a character from the terminal */
+				c = getch();
+				if ((c == -1) && (errno != EINTR))
+					break;
+			}
+		}
 	} else {	/* longjmp to here from signal handler */
 		c = KEY_BREAK;
 	}
