@@ -60,7 +60,7 @@ char	*strchr();
 #define	FMTVERSION	1	/* inverted index format version */
 #define	ZIPFSIZE	200	/* zipf curve size */
 
-static char const rcsid[] = "$Id: invlib.c,v 1.3 2000/04/26 08:48:21 uzi Exp $";
+static char const rcsid[] = "$Id: invlib.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
 
 extern	char	*argv0;	/* command name (must be set in main function) */
 int	invbreak;
@@ -116,6 +116,7 @@ invmake(char *invname, char *invpost, FILE *infile)
 	long	tlong;
 	PARAM	param;
 	POSTING	posting;
+	char 	temp[BLOCKSIZE];
 #if STATS
 	int	j;
 	unsigned maxtermlen = 0;
@@ -279,7 +280,7 @@ invmake(char *invname, char *invpost, FILE *infile)
 	 */
 	i = nextsupfing % BLOCKSIZE;
 	/* write out junk to fill log blk */
-	if (fwrite(SUPFING, BLOCKSIZE - i, 1, outfile) == 0 ||
+	if (fwrite(temp, BLOCKSIZE - i, 1, outfile) == 0 ||
 	    fflush(outfile) == EOF) {	/* rewind doesn't check for write failure */
 		goto cannotwrite;
 	}

@@ -39,7 +39,7 @@
 #include <curses.h>
 #include <regex.h>
 
-static char const rcsid[] = "$Id: find.c,v 1.3 2000/04/26 08:48:21 uzi Exp $";
+static char const rcsid[] = "$Id: find.c,v 1.1 2000/04/27 16:33:47 petr Exp $";
 
 /* most of these functions have been optimized so their innermost loops have
  * only one test for the desired character by putting the char and 
@@ -1020,7 +1020,7 @@ findterm(void)
 			s = lcasify(s);	/* make it lower case */
 		}
 		/* if it matches */
-		if (regexec (&regexp, s, (size_t)0, NULL, 0) != 0) {
+		if (regexec (&regexp, s, (size_t)0, NULL, 0) == 0) {
 	
 			/* add its postings to the set */
 			if ((postingp = boolfile(&invcontrol, &npostings, BOOL_OR)) == NULL) {
