@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.27 2004/02/05 11:46:18 broeker Exp $ */
+/* $Id: global.h,v 1.28 2004/02/12 18:14:05 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -47,6 +47,12 @@
 #include <signal.h>	/* SIGINT and SIGQUIT */
 #include <stdio.h>	/* standard I/O package */
 #include <stdlib.h>     /* standard library functions */
+
+/* A special "magic" header file required by HP/Compaq NSK (Non-Stop
+ * Kernel) to present a more Unix-ish environment ... */
+#ifdef HAVE_FLOSS_H
+# include <floss.h>
+#endif
 
 /* Replace most of the #if BSD stuff. Taken straight from the autoconf
  * manual, with an extension for handling memset(). */
