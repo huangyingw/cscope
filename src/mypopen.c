@@ -32,7 +32,6 @@
 
 #include <stdio.h>
 #include <signal.h>
-#include <fcntl.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -49,7 +48,7 @@
 # define CLOSE_ON_EXEC 1
 #endif
 
-static char const rcsid[] = "$Id: mypopen.c,v 1.8 2002/01/04 12:11:50 broeker Exp $";
+static char const rcsid[] = "$Id: mypopen.c,v 1.9 2002/07/11 14:23:45 broeker Exp $";
 
 static pid_t popen_pid[20];
 static RETSIGTYPE (*tstat)(int);

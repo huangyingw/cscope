@@ -34,13 +34,12 @@
 /* vpopen - view path version of the open system call */
 
 #include <stdio.h>
-#include <fcntl.h>
 #include "global.h"
 #include "vp.h"
 
 #define OPENFLAG_READ	0
 
-static char const rcsid[] = "$Id: vpopen.c,v 1.2 2000/05/03 19:07:09 petr Exp $";
+static char const rcsid[] = "$Id: vpopen.c,v 1.3 2000/05/03 22:02:10 petr Exp $";
 
 int
 vpopen(char *path, int oflag)

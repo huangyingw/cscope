@@ -43,10 +43,9 @@
 #else
 #include <curses.h>
 #endif
-#include <fcntl.h>	/* O_RDONLY */
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.17 2001/11/22 17:38:19 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.18 2002/07/08 15:52:24 broeker Exp $";
 
 
 int	selecting;

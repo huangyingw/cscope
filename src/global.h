@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.20 2002/01/04 12:11:50 broeker Exp $ */
+/* $Id: global.h,v 1.21 2002/07/11 14:23:45 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -104,6 +104,12 @@ char	*memset();
 # if SVR2 && !BSD && !V9 && !u3b2 && !sun
 #  define HAVE_FIXKEYPAD
 # endif
+#endif
+
+/* HBB 20020728: if <fcntl.h> is there, #include it here, since that's
+ * where the system definitions of O_TEXT should be coming from */
+#ifdef HAVE_FCNTL_H
+# include <fcntl.h>
 #endif
 
 /* HBB 20020103: Need to force text or binary mode opens on Cygwins,
