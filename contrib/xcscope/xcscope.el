@@ -2,7 +2,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; File:         xcscope.el
-; RCS:          $RCSfile: xcscope.el,v $ $Revision: 1.5 $ $Date: 2001/06/28 02:07:44 $ $Author: darrylo $
+; RCS:          $RCSfile: xcscope.el,v $ $Revision: 1.6 $ $Date: 2001/06/28 03:24:05 $ $Author: darrylo $
 ; Description:  cscope interface for (X)Emacs
 ; Author:       Darryl Okahata
 ; Created:      Wed Apr 19 17:03:38 2000
@@ -14,6 +14,8 @@
 ; (C) Copyright 2000, 2001, Darryl Okahata, all rights reserved.
 ; GNU Emacs enhancements (C) Copyright 2001,
 ;         Triet H. Lai <thlai@mail.usyd.edu.au>
+; Fuzzy matching code (C) Copyright 2001,
+;         Steven Elliott <selliott4@austin.rr.com>
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ALPHA VERSION 0.94
