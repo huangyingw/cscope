@@ -47,7 +47,7 @@
 #include <time.h>
 #include <errno.h>      /* sys_errlist 18-Apr-2000 hops */
 
-static char const rcsid[] = "$Id: display.c,v 1.8 2000/05/17 21:57:29 petr Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.9 2000/05/18 14:14:57 broeker Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
@@ -626,6 +626,20 @@ postmsg2(char *msg)
 		addstr(msg);
 	}
 }
+
+/* display an error mesg - stdout or on second msg line */
+void
+posterr(char *msg) 
+{
+	if (linemode == YES || incurses == NO)
+        {
+	    (void) fprintf(stderr, "%s\n", msg);
+	}
+	else
+            postmsg2(msg);
+}
+
+
 /* position references found file at specified line */
 
 void

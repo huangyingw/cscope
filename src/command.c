@@ -41,7 +41,7 @@
 #include <fcntl.h>	/* O_RDONLY */
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.7 2000/05/18 14:14:57 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.8 2000/05/18 15:21:21 broeker Exp $";
 
 
 int	selecting;
@@ -398,6 +398,7 @@ command(int commandc)
 #if TERMINFO
 	case KEY_CLEAR:
 #endif
+                (void) clearmsg2();
 		(void) clearok(curscr, TRUE);
 		(void) wrefresh(curscr);
 		drawscrollbar(topline, bottomline);

@@ -40,7 +40,7 @@
 #include <setjmp.h>	/* jmp_buf */
 #include <stdlib.h>
 
-static char const rcsid[] = "$Id: input.c,v 1.2 2000/05/03 19:07:09 petr Exp $";
+static char const rcsid[] = "$Id: input.c,v 1.3 2000/05/03 22:02:10 petr Exp $";
 
 static	jmp_buf	env;		/* setjmp/longjmp buffer */
 static	int	prevchar;	/* previous, ungotten character */
@@ -109,7 +109,7 @@ getline(char s[], unsigned size, int firstchar, BOOL iscaseless)
 	}
 	/* until the end of the line is reached */
 	while ((c = mygetch()) != '\r' && c != '\n' && c != KEY_ENTER) {
-		if (c == erasechar() || c == KEY_BACKSPACE || c == DEL) {
+		if (c == erasechar() || c == KEY_BACKSPACE || c == DEL || c == ctrl('H') ) {
 			/* erase */
 			if (i > 0) {
 				addstr("\b \b");

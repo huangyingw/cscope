@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.8 2000/05/18 14:14:57 broeker Exp $ */
+/* $Id: global.h,v 1.9 2000/05/18 15:21:21 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -262,6 +262,7 @@ void	progress(char *what, long current, long max);
 void	putfilename(char *srcfile);
 void	postmsg(char *msg);
 void	postmsg2(char *msg);
+void	posterr(char *msg);
 void	putposting(char *term, int type);
 void	putstring(char *s);
 void	rebuild(void);
