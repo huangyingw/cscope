@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: library.h,v 1.1 2000/04/27 16:33:47 petr Exp $ */
+/* $Id: library.h,v 1.2 2000/05/03 22:02:10 petr Exp $ */
 
 /* library function return value declarations */
 
@@ -55,19 +55,6 @@ char	*stralloc(char *s);
 FILE	*mypopen(char *cmd, char *mode);
 FILE	*vpfopen(char *filename, char *type);
 void	egrepcaseless(int i);
-
-/* standard C library */
-#if 0
-char	*ctime(), *getcwd(), *getenv(), *mktemp();
-char	*strcat(), *strcpy(), *strncpy(), *strpbrk(), *strchr(), *strrchr();
-char	*strtok();
-long	lseek(), time();
-unsigned sleep();
-void	exit(), free(), qsort();
-#if BSD
-FILE	*popen();	/* not in stdio.h */
-#endif
-#endif
 
 /* Programmer's Workbench library (-lPW) */
 char	*regcmp(), *regex();

@@ -39,9 +39,8 @@
 #include "global.h"
 #include <stdlib.h>
 
-static char const rcsid[] = "$Id: crossref.c,v 1.3 2000/05/03 22:02:10 petr Exp $";
+static char const rcsid[] = "$Id: crossref.c,v 1.4 2000/05/05 17:35:00 broeker Exp $";
 
-extern	int	myylineno;
 
 /* convert long to a string */
 #define	ltobase(value)	n = value; \

@@ -41,7 +41,7 @@
 #include <fcntl.h>	/* O_RDONLY */
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.5 2000/05/05 17:35:00 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.6 2000/05/17 21:57:29 petr Exp $";
 
 
 int   selecting;
@@ -64,9 +64,6 @@ void	clearprompt(void);
 void	mark(int i);
 void	scrollbar(MOUSE *p);
 static	void	countrefs(void);
-extern	void	editall(void);
-extern	void	editref(int);
-extern	void	help(void);
 
 /* execute the command */
 
