@@ -37,14 +37,14 @@
  */
 
 #include <stdlib.h>
+#include <sys/types.h>	/* needed by stat.h and dirent.h */
 #include <dirent.h>
 #include <stdlib.h>
-#include <sys/types.h>	/* needed by stat.h */
 #include <sys/stat.h>	/* stat */
 #include "global.h"
 #include "vp.h"		/* vpdirs and vpndirs */
 
-static char const rcsid[] = "$Id: dir.c,v 1.7 2000/10/02 17:36:24 petr Exp $";
+static char const rcsid[] = "$Id: dir.c,v 1.8 2000/10/27 12:36:55 broeker Exp $";
 
 #define	DIRSEPS	" ,:"	/* directory list separators */
 #define	DIRINC	10	/* directory list size increment */

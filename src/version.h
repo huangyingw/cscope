@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: version.h,v 1.3 2000/05/15 22:16:11 petr Exp $ */
+/* $Id: version.h,v 1.4 2000/11/20 20:07:24 petr Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -39,4 +39,4 @@
  */
 
 #define	FILEVERSION	15	/* Initial Open Source and Linux Port */
-#define	FIXVERSION	".1"	/* feature and bug fix version */
+#define	FIXVERSION	".2b"	/* feature and bug fix version */

@@ -43,8 +43,9 @@
 #endif
 #include <setjmp.h>	/* jmp_buf */
 #include <stdlib.h>
+#include <sys/termios.h>
 
-static char const rcsid[] = "$Id: input.c,v 1.4 2000/05/19 04:34:58 hops1 Exp $";
+static char const rcsid[] = "$Id: input.c,v 1.5 2000/05/31 16:54:10 petr Exp $";
 
 static	jmp_buf	env;		/* setjmp/longjmp buffer */
 static	int	prevchar;	/* previous, ungotten character */
