@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: scanner.h,v 1.1 2001/06/01 12:43:24 broeker Exp $ */
+/* $Id: scanner.h,v 1.2 2001/07/05 21:25:03 petr Exp $ */
 
 
 #ifndef CSCOPE_SCANNER_H
@@ -75,7 +75,8 @@ extern	int	myylineno;	/* input line number */
 #ifdef USING_LEX
 /* HBB 20010430: if lex is used instead of flex, have to simulate the
  * private copies of yytext and yytext for the world outside scanner.l: */
-#ifdef __OSF1__ || defined(__sun) /* FIXME: there should be a feature test for this! */
+/* FIXME: there should be a feature test for this! */
+#if defined(__OSF1__) || defined(__sun) 
 extern	char	yytext[];
 #else
 extern	unsigned char	yytext[];
