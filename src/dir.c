@@ -44,7 +44,7 @@
 #include "global.h"
 #include "vp.h"		/* vpdirs and vpndirs */
 
-static char const rcsid[] = "$Id: dir.c,v 1.6 2000/09/18 15:47:01 petr Exp $";
+static char const rcsid[] = "$Id: dir.c,v 1.7 2000/10/02 17:36:24 petr Exp $";
 
 #define	DIRSEPS	" ,:"	/* directory list separators */
 #define	DIRINC	10	/* directory list size increment */
@@ -585,7 +585,8 @@ freefilelist(void)
 	}
 	else {
 		/* for '-d' option free the string space block */
-		free (srcfiles[0]);
+	    if (nsrcfiles > 0)		/* protect against empty list */
+			free (srcfiles[0]);
 		nsrcfiles = 0;
 	}
 
