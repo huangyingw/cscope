@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.17 2001/07/05 16:47:04 broeker Exp $ */
+/* $Id: global.h,v 1.18 2001/07/09 14:00:25 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -269,7 +269,7 @@ char	*scanpast(char c);
 
 
 void	addcmd(int f, char *s);
-void	addsrcfile(char *name, char *path);
+void	addsrcfile(char *path);
 void	askforchar(void);
 void	askforreturn(void);
 void	atchange(void);
