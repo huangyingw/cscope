@@ -43,7 +43,7 @@
 #include "global.h"
 #include "vp.h"		/* vpdirs and vpndirs */
 
-static char const rcsid[] = "$Id: dir.c,v 1.20 2003/10/15 14:09:30 broeker Exp $";
+static char const rcsid[] = "$Id: dir.c,v 1.21 2004/06/23 15:41:59 broeker Exp $";
 
 #define	DIRSEPS	" ,:"	/* directory list separators */
 #define	DIRINC	10	/* directory list size increment */
@@ -513,7 +513,8 @@ scan_dir(const char *adir, BOOL recurse_dir)
 #endif
 						 && issrcfile(path)
 						 && infilelist(path) == NO) {
-					  addsrcfile(path);
+						if(access(path,R_OK) == 0)
+							addsrcfile(path);
 					}
 				}
 			}
