@@ -44,7 +44,7 @@
 #include "global.h"
 #include "vp.h"		/* vpdirs and vpndirs */
 
-static char const rcsid[] = "$Id: dir.c,v 1.13 2001/10/09 18:59:07 petr Exp $";
+static char const rcsid[] = "$Id: dir.c,v 1.14 2001/10/10 16:47:20 broeker Exp $";
 
 #define	DIRSEPS	" ,:"	/* directory list separators */
 #define	DIRINC	10	/* directory list size increment */
@@ -351,6 +351,38 @@ makefilelist(void)
 						namefile);
 				}
 			}
+			else if (*path == '"') {
+				/* handle quoted filenames... */
+				size_t in = 1, out = 0;
+				char *newpath = mymalloc(PATHLEN + 1);
+
+				while (in < PATHLEN && path[in] != '\0') {
+					if (path[in] == '"') {
+						newpath[out] = '\0';
+						break;	/* found end of quoted string */
+					}
+					else if (path[in] == '\\' && in < PATHLEN - 1
+						 && (path[in + 1]== '"' || path[in + 1] == '\\')) {
+						/* un-escape \" or \\ sequence */
+						newpath[out++] = path[in + 1];
+						in += 2;
+					}
+					else {
+						newpath[out++] = path[in++];
+					}
+				} /* while */ 
+				if (i >= PATHLEN) { /* safeguard against almost-overflow */
+					newpath[out]='\0';
+				}
+				if ((s = inviewpath(newpath)) != NULL) {
+					addsrcfile(s);
+				}
+				else {
+					(void) fprintf(stderr, "cscope: cannot find file %s\n",
+								   newpath);
+					errorsfound = YES;
+				}
+			} /* if (quoted entry) */
 			else if ((s = inviewpath(path)) != NULL) {
 				addsrcfile(s);
 			}
