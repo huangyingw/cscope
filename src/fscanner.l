@@ -50,7 +50,7 @@
 
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 
-static char const rcsid[] = "$Id: fscanner.l,v 1.3 2001/06/15 11:00:35 broeker Exp $";
+static char const rcsid[] = "$Id: fscanner.l,v 1.4 2001/06/19 20:04:02 broeker Exp $";
 
 int	first;	/* buffer index for first char of symbol */
 int	last;	/* buffer index for last char of symbol */
@@ -349,7 +349,7 @@ whitespace	[ \t\n]|{comment}
 			first = s - my_yytext;
 			last = my_yyleng - 1;
 			if (compress == YES) {
-				yytext[0] = '\2';	/* compress the keyword */
+				my_yytext[0] = '\2';	/* compress the keyword */
 			}
 			BEGIN(INITIAL);
 			return(INCLUDE);
@@ -450,7 +450,7 @@ whitespace	[ \t\n]|{comment}
 			ppdefine = YES;
 			token = DEFINE;
 			if (compress == YES) {
-				yytext[0] = '\1';	/* compress the keyword */
+				my_yytext[0] = '\1';	/* compress the keyword */
 			}
 		findident:
 			/* search backwards through yytext[] to find the identifier */
