@@ -49,7 +49,7 @@
 # define CLOSE_ON_EXEC 1
 #endif
 
-static char const rcsid[] = "$Id: mypopen.c,v 1.5 2001/01/24 16:24:52 petr Exp $";
+static char const rcsid[] = "$Id: mypopen.c,v 1.6 2001/03/27 14:09:19 broeker Exp $";
 
 static pid_t popen_pid[20];
 static RETSIGTYPE (*tstat)(int);
@@ -152,20 +152,24 @@ mypopen(char *cmd, char *mode)
 	popen_pid[myside] = pid;
 	(void) close(yourside);
 	return(fdopen(myside, mode));
-#endif
+#endif /* DJGPP */
 }
 
-#ifndef __DJGPP__ /* Don't replace that system's pclose() with our own. */
-/* FIXME: should we really override pclose(), after having left
- * popen() well alone, and calling our own version mypopen()? */
+/* HBB 20010705: renamed from 'pclose', which would collide with
+ * system-supplied function of same name */
 int
-pclose(FILE *ptr)
+mypclose(FILE *ptr)
 {
 	int f;
 	pid_t r;
 	int status;
 	RETSIGTYPE (*hstat)(int), (*istat)(int), (*qstat)(int);
 
+#ifdef __DJGPP__ 
+	/* HBB 20010705: This system has its own pclose(), which we
+	 * don't want to replace */
+	return (pclose)(ptr);
+#else
 	f = fileno(ptr);
 	(void) fclose(ptr);
 	istat = signal(SIGINT, SIG_IGN);
@@ -182,5 +186,5 @@ pclose(FILE *ptr)
 	/* mark this pipe closed */
 	popen_pid[f] = 0;
 	return(status);
+#endif /* DJGPP */
 }
-#endif

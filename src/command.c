@@ -45,7 +45,7 @@
 #include <fcntl.h>	/* O_RDONLY */
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.11 2001/03/27 14:09:19 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.12 2001/06/01 12:43:24 broeker Exp $";
 
 
 int	selecting;
@@ -387,7 +387,7 @@ command(int commandc)
 				(void) putc(c, file);
 			}
 			seekline(topline);
-			(void) pclose(file);
+			(void) mypclose(file);
 		}
 		if (commandc == '^') {
 			if (readrefs(temp2) == NO) {

@@ -59,7 +59,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.20 2001/06/01 12:43:24 broeker Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.21 2001/07/05 14:31:00 broeker Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -1070,7 +1070,7 @@ build(void)
 			else {
 				cannotindex();
 			}
-			(void) pclose(postings);
+			(void) mypclose(postings);
 		}
 		(void) unlink(temp1);
 		(void) free(srcoffset);

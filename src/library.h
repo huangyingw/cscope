@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: library.h,v 1.5 2001/06/01 12:43:24 broeker Exp $ */
+/* $Id: library.h,v 1.6 2001/07/05 14:31:00 broeker Exp $ */
 
 #ifndef CSCOPE_LIBRARY_H
 #define CSCOPE_LIBRARY_H
@@ -47,6 +47,7 @@ void	*mymalloc(int size);
 void	*myrealloc(void *p, int size);
 char	*stralloc(char *s);
 FILE	*mypopen(char *cmd, char *mode);
+int	mypclose(FILE *ptr);
 FILE	*vpfopen(char *filename, char *type);
 void	egrepcaseless(int i);
 
