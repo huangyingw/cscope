@@ -45,7 +45,7 @@
 #endif
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.18 2002/07/08 15:52:24 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.19 2002/07/28 15:40:07 broeker Exp $";
 
 
 int	selecting;
@@ -109,7 +109,7 @@ command(int commandc)
 			askforreturn();
 		}		
 		entercurses();
-		postmsg("");		/* clear any previous message */
+		clearmsg();		/* clear any previous message */
 		totallines = 0;
 		disprefs = 0;	
 		topline = nextline = 1;

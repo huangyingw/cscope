@@ -46,7 +46,7 @@
 #endif
 #include <regex.h>
 
-static char const rcsid[] = "$Id: find.c,v 1.14 2002/03/13 18:54:40 broeker Exp $";
+static char const rcsid[] = "$Id: find.c,v 1.15 2002/06/20 16:26:29 broeker Exp $";
 
 /* most of these functions have been optimized so their innermost loops have
  * only one test for the desired character by putting the char and 
@@ -791,8 +791,8 @@ putsource(int seemore, FILE *output)
 	blockp = cp;
 	if (*blockp != '\n' || getrefchar() != '\n' || 
 	    (!isdigit(getrefchar()) && fileversion >= 12)) {
-		postmsg("Internal error: cannot get source line from database");
-		myexit(1);
+		postfatal("Internal error: cannot get source line from database");
+		/* NOTREACHED */
 	}
 	/* until a double newline is found */
 	do {

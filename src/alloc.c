@@ -37,7 +37,7 @@
 #include "library.h"
 #include "global.h"
 
-static char const rcsid[] = "$Id: alloc.c,v 1.4 2000/05/09 13:37:10 broeker Exp $";
+static char const rcsid[] = "$Id: alloc.c,v 1.5 2002/07/28 15:40:07 broeker Exp $";
 
 static	void	*alloctest(void *p);
 
@@ -87,8 +87,8 @@ static	void *
 alloctest(void *p)
 {
 	if (p == NULL) {
-		(void) fprintf(stderr, "\n%s: out of storage\n", argv0);
-		myexit(1);
+		postfatal("\n%s: out of storage\n", argv0);
+		/* NOTREACHED */
 	}
 	return(p);
 }
