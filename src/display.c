@@ -52,7 +52,7 @@
 #include <errno.h>
 #include <stdarg.h>
 
-static char const rcsid[] = "$Id: display.c,v 1.12 2000/05/31 16:54:10 petr Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.13 2001/03/27 14:09:19 broeker Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
@@ -643,6 +643,7 @@ posterr(char *msg, ...)
     if (linemode == YES || incurses == NO)
     {
         (void) vfprintf(stderr, msg, ap); 
+	(void) fputc('\n', stderr);
     }
     else
     {
