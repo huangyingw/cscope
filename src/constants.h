@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: constants.h,v 1.4 2000/11/28 21:26:12 petr Exp $ */
+/* $Id: constants.h,v 1.5 2001/01/24 16:24:52 petr Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -77,7 +77,7 @@
 #define	NAMEFILE "cscope.files"	/* default list-of-files file */
 #define	INVNAME	"cscope.in.out"	/* inverted index to the database */
 #define	INVPOST	"cscope.po.out"	/* inverted index postings */
-#define	STMTMAX	5000		/* maximum source statement length */
+#define	STMTMAX	10000		/* maximum source statement length */
 #define	READ	4		/* access(2) parameter */
 #define	WRITE	2		/* access(2) parameter */
 #undef	YYLMAX		
