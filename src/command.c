@@ -45,7 +45,7 @@
 #endif
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.19 2002/07/28 15:40:07 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.20 2004/01/08 14:07:20 broeker Exp $";
 
 
 int	selecting;
@@ -866,7 +866,7 @@ countrefs(void)
 	filelen = 4;		/* strlen("File") */
 	fcnlen = 8;		/* strlen("Function") */
 	numlen = 0;
-	while ((i = fscanf(refsfound, "%250s%250s%6s %5000[^\n]", file,
+	while ((i = fscanf(refsfound, "%250s%250s%5s %5000[^\n]", file,
 	    function, linenum, tempstring)) != EOF) {
 		if (i != 4 ||
 		    !isgraph((unsigned char)*file) ||
