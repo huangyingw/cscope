@@ -48,7 +48,7 @@
 # define CLOSE_ON_EXEC 1
 #endif
 
-static char const rcsid[] = "$Id: mypopen.c,v 1.9 2002/07/11 14:23:45 broeker Exp $";
+static char const rcsid[] = "$Id: mypopen.c,v 1.10 2002/07/28 15:40:07 broeker Exp $";
 
 static pid_t popen_pid[20];
 static RETSIGTYPE (*tstat)(int);
@@ -103,7 +103,7 @@ myfopen(char *path, char *mode)
 	fp = fopen(path, mode);
 
 #ifdef SETMODE
-	if (! strchr(mode, 'b')) {
+	if (fp && ! strchr(mode, 'b')) {
 		SETMODE(fileno(fp), O_TEXT);
 	}
 #endif /* SETMODE */
