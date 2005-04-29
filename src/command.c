@@ -45,7 +45,7 @@
 #endif
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.26 2005/02/16 20:49:24 nhorman Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.27 2005/03/14 17:24:47 broeker Exp $";
 
 
 int	selecting;
@@ -250,7 +250,7 @@ command(int commandc)
 			atfield();
 			resetcmd();
 		}
-		return(NO);
+ 		return(NO);
 
 	case KEY_LL:	/* go to last input field */
 		if (selecting)
@@ -458,6 +458,7 @@ command(int commandc)
 		editall();
 		break;
 
+	case ctrl('A'):		/* HBB 20050428: added alt. keymapping */
 	case ctrl('Y'):	/* repeat last pattern */
 		if (*Pattern != '\0') {
 			(void) addstr(Pattern);
