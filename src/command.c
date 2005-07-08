@@ -45,7 +45,7 @@
 #endif
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.27 2005/03/14 17:24:47 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.28 2005/04/29 18:44:31 broeker Exp $";
 
 
 int	selecting;
@@ -412,7 +412,7 @@ command(int commandc)
 		askforreturn();
 		entercurses();
 		break;
-#ifdef KEY_RESIZE
+#if defined(KEY_RESIZE) && !defined(__DJGPP__)
 	case KEY_RESIZE:
 		exitcurses();
 		initscr();
