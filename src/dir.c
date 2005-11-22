@@ -43,7 +43,7 @@
 #include "global.h"
 #include "vp.h"		/* vpdirs and vpndirs */
 
-static char const rcsid[] = "$Id: dir.c,v 1.21 2004/06/23 15:41:59 broeker Exp $";
+static char const rcsid[] = "$Id: dir.c,v 1.22 2004/12/08 21:23:03 nhorman Exp $";
 
 #define	DIRSEPS	" ,:"	/* directory list separators */
 #define	DIRINC	10	/* directory list size increment */
@@ -532,6 +532,7 @@ issrcfile(char *path)
 	struct	stat	statstruct;
 	char	*file = mybasename(path);
 	char	*s = strrchr(file, '.');
+	BOOL looks_like_source = NO;
 
 	/* ensure there is some file suffix */
 	if (s == NULL || *++s == '\0')
@@ -556,7 +557,7 @@ issrcfile(char *path)
 		case 'G':
 		case 'H':
 		case 'L':
-			return(YES);
+			looks_like_source = YES;
 		}
 	} else if ((s[2] == '\0') /* 2 char suffix */
 		   && ((s[0] == 'b' && s[1] == 'p') /* breakpoint listing */
@@ -565,22 +566,25 @@ issrcfile(char *path)
 		       || (s[0] == 's' && s[1] == 'd') /* SDL */
 		       || (s[0] == 'c' && s[1] == 'c') /* C++ source */
 		       || (s[0] == 'h' && s[1] == 'h'))) { /* C++ header */
+		looks_like_source = YES;
 			
-		/* some directories have 2 character
-		   suffixes so make sure it is a file */
-		if (lstat(path, &statstruct) == 0 && 
-		    S_ISREG(statstruct.st_mode)) {
-			return(YES);
-		}
 	} else if((s[3] == '\0') /* 3 char suffix */
 		  /* C++ template source */
-		  && (s[0] == 't' && s[1] == 'c' && s[2] == 'c' )
-		  ) { 
-		/* make sure it is a file */
-		if (lstat(path, &statstruct) == 0 && 
-		    S_ISREG(statstruct.st_mode)) {
-			return(YES);
-		}
+		  && ((s[0] == 't' && s[1] == 'c' && s[2] == 'c' )
+		      /* C++ source: */
+		      || (s[0] == 'c' && s[1] == 'p' && s[2] == 'p' )
+		      || (s[0] == 'c' && s[1] == 'x' && s[2] == 'x' ))
+		  ) {
+		looks_like_source = YES;
+	}
+
+	if (looks_like_source != YES)
+		return NO;
+	
+	/* make sure it is a file */
+	if (lstat(path, &statstruct) == 0 && 
+	    S_ISREG(statstruct.st_mode)) {
+		return(YES);
 	}
 	return NO;
 }
