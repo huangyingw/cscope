@@ -41,7 +41,7 @@
 #include "global.h"
 #include "constants.h"
 
-static char const rcsid[] = "$Id: vpinit.c,v 1.5 2000/05/05 17:51:45 broeker Exp $";
+static char const rcsid[] = "$Id: vpinit.c,v 1.6 2004/04/30 15:30:51 broeker Exp $";
 
 #if !NOMALLOC
 char	**vpdirs;	/* directories (including current) in view path */
@@ -99,7 +99,7 @@ vpinit(char *current_dir)
 	/* count the nodes in the view path */
 	vpndirs = 1;
 	for (i = 0; vpath[i] != '\0'; ++i) {
-		if (vpath[i] == ':') {
+		if (vpath[i] == ':' && vpath[i + 1]) {
 			++vpndirs;
 		}
 	}
