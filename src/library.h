@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: library.h,v 1.8 2001/07/05 16:47:04 broeker Exp $ */
+/* $Id: library.h,v 1.9 2001/11/22 17:38:19 broeker Exp $ */
 
 #ifndef CSCOPE_LIBRARY_H
 #define CSCOPE_LIBRARY_H
@@ -42,12 +42,12 @@ char	*compath(char *pathname);
 char	*egrepinit(char *egreppat);
 char	*logdir(char *name);
 char	*mybasename(char *path);
-void	*mycalloc(int nelem, int size);
+void	*mycalloc(size_t nelem, size_t size);
 FILE	*myfopen(char *path, char *mode);
 char	*mygetenv(char *variable, char *deflt);
-void	*mymalloc(int size);
+void	*mymalloc(size_t size);
 int	myopen(char *path, int flag, int mode);
-void	*myrealloc(void *p, int size);
+void	*myrealloc(void *p, size_t size);
 char	*stralloc(char *s);
 FILE	*mypopen(char *cmd, char *mode);
 int	mypclose(FILE *ptr);
