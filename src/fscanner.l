@@ -50,7 +50,7 @@
 
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 
-static char const rcsid[] = "$Id: fscanner.l,v 1.8 2001/09/13 16:44:52 broeker Exp $";
+static char const rcsid[] = "$Id: fscanner.l,v 1.9 2002/06/20 16:25:33 broeker Exp $";
 
 int	first;	/* buffer index for first char of symbol */
 int	last;	/* buffer index for last char of symbol */
@@ -521,7 +521,7 @@ if{wsnl}*\(	{ 	/* ignore 'if' */
 		}
 
 <WAS_IDENTIFIER>{       
-{ws}*\(({wsnl}|{identifier}|[*&[\]=,.])*\)([()]|{wsnl})*[:a-zA-Z_#{]	{
+{ws}*\(({wsnl}|{identifier}|{number}|[*&[\]=,.])*\)([()]|{wsnl})*[:a-zA-Z_#{]	{
 			/* a function definition */
 			/* note: "#define a (b) {" and "#if defined(a)\n#" 
 			 * are not fcn definitions! */
@@ -543,7 +543,7 @@ if{wsnl}*\(	{ 	/* ignore 'if' */
 			goto fcncal;
 			/* NOTREACHED */
 		}
-{ws}*\(([*&[\]=,.]|{identifier}|{wsnl})*		{ 	/* function call */
+{ws}*\(([*&[\]=,.]|{identifier}|{number}|{wsnl})*		{ 	/* function call */
 		fcncal:	if (fcndef == YES || ppdefine == YES || rules == YES) {
 				token = FCNCALL;
 				goto fcn;
