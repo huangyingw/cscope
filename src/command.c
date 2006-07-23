@@ -37,6 +37,8 @@
 
 #include "global.h"
 #include "build.h"		/* for rebuild() */
+#include "alloc.h"
+
 #include <stdlib.h>
 #if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
 #include <ncurses.h>
@@ -45,7 +47,7 @@
 #endif
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.29 2005/07/08 11:00:20 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.30 2006/04/21 10:45:48 broeker Exp $";
 
 
 int	selecting;

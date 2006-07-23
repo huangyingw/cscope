@@ -40,11 +40,12 @@
 
 #include "build.h"
 #include "scanner.h"
+#include "alloc.h"
 
 #include <stdlib.h>
 #include <sys/stat.h>
 
-static char const rcsid[] = "$Id: crossref.c,v 1.12 2003/04/29 14:08:45 broeker Exp $";
+static char const rcsid[] = "$Id: crossref.c,v 1.13 2006/04/21 10:45:48 broeker Exp $";
 
 
 /* convert long to a string */

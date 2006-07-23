@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: constants.h,v 1.12 2002/07/11 14:23:45 broeker Exp $ */
+/* $Id: constants.h,v 1.13 2004/04/30 15:28:25 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -64,7 +64,7 @@
 #define	ESC	'\033'		/* escape character */
 #define	DEL	'\177'		/* delete character */
 #define	DUMMYCHAR	' '	/* use space as a dummy character */
-#define	MSGLEN	PATLEN + 80	/* displayed message length */
+#define	MSGLEN	((PATLEN) + 80)	/* displayed message length */
 #define	NUMLEN	5		/* line number length */
 #define	PATHLEN	250		/* file pathname length */
 #define	PATLEN	250		/* symbol pattern length */

@@ -36,6 +36,7 @@
  *	C symbol scanner
  */
 #include "global.h"
+#include "alloc.h"
 #include "scanner.h"
 #include "lookup.h"
 
@@ -50,7 +51,7 @@
 
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 
-static char const rcsid[] = "$Id: fscanner.l,v 1.9 2002/06/20 16:25:33 broeker Exp $";
+static char const rcsid[] = "$Id: fscanner.l,v 1.10 2006/05/06 13:07:39 broeker Exp $";
 
 int	first;	/* buffer index for first char of symbol */
 int	last;	/* buffer index for last char of symbol */

@@ -37,12 +37,14 @@
 
 #include "global.h"
 #include "build.h"
+#include "alloc.h"
 
 #ifdef CCS
 #include "sgs.h"	/* ESG_PKG and ESG_REL */
 #else
 #include "version.h"	/* FILEVERSION and FIXVERSION */
 #endif
+
 #if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
 #include <ncurses.h>
 #else
@@ -60,7 +62,7 @@
 typedef jmp_buf sigjmp_buf;
 #endif
 
-static char const rcsid[] = "$Id: display.c,v 1.26 2004/10/27 11:32:46 broeker Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.27 2006/04/21 10:45:48 broeker Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */

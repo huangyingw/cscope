@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.33 2005/03/14 17:24:46 broeker Exp $ */
+/* $Id: global.h,v 1.34 2006/04/21 10:45:48 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -380,7 +380,7 @@ void	postmsg2(char *msg);
 void	posterr(char *msg,...);
 void	postfatal(const char *msg,...);
 void	putposting(char *term, int type);
-void	putstring(char *s);
+void	fetch_string_from_dbase(char *, size_t);
 void	resetcmd(void);
 void	seekline(unsigned int line);
 void	setfield(void);

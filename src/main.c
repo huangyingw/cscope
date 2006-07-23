@@ -42,6 +42,8 @@
 #include "vp.h"
 #include "version.h"	/* FILEVERSION and FIXVERSION */
 #include "scanner.h" 
+#include "alloc.h"
+
 #include <stdlib.h>	/* atoi */
 #if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
 #include <ncurses.h>
@@ -62,7 +64,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.38 2005/08/16 20:05:35 broeker Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.39 2006/04/21 10:45:48 broeker Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -277,9 +279,9 @@ cscope: pattern too long, cannot be > %d characters\n", PATLEN);
 #endif
 		    s = path + strlen(path);
 		    strcpy(s, ".in");
-		    invname = stralloc(path);
+		    invname = my_strdup(path);
 		    strcpy(s, ".po");
-		    invpost = stralloc(path);
+		    invpost = my_strdup(path);
 		    break;
 		case 'F':	/* symbol reference lines file */
 		    reflines = s;
@@ -384,11 +386,11 @@ cscope: Could not create private temp dir %s\n",
 	 */
 	sprintf(path, "%s/%s", home, reffile);
 	if (isuptodate == NO || access(path, READ) == 0) {
-	    reffile = stralloc(path);
+	    reffile = my_strdup(path);
 	    sprintf(path, "%s/%s", home, invname);
-	    invname = stralloc(path);
+	    invname = my_strdup(path);
 	    sprintf(path, "%s/%s", home, invpost);
-	    invpost = stralloc(path);
+	    invpost = my_strdup(path);
 	}
     }
 
@@ -526,7 +528,7 @@ cscope: cannot read source file name from file %s\n",
 			      reffile);
 		    /* NOTREACHED */
 		}
-		srcfiles[i] = stralloc(path);
+		srcfiles[i] = my_strdup(path);
 	    }
 	}
 	fclose(oldrefs);

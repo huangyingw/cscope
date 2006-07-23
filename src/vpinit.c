@@ -37,11 +37,12 @@
 #include <string.h>
 #include <unistd.h>
 #include "vp.h"
+#include "alloc.h"
 #include "library.h"
 #include "global.h"
 #include "constants.h"
 
-static char const rcsid[] = "$Id: vpinit.c,v 1.6 2004/04/30 15:30:51 broeker Exp $";
+static char const rcsid[] = "$Id: vpinit.c,v 1.7 2006/02/21 19:54:57 broeker Exp $";
 
 #if !NOMALLOC
 char	**vpdirs;	/* directories (including current) in view path */
@@ -107,7 +108,7 @@ vpinit(char *current_dir)
 	vpdirs = mymalloc(vpndirs * sizeof(char *));
 
 	/* don't change VPATH in the environment */
-	vpath = stralloc(vpath);
+	vpath = my_strdup(vpath);
 	
 	/* split the view path into nodes */
 	for (i = 0, s = vpath; *s != '\0'; ++i) {

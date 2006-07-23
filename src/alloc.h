@@ -30,66 +30,17 @@
  DAMAGE. 
  =========================================================================*/
 
-/* memory allocation functions */
+/* $Id: alloc.h,v 1.10 2006/04/21 10:45:48 broeker Exp $ */
 
-#include <stdio.h>
-#include <string.h>
-#include "alloc.h"
+#ifndef CSCOPE_ALLOC_H
+#define CSCOPE_ALLOC_H
 
-#include "global.h" /* for postfatal() */
+#include <string.h>  /* need size_t ... */
 
-static char const rcsid[] = "$Id: alloc.c,v 1.7 2006/04/21 10:45:48 broeker Exp $";
+/* memory allocation support */
+void	*mycalloc(size_t nelem, size_t size);
+void	*mymalloc(size_t size);
+void	*myrealloc(void *p, size_t size);
+char	*my_strdup(char *s);
 
-static	void	*alloctest(void *p);
-
-/* let autoconf find out if <stdlib.h> is available. This test will
- * succeed more reliably than the defined(__STDC__) one I replaced */
-#if STDC_HEADERS
-# include <stdlib.h>
-#else
-char	*calloc(), *malloc(), *realloc(), *strcpy();
-#endif
-
-/* allocate a string */
-
-char *
-my_strdup(char *s)
-{
-	return(strcpy(mymalloc(strlen(s) + 1), s));
-}
-
-
-/* version of malloc that only returns if successful */
-void *
-mymalloc(size_t size)
-{
-    return(alloctest(malloc((unsigned) size)));
-}
-
-
-/* version of calloc that only returns if successful */
-void *
-mycalloc(size_t nelem, size_t size)
-{
-    return(alloctest(calloc((unsigned) nelem, (unsigned) size)));
-}
-
-
-/* version of realloc that only returns if successful */
-void *
-myrealloc(void *p, size_t size)
-{
-    return(alloctest(realloc(p, (unsigned) size)));
-}
-
-
-/* check for memory allocation failure */
-static	void *
-alloctest(void *p)
-{
-    if (p == NULL) {
-	postfatal("\n%s: out of storage\n", argv0);
-	/* NOTREACHED */
-    }
-    return(p);
-}
+#endif /* CSCOPE_ALLOC_H */
