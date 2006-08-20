@@ -62,7 +62,7 @@
 typedef jmp_buf sigjmp_buf;
 #endif
 
-static char const rcsid[] = "$Id: display.c,v 1.27 2006/04/21 10:45:48 broeker Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.28 2006/07/23 20:59:20 broeker Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
@@ -224,7 +224,7 @@ display(void)
 	     disprefs < mdisprefs && screenline <= lastdispline;
 	     ++disprefs, ++screenline) {
 	    /* read the reference line */
-	    if (fscanf(refsfound, "%s%s%s %[^\n]", file, function, 
+	    if (fscanf(refsfound, "%" PATHLEN_STR "s%" PATHLEN_STR "s%" NUMLEN_STR "s %" TEMPSTRING_LEN_STR "[^\n]", file, function, 
 		       linenum, tempstring) < 4) {
 		break;
 	    }

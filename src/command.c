@@ -47,7 +47,7 @@
 #endif
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.30 2006/04/21 10:45:48 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.31 2006/07/23 20:59:20 broeker Exp $";
 
 
 int	selecting;
@@ -728,7 +728,7 @@ changestring(void)
     *oldfile = '\0';
     seekline(1);
     for (i = 0; 
-	 fscanf(refsfound, "%s%*s%s%*[^\n]", newfile, linenum) == 2;
+	 fscanf(refsfound, "%" PATHLEN_STR "s%*s%" NUMLEN_STR "s%*[^\n]", newfile, linenum) == 2;
 	 ++i) {
 	/* see if the line is to be changed */
 	if (change[i] == YES) {
