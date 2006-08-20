@@ -48,7 +48,7 @@
 #endif
 #include <regex.h>
 
-static char const rcsid[] = "$Id: find.c,v 1.18 2006/04/21 10:45:48 broeker Exp $";
+static char const rcsid[] = "$Id: find.c,v 1.19 2006/07/23 20:59:20 broeker Exp $";
 
 /* most of these functions have been optimized so their innermost loops have
  * only one test for the desired character by putting the char and 
@@ -184,6 +184,7 @@ findsymbol(char *pattern)
 			
 			default:		/* other symbol */
 				s = symbol;
+				s_len = sizeof(symbol);
 			}
 			/* save the name */
 			skiprefchar();
