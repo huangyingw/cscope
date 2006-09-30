@@ -56,7 +56,7 @@
 #define	FMTVERSION	1	/* inverted index format version */
 #define	ZIPFSIZE	200	/* zipf curve size */
 
-static char const rcsid[] = "$Id: invlib.c,v 1.16 2005/11/22 11:28:55 broeker Exp $";
+static char const rcsid[] = "$Id: invlib.c,v 1.17 2006/04/21 10:43:42 broeker Exp $";
 
 #if DEBUG
 /* FIXME HBB 20010705: nowhere in the source is `invbreak' ever set to
@@ -412,7 +412,7 @@ invnewterm(void)
 	if (maxback > numinvitems)
 	    maxback = numinvitems - 2;
 	howfar = 0;
-	while (--maxback > 0) {
+	while (maxback-- > 1) {
 	    howfar++;
 	    iteminfo.packword[0] =
 		logicalblk.invblk[--holditems * 2 + (sizeof(long) - 1)];
