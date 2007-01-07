@@ -50,8 +50,9 @@
 #endif
 
 #define	IFLEVELINC	5	/* #if nesting level size increment */
+#define YY_NO_TOP_STATE 1
 
-static char const rcsid[] = "$Id: fscanner.l,v 1.11 2006/07/23 20:59:20 broeker Exp $";
+static char const rcsid[] = "$Id: fscanner.l,v 1.12 2006/09/30 20:29:14 broeker Exp $";
 
 int	first;	/* buffer index for first char of symbol */
 int	last;	/* buffer index for last char of symbol */
@@ -124,6 +125,7 @@ static	void	my_yymore(void);
 }
 
 #endif /* !COMMENTS_BY_FLEX*/
+
 
 %}
 identifier	[a-zA-Z_$][a-zA-Z_0-9$]*
