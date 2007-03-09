@@ -44,7 +44,7 @@
 
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 
-static char const rcsid[] = "$Id: scanner.l,v 1.6 2001/06/26 13:55:07 broeker Exp $";
+static char const rcsid[] = "$Id: scanner.l,v 1.7 2004/01/08 14:07:20 broeker Exp $";
 
 int	first;	/* buffer index for first char of symbol */
 int	last;	/* buffer index for last char of symbol */
@@ -95,8 +95,8 @@ int	comment(void);
 #else
 /* Assume this is the AT&T/SCO style lex */
 #undef	input
-#define input()  ((yytchar=(yytchar=yysptr>yysbuf?*(unsigned char *)--yysptr:getc(yyin))=='/'?comment():yytchar)==EOF?0:yytchar)
-#define noncommentinput()  ((yytchar=yysptr>yysbuf?*--yysptr:getc(yyin))==EOF?0:yytchar)
+#define input()  ((yytchar=(yytchar=yysptr>yysbuf?*(unsigned char *)--yysptr:getc(yyin))=='/'?comment():yytchar)==EOF?LEXEOF:yytchar)
+#define noncommentinput()  ((yytchar=yysptr>yysbuf?*--yysptr:getc(yyin))==EOF?LEXEOF:yytchar)
 #undef	unput
 #define unput(c) (*yysptr++=(c))
 
@@ -685,7 +685,7 @@ comment_input(void)
 
 	c = getc (yyin);
 
-	return c;
+	return (c == EOF) ? LEXEOF : c;
 }
 
 int
