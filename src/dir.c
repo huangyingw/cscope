@@ -45,7 +45,7 @@
 #include <dirent.h>
 #include <sys/stat.h>	/* stat */
 
-static char const rcsid[] = "$Id: dir.c,v 1.28 2006/08/20 15:00:34 broeker Exp $";
+static char const rcsid[] = "$Id: dir.c,v 1.29 2006/10/15 16:53:24 broeker Exp $";
 
 #define	DIRSEPS	" ,:"	/* directory list separators */
 #define	DIRINC	10	/* directory list size increment */
@@ -566,7 +566,9 @@ issrcfile(char *path)
 		  && ((s[0] == 't' && s[1] == 'c' && s[2] == 'c' )
 		      /* C++ source: */
 		      || (s[0] == 'c' && s[1] == 'p' && s[2] == 'p' )
-		      || (s[0] == 'c' && s[1] == 'x' && s[2] == 'x' ))
+		      || (s[0] == 'c' && s[1] == 'x' && s[2] == 'x' )
+		      || (s[0] == 'h' && s[1] == 'p' && s[2] == 'p' )
+		      || (s[0] == 'h' && s[1] == 'x' && s[2] == 'x' ))
 		  ) {
 		looks_like_source = YES;
 	}

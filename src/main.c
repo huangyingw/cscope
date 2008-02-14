@@ -64,7 +64,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.42 2006/10/10 11:42:17 nhorman Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.43 2006/10/23 12:37:36 nhorman Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -375,6 +375,9 @@ cscope: Could not create private temp dir %s\n",
     }
     /* cleanup on the hangup signal */
     signal(SIGHUP, myexit);
+
+    /* ditto the TERM signal */
+    signal(SIGTERM, myexit);
 
     /* if the database path is relative and it can't be created */
     if (reffile[0] != '/' && access(".", WRITE) != 0) {
