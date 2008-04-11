@@ -64,7 +64,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.43 2006/10/23 12:37:36 nhorman Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.44 2008/02/14 12:39:37 nhorman Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -799,7 +799,7 @@ entercurses(void)
 #ifndef __MSDOS__ /* HBB 20010313 */
     nonl();		    /* don't translate an output \n to \n\r */
 #endif
-    cbreak();			/* single character input */
+    raw();			/* single character input */
     noecho();			/* don't echo input characters */
     clear();			/* clear the screen */
     mouseinit();		/* initialize any mouse interface */

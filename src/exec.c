@@ -49,7 +49,7 @@
 #include <curses.h>
 #endif
 
-static char const rcsid[] = "$Id: exec.c,v 1.9 2004/02/12 18:14:05 broeker Exp $";
+static char const rcsid[] = "$Id: exec.c,v 1.10 2006/04/21 10:45:48 broeker Exp $";
 
 static	sighandler_t oldsigquit; /* old value of quit signal */
 static	sighandler_t oldsighup; /* old value of hangup signal */
@@ -99,7 +99,7 @@ execute(char *a, ...)	/* note: "exec" is already defined on u370 */
 # ifndef __DJGPP__ /* leave CRLF handling as is */      
 	nonl();
 # endif
-	cbreak();	/* endwin() turns off cbreak mode so restore it */
+	raw();	/* endwin() turns off cbreak mode so restore it */
 	noecho();
 #endif
 	mousemenu();
