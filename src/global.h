@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.34 2006/04/21 10:45:48 broeker Exp $ */
+/* $Id: global.h,v 1.35 2006/07/23 20:59:20 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -248,7 +248,7 @@ extern	char	temp1[];	/* temporary file name */
 extern	char	temp2[];	/* temporary file name */
 extern	long	totalterms;	/* total inverted index terms */
 extern	BOOL	trun_syms;	/* truncate symbols to 8 characters */
-extern	char	tempstring[8192]; /* global dummy string buffer */
+extern	char	tempstring[TEMPSTRING_LEN + 1]; /* global dummy string buffer */
 extern	char	*tmpdir;	/* temporary directory */
 
 /* command.c global data */
