@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: vpaccess.c,v 1.1 2000/04/27 16:33:47 petr Exp $ */
+/* $Id: vpaccess.c,v 1.2 2000/05/03 22:02:10 petr Exp $ */
 
 /* vpaccess - view path version of the access system call */
 
@@ -49,7 +49,7 @@ vpaccess(char *path, mode_t amode)
 	if ((returncode = access(path, amode)) == -1 && path[0] != '/') {
 		vpinit(NULL);
 		for (i = 1; i < vpndirs; i++) {
-			(void) sprintf(buf, "%s/%s", vpdirs[i], path);
+			(void) snprintf(buf, sizeof(buf), "%s/%s", vpdirs[i], path);
 			if ((returncode = access(buf, amode)) != -1) {
 				break;
 			}

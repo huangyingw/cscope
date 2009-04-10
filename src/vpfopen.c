@@ -37,7 +37,7 @@
 #include "vp.h"
 #include "global.h"
 
-static char const rcsid[] = "$Id: vpfopen.c,v 1.2 2000/05/03 22:02:10 petr Exp $";
+static char const rcsid[] = "$Id: vpfopen.c,v 1.3 2001/03/27 14:09:19 broeker Exp $";
 
 FILE *
 vpfopen(char *filename, char *type)
@@ -53,7 +53,7 @@ vpfopen(char *filename, char *type)
 		) {
 		vpinit(NULL);
 		for (i = 1; i < vpndirs; i++) {
-			(void) sprintf(buf, "%s/%s", vpdirs[i], filename);
+			(void) snprintf(buf, sizeof(buf), "%s/%s", vpdirs[i], filename);
 			if ((returncode = myfopen(buf, type)) != NULL) {
 				break;
 			}

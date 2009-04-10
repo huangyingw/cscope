@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.35 2006/07/23 20:59:20 broeker Exp $ */
+/* $Id: global.h,v 1.36 2008/06/30 21:16:02 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -93,6 +93,22 @@ char	*memset();
 #ifndef HAVE_SIGHANDLER_T
 typedef RETSIGTYPE (*sighandler_t)(int);
 #endif
+
+#if HAVE_STDARG_H
+#include <stdarg.h>
+#if !HAVE_VSNPRINTF
+int rpl_vsnprintf(char *, size_t, const char *, va_list);
+#endif
+#if !HAVE_SNPRINTF
+int rpl_snprintf(char *, size_t, const char *, ...);
+#endif
+#if !HAVE_VASPRINTF
+int rpl_vasprintf(char **, const char *, va_list);
+#endif
+#if !HAVE_ASPRINTF
+int rpl_asprintf(char **, const char *, ...);
+#endif
+#endif	/* HAVE_STDARG_H */
 
 /* FIXME: this testing for platforms is foolish. Stop it! */
 #if BSD

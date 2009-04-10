@@ -49,7 +49,7 @@
 #include <curses.h>
 #endif
 
-static char const rcsid[] = "$Id: exec.c,v 1.10 2006/04/21 10:45:48 broeker Exp $";
+static char const rcsid[] = "$Id: exec.c,v 1.11 2008/04/11 11:23:55 nhorman Exp $";
 
 static	sighandler_t oldsigquit; /* old value of quit signal */
 static	sighandler_t oldsighup; /* old value of hangup signal */
@@ -123,7 +123,7 @@ myexecvp(char *a, char **args)
 
     /* execute the program or shell script */
     execvp(a, args);	/* returns only on failure */
-    sprintf(msg, "\nCannot exec %s", a);
+    snprintf(msg, sizeof(msg), "\nCannot exec %s", a);
     perror(msg);		/* display the reason */
     askforreturn();		/* wait until the user sees the message */
     myexit(1);		/* exit the child */

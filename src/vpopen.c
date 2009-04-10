@@ -39,7 +39,7 @@
 
 #define OPENFLAG_READ	0
 
-static char const rcsid[] = "$Id: vpopen.c,v 1.3 2000/05/03 22:02:10 petr Exp $";
+static char const rcsid[] = "$Id: vpopen.c,v 1.4 2002/07/28 15:40:07 broeker Exp $";
 
 int
 vpopen(char *path, int oflag)
@@ -52,7 +52,7 @@ vpopen(char *path, int oflag)
 	    oflag == OPENFLAG_READ) {
 		vpinit(NULL);
 		for (i = 1; i < vpndirs; i++) {
-			(void) sprintf(buf, "%s/%s", vpdirs[i], path);
+			(void) snprintf(buf, sizeof(buf), "%s/%s", vpdirs[i], path);
 			if ((returncode = myopen(buf, oflag, 0666)) != -1) {
 				break;
 			}

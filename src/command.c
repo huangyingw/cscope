@@ -47,7 +47,7 @@
 #endif
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.31 2006/07/23 20:59:20 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.32 2006/08/20 15:00:33 broeker Exp $";
 
 
 int	selecting;
@@ -739,7 +739,7 @@ changestring(void)
 				
 		/* make sure it can be changed */
 		if (access(newfile, WRITE) != 0) {
-		    sprintf(msg, "Cannot write to file %s", newfile);
+		    snprintf(msg, sizeof(msg), "Cannot write to file %s", newfile);
 		    postmsg(msg);
 		    anymarked = NO;
 		    break;
