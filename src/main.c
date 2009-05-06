@@ -64,7 +64,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.45 2008/04/11 11:23:55 nhorman Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.46 2009/04/10 13:39:23 broeker Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -265,9 +265,9 @@ cscope: pattern too long, cannot be > %d characters\n", PATLEN);
 		switch (c) {
 		case 'f':	/* alternate cross-reference file */
 		    reffile = s;
-		    if (strlen(reffile) > sizeof(path) - 1) {
+		    if (strlen(reffile) > sizeof(path) - 3) {
 			  postfatal("\
-cscope: reffile too long, cannot be > %d characters\n", sizeof(path) - 1);
+cscope: reffile too long, cannot be > %d characters\n", sizeof(path) - 3);
 			  /* NOTREACHED */
 		    }
 		    strcpy(path, s);
