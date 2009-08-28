@@ -45,7 +45,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
-static char const rcsid[] = "$Id: crossref.c,v 1.13 2006/04/21 10:45:48 broeker Exp $";
+static char const rcsid[] = "$Id: crossref.c,v 1.14 2006/07/23 20:59:20 broeker Exp $";
 
 
 /* convert long to a string */
@@ -176,6 +176,7 @@ crossref(char *srcfile)
 #endif
 	    break;
 			
+	case LEXERR:	/* Lexer error, abort further parsing of this file */
 	case LEXEOF:	/* end of file; last line may not have \n */
 			
 			/* if there were symbols, output them and the source line */
