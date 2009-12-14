@@ -67,7 +67,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.47 2009/05/06 14:41:51 nhorman Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.48 2009/12/09 20:29:34 nhorman Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -146,17 +146,15 @@ struct option lopts[] = {
 char ** parse_options(int *argc, char **argv)
 {
 	int opt;
-	int optind;
+	int longind;
 	char path[PATHLEN + 1];     /* file path */
 	char *s;
-	int args_handled = 1;
 	int argcc = *argc;
 	
 
 	while ((opt = getopt_long(argcc, argv,
 	       "hVbcCdeF:f:I:i:kLl0:1:2:3:4:5:6:7:8:9:P:p:qRs:TUuv",
-	       lopts, &optind)) != -1) {
-		args_handled++;
+	       lopts, &longind)) != -1) {
 		switch(opt) {
 
 		case '?':
@@ -249,8 +247,8 @@ char ** parse_options(int *argc, char **argv)
  	 * args.  Its ugly, but we need to do it so that the rest
  	 * of the main routine doesn't get all confused
  	 */
-	*argc = *argc - args_handled;
-	return &argv[*argc];
+	*argc = *argc - optind;
+	return &argv[optind];
 }
 #endif
 
