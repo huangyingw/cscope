@@ -67,7 +67,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.48 2009/12/09 20:29:34 nhorman Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.49 2009/12/14 13:51:50 nhorman Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -160,6 +160,25 @@ char ** parse_options(int *argc, char **argv)
 		case '?':
 			usage();
 			myexit(1);
+			break;
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			/* The input fields numbers for line mode operation */
+			field = opt - '0';
+			if (strlen(optarg) > PATHLEN) {
+				    postfatal("\
+					cscope: pattern too long, cannot be > \
+					%d characters\n", PATLEN);
+			}
+			strcpy(Pattern, optarg);	
 			break;
 		case 'b':	/* only build the cross-reference */
 			buildonly = YES;
