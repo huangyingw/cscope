@@ -67,7 +67,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.49 2009/12/14 13:51:50 nhorman Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.50 2009/12/14 17:54:22 nhorman Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -197,6 +197,10 @@ char ** parse_options(int *argc, char **argv)
 		case 'e':	/* suppress ^E prompt between files */
 			editallprompt = NO;
 			break;
+		case 'h':
+			longusage();
+			myexit(1);
+			break;
 		case 'k':	/* ignore DFLT_INCDIR */
 			kernelmode = YES;
 			break;
@@ -208,6 +212,11 @@ char ** parse_options(int *argc, char **argv)
 			break;
 		case 'v':
 			verbosemode = YES;
+			break;
+		case 'V':
+			fprintf(stderr, "%s: version %d%s\n", argv0,
+				FILEVERSION, FIXVERSION);
+			myexit(0);
 			break;
 		case 'q':	/* quick search */
 			invertedindex = YES;
