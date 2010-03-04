@@ -44,7 +44,7 @@
 
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 
-static char const rcsid[] = "$Id: scanner.l,v 1.7 2004/01/08 14:07:20 broeker Exp $";
+static char const rcsid[] = "$Id: scanner.l,v 1.8 2007/03/09 23:54:34 broeker Exp $";
 
 int	first;	/* buffer index for first char of symbol */
 int	last;	/* buffer index for last char of symbol */
@@ -375,7 +375,7 @@ class{ws}+{identifier}({wsnl}|[a-zA-Z0-9_():])*\{	{	/* class definition */
 			tagdef = '\0';
 			goto more;
 		}  			
-{identifier}/{ws}*\(({wsnl}|a-zA-Z0-9_*&[\]=,.])*\)({wsnl}|[()])*[:a-zA-Z_#{]	{
+{identifier}/{ws}*\(({wsnl}|a-zA-Z0-9_*&[\]=,.:])*\)({wsnl}|[()])*[:a-zA-Z_#{]	{
 			
 			/* warning: "if (...)" must not overflow yytext, so the content
 			   of function argument definitions is restricted, in particular
