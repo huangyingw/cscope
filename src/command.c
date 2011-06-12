@@ -47,7 +47,7 @@
 #endif
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.32 2006/08/20 15:00:33 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.33 2009/04/10 13:39:23 broeker Exp $";
 
 
 int	selecting;
@@ -634,10 +634,16 @@ changestring(void)
 	atchange();
 		
 	/* get a character from the terminal */
-	if ((c = mygetch()) == EOF
-	    || c == ctrl('D') 
-	    || c == ctrl('Z')) {
+	if ((c = mygetch()) == EOF || c == ctrl('D')) {
 	    break;	/* change lines */
+	}
+	if (c == ctrl('Z')) {
+#ifdef SIGTSTP
+	    kill(0, SIGTSTP);
+	    goto same;
+#else
+	    break;	/* change lines */
+#endif
 	}
 	/* see if the input character is a command */
 	switch (c) {
