@@ -67,7 +67,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.51 2009/12/21 12:17:47 nhorman Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.52 2010/09/30 14:29:19 nhorman Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -619,7 +619,7 @@ cscope: Could not create private temp dir %s\n",
 		    ungetc(c, oldrefs);
 		    break;
 		}
-		switch (c = getc(oldrefs)) {
+		switch (getc(oldrefs)) {
 		case 'c':	/* ASCII characters only */
 		    compress = NO;
 		    break;
@@ -732,7 +732,11 @@ cscope: cannot read source file name from file %s\n",
 	/* add /usr/include to the #include directory list,
 	   but not in kernelmode... kernels tend not to use it. */
 	if (kernelmode == NO) {
-	    includedir(DFLT_INCDIR);
+	    if (NULL != (s = getenv("INCDIR"))) {
+		includedir(s);
+	    } else {
+		includedir(DFLT_INCDIR);
+	    }
 	}
 
 	/* initialize the C keyword table */
@@ -871,8 +875,16 @@ cscope: cannot read source file name from file %s\n",
 	    atfield();	/* move to the input field */
 
 	/* exit if the quit command is entered */
-	if ((c = mygetch()) == EOF || c == ctrl('D') || c == ctrl('Z')) {
+	if ((c = mygetch()) == EOF || c == ctrl('D')) {
 	    break;
+	}
+	if (c == ctrl('Z')) {
+#ifdef SIGTSTP
+	    kill(0, SIGTSTP);
+	    continue;
+#else
+	    break;
+#endif
 	}
 	/* execute the commmand, updating the display if necessary */
 	if (command(c) == YES) {
