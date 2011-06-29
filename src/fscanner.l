@@ -52,7 +52,7 @@
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 #define YY_NO_TOP_STATE 1
 
-static char const rcsid[] = "$Id: fscanner.l,v 1.14 2009/08/28 14:28:27 nhorman Exp $";
+static char const rcsid[] = "$Id: fscanner.l,v 1.15 2010/03/04 21:07:17 broeker Exp $";
 
 int	first;	/* buffer index for first char of symbol */
 int	last;	/* buffer index for last char of symbol */
@@ -341,6 +341,8 @@ wsnl		[ \t\r\v\f\n]|{comment}
 			
 			my_yymore();
 			s = strpbrk(my_yytext, "\"<");
+			if (!s)
+				return(LEXERR);
 			my_yytext[my_yyleng-1] = '\0';
 			incfile(s + 1, s);
 			my_yytext[my_yyleng-1] = remember;
