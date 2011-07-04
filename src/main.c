@@ -67,7 +67,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.52 2010/09/30 14:29:19 nhorman Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.53 2011/06/12 13:17:14 broeker Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -325,16 +325,6 @@ main(int argc, char **argv)
 	}
 
 	for (s = argv[0] + 1; *s != '\0'; s++) {
-
-	    if ((*s != 'f') && (*s != 'F') &&
-		(*s != 'i') && (*s != 'I') &&
-		(*s != 'p') && (*s != 'P') &&
-		(*s != 's') && (*s != 'S')) {
-			if (*(s+1) != '\0') {
-				usage();
-				myexit(1);
-			}
-		}
 
 	    /* look for an input field number */
 	    if (isdigit((unsigned char) *s)) {
