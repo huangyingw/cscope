@@ -62,7 +62,7 @@
 typedef jmp_buf sigjmp_buf;
 #endif
 
-static char const rcsid[] = "$Id: display.c,v 1.29 2006/08/20 15:00:34 broeker Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.30 2009/04/10 13:39:23 broeker Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
@@ -113,6 +113,7 @@ static	struct	{		/* text of input fields */
 	{"Find this", "file",				findfile},
 	{"Find", "files #including this file",		findinclude},
 	{"Find all", "function definitions",		findallfcns},	/* samuel only */
+	{"Find all", "symbol assignments",		findassign},
 };
 
 /* Internal prototypes: */
