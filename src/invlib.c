@@ -56,7 +56,7 @@
 #define	FMTVERSION	1	/* inverted index format version */
 #define	ZIPFSIZE	200	/* zipf curve size */
 
-static char const rcsid[] = "$Id: invlib.c,v 1.18 2006/09/30 15:38:16 broeker Exp $";
+static char const rcsid[] = "$Id: invlib.c,v 1.19 2011/06/12 13:07:52 broeker Exp $";
 
 #if DEBUG
 /* FIXME HBB 20010705: nowhere in the source is `invbreak' ever set to
@@ -228,7 +228,7 @@ invmake(char *invname, char *invpost, FILE *infile)
 			num = BASE * num + *++s - '!';
 		} while (++i < PRECISION);
 		posting.lineoffset = num;
-		while (++fileindex < nsrcoffset && num > srcoffset[fileindex]) {
+		while (++fileindex < nsrcfiles && num > srcoffset[fileindex]) {
 			;
 		}
 		posting.fileindex = --fileindex;
