@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: constants.h,v 1.16 2012/03/05 19:28:13 nhorman Exp $ */
+/* $Id: constants.h,v 1.17 2012/04/07 13:25:57 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -101,7 +101,7 @@
 #define	REGEXP		6
 #define FILENAME	7
 #define INCLUDES	8
-#define	FIELDS		11
+#define	FIELDS		10
 
 #if (BSD || V9) && !__NetBSD__ && !__FreeBSD__
 # define TERMINFO	0	/* no terminfo curses */
