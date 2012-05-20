@@ -62,7 +62,7 @@
 typedef jmp_buf sigjmp_buf;
 #endif
 
-static char const rcsid[] = "$Id: display.c,v 1.31 2012/03/05 19:28:13 nhorman Exp $";
+static char const rcsid[] = "$Id: display.c,v 1.32 2012/04/07 14:12:07 broeker Exp $";
 
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
@@ -350,11 +350,7 @@ display(void)
 	i = totallines - nextline + 1;
 	bottomline = nextline;
 	if (i > 0) {
-	    s = "s";
-	    if (i == 1) {
-		s = "";
-	    }
-	    printw("* %d more line%s - press the space bar to display more *", i, s);
+	    printw("* Lines %d-%d of %d, %d more - press the space bar to display more *", topline, bottomline, totallines, i);
 	}
 	/* if this is the last page of references */
 	else if (topline > 1 && nextline > totallines) {
