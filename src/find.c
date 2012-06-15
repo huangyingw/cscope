@@ -48,7 +48,7 @@
 #endif
 #include <regex.h>
 
-static char const rcsid[] = "$Id: find.c,v 1.23 2012/03/05 19:28:13 nhorman Exp $";
+static char const rcsid[] = "$Id: find.c,v 1.24 2012/04/07 13:23:38 broeker Exp $";
 
 /* most of these functions have been optimized so their innermost loops have
  * only one test for the desired character by putting the char and 
@@ -120,9 +120,14 @@ check_for_assignment(void)
 		return NO;
 	}
     }
-
+    /* check for digraph starting with = */
+    if ((asgn_char[0] & 0x80) && (dichar1[(asgn_char[0] & 0177)/8] == '=')) {
+	return YES;
+    }
     /* check for plain '=', not '==' */
-    if ((asgn_char[0] == '=') && (asgn_char[1] != '=')) {
+    if ((asgn_char[0] == '=') && 
+	(((asgn_char[1] != '=') && !(asgn_char[1] & 0x80)) || 
+	 ((asgn_char[1] & 0x80) && (dichar1[(asgn_char[1]& 0177)/8] != '=')))) {
 	return YES;
     }
 
@@ -136,7 +141,8 @@ check_for_assignment(void)
 	    || (asgn_char[0] == '|') 
 	    || (asgn_char[0] == '^') 
 	   )
-	&& (asgn_char[1] == '=')
+	&& ((asgn_char[1] == '=') || ((asgn_char[1] & 0x80) && (dichar1[(asgn_char[1] &0177)/8] == '=')))
+
        ) {
 	return YES;
     }
@@ -146,7 +152,7 @@ check_for_assignment(void)
             || (asgn_char[0] == '>')
            )
 	&& (asgn_char[1] == asgn_char[0])
-	&& (asgn_char[2] == '=')
+	&& ((asgn_char[2] == '=') || ((asgn_char[2] & 0x80) && (dichar1[(asgn_char[2] & 0177)/8] == '=')))
        )
 	return YES;
     return NO;
@@ -167,7 +173,7 @@ find_symbol_or_assignment(char *pattern, BOOL assign_flag)
 	char firstchar;		/* first character of a potential symbol */
 	BOOL fcndef = NO;
 
-	if (invertedindex == YES) {
+	if ((invertedindex == YES) && (assign_flag == NO)) {
 		long	lastline = 0;
 		POSTING *p;
 
