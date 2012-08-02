@@ -52,7 +52,7 @@
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 #define YY_NO_TOP_STATE 1
 
-static char const rcsid[] = "$Id: fscanner.l,v 1.15 2010/03/04 21:07:17 broeker Exp $";
+static char const rcsid[] = "$Id: fscanner.l,v 1.16 2011/06/29 15:47:59 nhorman Exp $";
 
 int	first;	/* buffer index for first char of symbol */
 int	last;	/* buffer index for last char of symbol */
@@ -471,7 +471,13 @@ wsnl		[ \t\r\v\f\n]|{comment}
 			goto definition;
 			/* NOTREACHED */
 		}
-<IN_PREPROC>.|\n			|
+<IN_PREPROC>\n	{   /* unknown preprocessor line */
+			BEGIN(INITIAL);
+                        ++myylineno;
+			goto more;
+			/* NOTREACHED */
+		}
+<IN_PREPROC>.		 |
 <IN_PREPROC>{identifier}	{   /* unknown preprocessor line */
 			BEGIN(INITIAL);
 			goto more;
