@@ -30,7 +30,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: version.h,v 1.8 2001/07/05 14:31:00 broeker Exp $ */
+/* $Id: version.h,v 1.9 2009/04/30 22:16:28 broeker Exp $ */
 
 /*	cscope - interactive C symbol cross-reference
  *
@@ -42,6 +42,6 @@
 #define CSCOPE_VERSION_H
 
 #define	FILEVERSION	15	/* Initial Open Source and Linux Port */
-#define	FIXVERSION	".7a"	/* feature and bug fix version */
+#define	FIXVERSION	".8"	/* feature and bug fix version */
 
 #endif /* CSCOPE_VERSION_H */
