@@ -1,3 +1,10 @@
+2012-11-20  Neil Horman  <nhorman@tuxdriver.com>
+	Add option to delete cscope db's on exit
+
+	* src/main.c: Added -X option to cmdline parser
+
+	* doc/cscope.1: Updated man page to add new option above
+
 2012-08-04  Hans-Bernhard Broeker  <broeker@physik.rwth-aachen.de>
 
 	Make an update release 15.8a

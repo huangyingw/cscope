@@ -67,7 +67,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.54 2011/07/04 12:51:57 nhorman Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.55 2011/07/04 13:41:17 nhorman Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -98,6 +98,7 @@ BOOL	kernelmode;		/* don't use DFLT_INCDIR - bad for kernels */
 BOOL	linemode = NO;		/* use line oriented user interface */
 BOOL	verbosemode = NO;	/* print extra information on line mode */
 BOOL	recurse_dir = NO;	/* recurse dirs when searching for src files */
+BOOL	remove_symfile_onexit=NO;
 char	*namefile;		/* file of file names */
 BOOL	ogs;			/* display OGS book and subsystem names */
 char	*prependpath;		/* prepend path to file names */
@@ -153,13 +154,16 @@ char ** parse_options(int *argc, char **argv)
 	
 
 	while ((opt = getopt_long(argcc, argv,
-	       "hVbcCdeF:f:I:i:kLl0:1:2:3:4:5:6:7:8:9:P:p:qRs:TUuv",
+	       "hVbcCdeF:f:I:i:kLl0:1:2:3:4:5:6:7:8:9:P:p:qRs:TUuvX",
 	       lopts, &longind)) != -1) {
 		switch(opt) {
 
 		case '?':
 			usage();
 			myexit(1);
+			break;
+		case 'X':
+			remove_symfile_onexit = YES;
 			break;
 		case '0':
 		case '1':
@@ -394,6 +398,9 @@ cscope: pattern too long, cannot be > %d characters\n", PATLEN);
 		break;
 	    case 'R':
 		recurse_dir = YES;
+		break;
+		case 'X':
+		remove_symfile_onexit = YES;
 		break;
 	    case 'f':	/* alternate cross-reference file */
 	    case 'F':	/* symbol reference lines file */
@@ -1065,6 +1072,12 @@ myexit(int sig)
 	freesrclist();
 	freecrossref();
 	free_newbuildfiles();
+
+	if( remove_symfile_onexit == YES ) {
+		unlink( reffile );
+		unlink( invname );
+		unlink( invpost );
+	}
 
 	exit(sig);
 }

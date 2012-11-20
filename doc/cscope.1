@@ -4,7 +4,7 @@
 cscope - interactively examine a C program 
 .SH SYNOPSIS
 .B cscope
-.B [\-bCcdehkLlqRTUuVv]
+.B [\-bCcdehkLlqRTUuVvX]
 .BI [\-F symfile ]
 .BI [\-f reffile ]
 .BI [\-I incdir ]
@@ -188,6 +188,9 @@ files have changed).
 .B -v
 Be more verbose in line-oriented mode.  Output progress updates during
 database building and searches.
+.TP
+.B -X
+Remove the cscope reference file and inverted indexes when exiting
 .TP
 .I files
 A list of file names to operate on.
