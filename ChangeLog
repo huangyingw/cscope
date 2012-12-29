@@ -1,3 +1,8 @@
+2012-12-29  Hans-Bernhard Broeker  <broeker@physik.rwth-aachen.de>
+
+	* src/constants.h: Accept patch #2912267 to fix assumption about
+	terminfo on OSX.
+
 2012-11-20  Neil Horman  <nhorman@tuxdriver.com>
 	Add option to delete cscope db's on exit
 
