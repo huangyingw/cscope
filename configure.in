@@ -23,6 +23,8 @@ if test "x$LEX" = "xlex" ; then AC_DEFINE(USING_LEX, 1,
 fi
 AC_PROG_YACC
 
+AC_SYS_LARGEFILE
+
 dnl === BEGIN CURSES CHECK
 dnl Curses detection: Munged from Midnight Commander's configure.in
 dnl
