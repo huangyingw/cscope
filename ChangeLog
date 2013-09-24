@@ -1,3 +1,9 @@
+2013-09-25  Hans-Bernhard Broeker  <broeker@physik.rwth-aachen.de>
+
+	* doc/cscope.1: "Find assignments to" search was missing from the
+	man page.  Thanks to Roberto E. Vargas Caballero for noticing
+	this.
+
 2013-06-26  Hans-Bernhard Broeker  <broeker@physik.rwth-aachen.de>
 
 	* configure.in: Check for possible need of large file support.
