@@ -1,3 +1,8 @@
+2014-04-15  Neil Horman <nhorman@tuxdriver.com>
+
+	* src/find.c: ensure that putpostigref assigns function array
+	properly (sf bz 200)
+
 2013-09-25  Hans-Bernhard Broeker  <broeker@physik.rwth-aachen.de>
 
 	* doc/cscope.1: "Find assignments to" search was missing from the

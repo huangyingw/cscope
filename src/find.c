@@ -48,7 +48,7 @@
 #endif
 #include <regex.h>
 
-static char const rcsid[] = "$Id: find.c,v 1.24 2012/04/07 13:23:38 broeker Exp $";
+static char const rcsid[] = "$Id: find.c,v 1.25 2012/06/15 11:18:11 nhorman Exp $";
 
 /* most of these functions have been optimized so their innermost loops have
  * only one test for the desired character by putting the char and 
@@ -1201,7 +1201,9 @@ getposting(void)
 static void
 putpostingref(POSTING *p, char *pat)
 {
-	static char	function[PATLEN + 1];	/* function name */
+	// initialize function to "unknown" so that the first line of temp1
+	// is properly formed if symbol matches a header file entry first time
+	static char function[PATLEN + 1] = "unknown";/* function name */
 
 	if (p->fcnoffset == 0) {
 		if (p->type == FCNDEF) { /* need to find the function name */
