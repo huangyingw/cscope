@@ -1,7 +1,18 @@
+2014-11-20  Hans-Bernhard Broeker  <broeker@physik.rwth-aachen.de>
+
+	* contrib/xcscope/cscope-indexer: Automatically wrap pathnames in
+	quotes if they contain blanks or tabs.
+
+2014-11-16  Hans-Bernhard Broeker  <broeker@physik.rwth-aachen.de>
+
+	* src/fscanner.l (skipcomment_input, comment, insidestring_input)
+	(string_terminator, YY_INPUT): Remove hand-coded comment skipping
+	function, use flex-generated one instead.
+
 2014-04-15  Neil Horman <nhorman@tuxdriver.com>
 
-	* src/find.c: ensure that putpostigref assigns function array
-	properly (sf bz 200)
+	* src/find.c (putpostingref): Ensure that initialization of
+	function name (sf bz 200).
 
 2013-09-25  Hans-Bernhard Broeker  <broeker@physik.rwth-aachen.de>
 
