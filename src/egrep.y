@@ -31,7 +31,7 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: egrep.y,v 1.10 2005/03/14 17:23:05 broeker Exp $ */
+/* $Id: egrep.y,v 1.11 2006/04/21 10:45:48 broeker Exp $ */
 
 /*
  * egrep -- fine lines containing a regular expression
@@ -162,6 +162,7 @@ yylex(void)
 
     switch(c = nextch()) {
     case '|':
+    case '\n':
 	return (OR);
     case '*':
 	return (STAR);
@@ -170,15 +171,12 @@ yylex(void)
     case '?':
 	return (QUEST);
     case '(':
-	return (c);
     case ')':
 	return (c);
     case '.':
 	return (DOT);
     case '\0':
 	return (0);
-    case '\n':
-	return (OR);
     case '[': 
 	x = CCL;
 	cclcnt = 0;
@@ -190,9 +188,10 @@ yylex(void)
 	do {
 	    if (c == '\0')
 		synerror();
-	    if (c == '-'
-		&& cclcnt > 0
-		&& chars[nxtchar-1] != 0) {
+	    if (   (c == '-')
+		&& (cclcnt > 0)
+		&& (chars[nxtchar-1] != 0)
+	       ) {
 		if ((d = nextch()) != 0) {
 		    c = chars[nxtchar-1];
 		    while ((unsigned int)c < (unsigned int)d) {
@@ -214,11 +213,13 @@ yylex(void)
     case '\\':
 	if ((c = nextch()) == '\0')
 	    synerror();
-	/* not reached */
+	yylval = c;
+	return (CHAR);
     case '$':
     case '^':
 	c = '\n';
-	/* fall through */
+	yylval = c;
+	return (CHAR);
     default:
 	yylval = c;
 	return (CHAR);
@@ -351,13 +352,13 @@ cgotofn(void)
 		    nc = chars[right[curpos]];
 		    pc = right[curpos] + 1;
 		    for (j = 0; j < nc; j++)
-			symbol[(unsigned char)(chars[pc++])] = 1;
+			symbol[(unsigned char)chars[pc++]] = 1;
 		} else if (c == NCCL) {
 		    nc = chars[right[curpos]];
 		    for (j = 0; j < NCHARS; j++) {
 			pc = right[curpos] + 1;
 			for (l = 0; l < nc; l++)
-			    if (j==(unsigned char)(chars[pc++]))
+			    if (j==(unsigned char)chars[pc++])
 				goto cont;
 			if (j != '\n')
 			    symbol[j] = 1;
@@ -551,13 +552,29 @@ egrepinit(char *egreppat)
     return(message);
 }
 
+static char buf[2 * BUFSIZ];
+static const char *buf_end = buf + (sizeof(buf) / sizeof(*buf));
+
+static size_t read_next_chunk(char **p, FILE *fptr)
+{
+    if (*p <= (buf + BUFSIZ)) {
+        /* bwlow the middle, so enough space left for one entire BUFSIZ */
+	return fread(*p, sizeof(**p), BUFSIZ, fptr);
+    } else if (*p == buf_end) {
+        /* exactly at end ... wrap around and use lower half */
+	*p = buf;
+	return fread(*p, sizeof(**p), BUFSIZ, fptr);
+    }
+    /* somewhere in second half, so do a limited read */
+    return fread(*p, sizeof(**p), buf_end - *p, fptr);
+}
+
 int
 egrep(char *file, FILE *output, char *format)
 {
     char *p;
     unsigned int cstat;
     int ccount;
-    char buf[2*BUFSIZ];
     char *nlp;
     unsigned int istat;
     int in_line;
@@ -566,24 +583,27 @@ egrep(char *file, FILE *output, char *format)
     if ((fptr = myfopen(file, "r")) == NULL) 
 	return(-1);
 
-    ccount = 0;
     lnum = 1;
-    in_line = 0;
     p = buf;
     nlp = p;
-    if ((ccount = fread(p, sizeof(char), BUFSIZ, fptr)) <= 0)
-	goto done;
+    ccount = read_next_chunk(&p, fptr);
+
+    if (ccount <= 0) {
+	fclose(fptr);
+	return(0);
+    }
     in_line = 1;
     istat = cstat = (unsigned int) gotofn[0]['\n'];
     if (out[cstat])
 	goto found;
     for (;;) {
-	if (!iflag)
-	    cstat = (unsigned int) gotofn[cstat][(unsigned int)*p&0377];
-	/* all input chars made positive */
-	else
-	    cstat = (unsigned int) gotofn[cstat][tolower((int)*p&0377)];
-	/* for -i option*/
+	if (!iflag) {
+	    /* all input chars made positive */
+	    cstat = (unsigned int) gotofn[cstat][(unsigned char)*p];
+	} else {
+	    /* for -i option*/
+	    cstat = (unsigned int) gotofn[cstat][tolower((unsigned char)*p)];
+        }
 	if (out[cstat]) {
 	found:
 	    for(;;) {
@@ -592,7 +612,7 @@ egrep(char *file, FILE *output, char *format)
 		succeed:
 		    fprintf(output, format, file, lnum);
 		    if (p <= nlp) {
-			while (nlp < &buf[2*BUFSIZ])
+			while (nlp < buf_end)
 			    putc(*nlp++, output);
 			nlp = buf;
 		    }
@@ -600,26 +620,19 @@ egrep(char *file, FILE *output, char *format)
 			putc(*nlp++, output);
 		    lnum++;
 		    nlp = p;
-		    if ((out[(cstat=istat)]) == 0)
+		    if (out[cstat = istat] == 0)
 			goto brk2;
 		} /* if (p++ == \n) */
 	    cfound:
 		if (--ccount <= 0) {
-		    if (p <= &buf[BUFSIZ]) {
-			ccount = fread(p, sizeof(char), BUFSIZ, fptr);
-		    } else if (p == &buf[2*BUFSIZ]) {
-			p = buf;
-			ccount = fread(p, sizeof(char), BUFSIZ, fptr);
-		    } else {
-			ccount = fread(p, sizeof(char), &buf[2*BUFSIZ] - p,
-				       fptr);
-		    }
+		    ccount = read_next_chunk(&p, fptr);
 		    if (ccount <= 0) {
 			if (in_line) {
 			    in_line = 0;
 			    goto succeed;
 			}
-			goto done;
+                        fclose(fptr);
+                        return(0);
 		    }
 		} /* if(ccount <= 0) */
 		in_line = 1;
@@ -635,20 +648,12 @@ egrep(char *file, FILE *output, char *format)
 	}
     brk2:
 	if (--ccount <= 0) {
-	    if (p <= &buf[BUFSIZ]) {
-		ccount = fread(p, sizeof(char), BUFSIZ, fptr);
-	    } else if (p == &buf[2*BUFSIZ]) {
-		p = buf;
-		ccount = fread(p, sizeof(char), BUFSIZ, fptr);
-	    } else {
-		ccount = fread(p, sizeof(char), &buf[2*BUFSIZ] - p, fptr);
-	    }
+	    ccount = read_next_chunk(&p, fptr);
 	    if (ccount <= 0) 
 		break;
 	}
 	in_line = 1;
     }
-done:
     fclose(fptr);
     return(0);
 }

@@ -1,5 +1,15 @@
 2014-11-20  Hans-Bernhard Broeker  <broeker@physik.rwth-aachen.de>
 
+	* src/egrep.y (yylex): Collapse some cases of the switch.  Fix
+	fall-through that got broken some time before 15.8; similar to
+	patch #87.
+	(read_next_chunk): Refactored repeated code sequence into separate
+	function.
+	(egrep): Use new function.  Replace some gotos by the code they
+	jump to.
+
+	* src/exec.c (join): Initialize local variable.
+
 	* src/main.c (error_usage): Refactored code to output error.
 	(main): Use new function instead of goto.
 
