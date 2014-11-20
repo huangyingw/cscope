@@ -49,7 +49,7 @@
 #include <curses.h>
 #endif
 
-static char const rcsid[] = "$Id: exec.c,v 1.11 2008/04/11 11:23:55 nhorman Exp $";
+static char const rcsid[] = "$Id: exec.c,v 1.12 2009/04/10 13:39:23 broeker Exp $";
 
 static	sighandler_t oldsigquit; /* old value of quit signal */
 static	sighandler_t oldsighup; /* old value of hangup signal */
@@ -168,7 +168,7 @@ myfork(void)
 static int
 join(pid_t p) 
 {
-	int	status;  
+	int	status = -1;  
 	pid_t	w;
 
 	/* wait for the correct child to exit */
