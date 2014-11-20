@@ -140,7 +140,7 @@ void setup_build_filenames(char *reffile)
     char *path;			/* file pathname */
     char *s;			/* pointer to basename in path */
 
-    path = mymalloc(strlen(reffile) + 10);
+    path = mymalloc(strlen(reffile) + 10u);
     strcpy(path, reffile);
     s = mybasename(path);
     *s = '\0';
@@ -226,7 +226,7 @@ build(void)
 	snprintf(newdir, sizeof(newdir), "$HOME%s", currentdir + strlen(home));
     }
     /* sort the source file names (needed for rebuilding) */
-    qsort(srcfiles, nsrcfiles, sizeof(char *), compare);
+    qsort(srcfiles, nsrcfiles, sizeof(*srcfiles), compare);
 
     /* if there is an old cross-reference and its current directory matches */
     /* or this is an unconditional build */
@@ -367,7 +367,7 @@ cscope: converting to new symbol database file format\n");
     firstfile = 0;
     lastfile = nsrcfiles;
     if (invertedindex == YES) {
-	srcoffset = mymalloc((nsrcfiles + 1) * sizeof(long));
+	srcoffset = mymalloc((nsrcfiles + 1u) * sizeof(*srcoffset));
     }
     for (;;) {
 	progress("Building symbol database", (long)built,
@@ -422,12 +422,10 @@ cscope: converting to new symbol database file format\n");
 	firstfile = lastfile;
 	lastfile = nsrcfiles;
 	if (invertedindex == YES) {
-	    srcoffset = myrealloc(srcoffset,
-				  (nsrcfiles + 1) * sizeof(long));
+	    srcoffset = myrealloc(srcoffset, (nsrcfiles + 1) * sizeof(*srcoffset));
 	}
 	/* sort the included file names */
-	qsort(&srcfiles[firstfile], (lastfile - firstfile), 
-	      sizeof(char *), compare);
+	qsort(srcfiles + firstfile, lastfile - firstfile, sizeof(*srcfiles), compare);
     }
     /* add a null file name to the trailing tab */
     putfilename("");
@@ -603,7 +601,6 @@ putlist(char **names, int count)
 static void
 copydata(void)
 {
-    char symbol[PATLEN + 1];
     char *cp;
 
     setmark('\t');
@@ -629,6 +626,7 @@ copydata(void)
 	}
 	/* look for an #included file */
 	if (*cp == INCLUDE) {
+            char symbol[PATLEN + 1];
 	    blockp = cp;
 	    fetch_include_from_dbase(symbol, sizeof(symbol));
 	    writestring(symbol);

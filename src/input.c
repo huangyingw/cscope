@@ -48,18 +48,18 @@
 #include <sys/termios.h>
 #endif
 
-static char const rcsid[] = "$Id: input.c,v 1.14 2006/04/21 10:42:15 broeker Exp $";
+static char const rcsid[] = "$Id: input.c,v 1.15 2006/08/20 15:00:34 broeker Exp $";
 
 static	jmp_buf	env;		/* setjmp/longjmp buffer */
 static	int	prevchar;	/* previous, ungotten character */
 
 /* Internal prototypes: */
-static RETSIGTYPE catchint(int sig);
+static void catchint(int sig);
 
 /* catch the interrupt signal */
 
 /*ARGSUSED*/
-static RETSIGTYPE
+static void
 catchint(int sig)
 {
  	(void) sig;		/* 'use' it, to avoid a warning */
@@ -79,7 +79,7 @@ myungetch(int c)
 int
 mygetch(void)
 {
-    sighandler_t savesig; /* old value of signal */
+    sighandler_t savesig = 0; /* old value of signal */
     int c;
 
     /* change an interrupt signal to a break key character */
@@ -125,7 +125,7 @@ mygetline(char p[], char s[], unsigned size, int firstchar, BOOL iscaseless)
      * At the end of the function, we'll pop off any remaining characters
      * onto the end of 's'
      */
-    sright = calloc(sizeof(char), size );
+    sright = calloc(size, sizeof(*sright));
 
     strcpy ( s, p);
     i += strlen(p);

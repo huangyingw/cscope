@@ -47,7 +47,7 @@
 #endif
 #include <ctype.h>
 
-static char const rcsid[] = "$Id: command.c,v 1.35 2012/04/07 13:24:41 broeker Exp $";
+static char const rcsid[] = "$Id: command.c,v 1.36 2012/05/20 13:58:53 broeker Exp $";
 
 
 int	selecting;
@@ -314,9 +314,7 @@ command(int commandc)
 		s = "a";
 	    }
 	    if (c != '\r' && 
-		mygetline("", newpat,
-			  COLS - sizeof(appendprompt), c, NO) > 0
-		) {
+		mygetline("", newpat, COLS - sizeof(appendprompt), c, NO) > 0) {
 		shellpath(filename, sizeof(filename), newpat);
 		if ((file = myfopen(filename, s)) == NULL) {
 		    cannotopen(filename);
@@ -336,8 +334,7 @@ command(int commandc)
     case '<':	/* read lines from a file */
 	move(PRLINE, 0);
 	addstr(readprompt);
-	if (mygetline("", newpat, COLS - sizeof(readprompt),
-		      '\0', NO) > 0) {
+	if (mygetline("", newpat, COLS - sizeof(readprompt), '\0', NO) > 0) {
 	    clearprompt();
 	    shellpath(filename, sizeof(filename), newpat);
 	    if (readrefs(filename) == NO) {
@@ -358,8 +355,7 @@ command(int commandc)
 	/* get the shell command */
 	move(PRLINE, 0);
 	addstr(pipeprompt);
-	if (mygetline("", newpat, COLS - sizeof(pipeprompt), '\0', NO)
-	    == 0) {
+	if (mygetline("", newpat, COLS - sizeof(pipeprompt), '\0', NO) == 0) {
 	    clearprompt();
 	    return(NO);
 	}
@@ -623,7 +619,7 @@ changestring(void)
 	return(NO);
     }
     /* create the line change indicators */
-    change = mycalloc(totallines, sizeof(BOOL));
+    change = mycalloc(totallines, sizeof(*change));
     changing = YES;
     mousemenu();
 

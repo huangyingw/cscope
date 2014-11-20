@@ -67,7 +67,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.55 2011/07/04 13:41:17 nhorman Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.56 2012/11/20 15:20:26 nhorman Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -116,6 +116,7 @@ static	BOOL	onesearch;		/* one search only in line mode */
 static	char	*reflines;		/* symbol reference lines file */
 
 /* Internal prototypes: */
+static  void    error_usage(void);
 static	void	initcompress(void);
 static	void	longusage(void);
 static	void	skiplist(FILE *oldrefs);
@@ -280,7 +281,7 @@ char ** parse_options(int *argc, char **argv)
  	 * of the main routine doesn't get all confused
  	 */
 	*argc = *argc - optind;
-	return &argv[optind];
+	return argv + optind;
 }
 #endif
 
@@ -417,7 +418,7 @@ cscope: pattern too long, cannot be > %d characters\n", PATLEN);
 		if (*s == '\0') {
 		    fprintf(stderr, "%s: -%c option: missing or empty value\n", 
 			    argv0, c);
-		    goto usage;
+		    error_usage();
 		}
 		switch (c) {
 		case 'f':	/* alternate cross-reference file */
@@ -455,7 +456,7 @@ cscope: reffile too long, cannot be > %d characters\n", sizeof(path) - 3);
 			fprintf(stderr, "\
 %s: -p option: missing or invalid numeric value\n", 
 				argv0);
-			goto usage;
+			error_usage();
 		    }
 		    dispcomponents = atoi(s);
 		    break;
@@ -471,10 +472,7 @@ cscope: reffile too long, cannot be > %d characters\n", sizeof(path) - 3);
 	    default:
 		fprintf(stderr, "%s: unknown option: -%c\n", argv0, 
 			*s);
-	    usage:
-		usage();
-		fprintf(stderr, "Try the -h option for more information.\n");
-		myexit(1);
+		error_usage();
 	    } /* switch(option letter) */
 	} /* for(option) */
     nextarg:	
@@ -644,7 +642,7 @@ cscope: cannot read source file size from file %s\n", reffile);
 	    /* NOTREACHED */
 	}
 	/* get the source file list */
-	srcfiles = mymalloc(nsrcfiles * sizeof(char *));
+	srcfiles = mymalloc(nsrcfiles * sizeof(*srcfiles));
 	if (fileversion >= 9) {
 
 	    /* allocate the string space */
@@ -716,7 +714,7 @@ cscope: cannot read source file name from file %s\n",
 	    sourcedir(s);
 	}
 	/* make the source file list */
-	srcfiles = mymalloc(msrcfiles * sizeof(char *));
+	srcfiles = mymalloc(msrcfiles * sizeof(*srcfiles));
 	makefilelist();
 	if (nsrcfiles == 0) {
 	    postfatal("cscope: no source files found\n");
@@ -990,6 +988,14 @@ exitcurses(void)
 	fflush(stdout);
 }
 
+/* error exit including short usage information */
+static void
+error_usage(void)
+{
+	usage();
+	fprintf(stderr, "Try the -h option for more information.\n");
+	myexit(1);
+}
 
 /* normal usage message */
 static void

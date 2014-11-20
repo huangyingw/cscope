@@ -44,8 +44,9 @@
 #include <sys/types.h>	/* needed by stat.h and dirent.h */
 #include <dirent.h>
 #include <sys/stat.h>	/* stat */
+#include <assert.h>
 
-static char const rcsid[] = "$Id: dir.c,v 1.31 2009/04/10 13:39:23 broeker Exp $";
+static char const rcsid[] = "$Id: dir.c,v 1.32 2010/03/04 21:11:43 broeker Exp $";
 
 #define	DIRSEPS	" ,:"	/* directory list separators */
 #define	DIRINC	10	/* directory list size increment */
@@ -106,7 +107,7 @@ makevpsrcdirs(void)
 	}
 	/* create the source directory list */
 	msrcdirs = nsrcdirs + DIRINC;
-	srcdirs = mymalloc(msrcdirs * sizeof(char *));
+	srcdirs = mymalloc(msrcdirs * sizeof(*srcdirs));
 	*srcdirs = ".";	/* first source dir is always current dir */
 	for (i = 1; i < vpndirs; ++i) {
 		srcdirs[i] = vpdirs[i];
@@ -165,7 +166,7 @@ addsrcdir(char *dir)
 		/* note: there already is a source directory list */
 		if (nsrcdirs == msrcdirs) {
 			msrcdirs += DIRINC;
-			srcdirs = myrealloc(srcdirs, msrcdirs * sizeof(char *));
+			srcdirs = myrealloc(srcdirs, msrcdirs * sizeof(*srcdirs));
 		}
 		srcdirs[nsrcdirs++] = my_strdup(dir);
 	}
@@ -230,14 +231,12 @@ addincdir(char *name, char *path)
 	if (lstat(compath(path), &statstruct) == 0 && 
 	    S_ISDIR(statstruct.st_mode)) {
 		if (incdirs == NULL) {
-			incdirs = mymalloc(mincdirs * sizeof(char *));
-			incnames = mymalloc(mincdirs * sizeof(char *));
+			incdirs = mymalloc(mincdirs * sizeof(*incdirs));
+			incnames = mymalloc(mincdirs * sizeof(*incnames));
 		} else if (nincdirs == mincdirs) {
 			mincdirs += DIRINC;
-			incdirs = myrealloc(incdirs, 
-				mincdirs * sizeof(char *));
-			incnames = myrealloc(incnames, 
-				mincdirs * sizeof(char *));
+			incdirs = myrealloc(incdirs, mincdirs * sizeof(*incdirs));
+			incnames = myrealloc(incnames, mincdirs * sizeof(*incnames));
 		}
 		incdirs[nincdirs] = my_strdup(path);
 		incnames[nincdirs++] = my_strdup(name);
@@ -488,7 +487,6 @@ scan_dir(const char *adir, BOOL recurse_dir)
 	if ((dirfile = opendir(adir)) != NULL) {
 		struct dirent *entry;
 		char	path[PATHLEN + 1];
-		char	*file;
 
 		while ((entry = readdir(dirfile)) != NULL) { 
 			if ((strcmp(".",entry->d_name) != 0)
@@ -500,7 +498,6 @@ scan_dir(const char *adir, BOOL recurse_dir)
 					entry->d_name);
 
 				if (lstat(path,&buf) == 0) {
-					file = entry->d_name;
 					if (recurse_dir 
                                             && S_ISDIR(buf.st_mode) ) {
 						scan_dir(path, recurse_dir);
@@ -594,6 +591,7 @@ incfile(char *file, char *type)
     char    *s;
     unsigned int i;
 
+    assert(file != NULL); /* should never happen, but let's make sure anyway */
     /* see if the file is already in the source file list */
     if (infilelist(file) == YES) {
 	return;
@@ -700,11 +698,11 @@ addsrcfile(char *path)
 	/* make sure there is room for the file */
 	if (nsrcfiles == msrcfiles) {
 		msrcfiles += SRCINC;
-		srcfiles = myrealloc(srcfiles, msrcfiles * sizeof(char *));
+		srcfiles = myrealloc(srcfiles, msrcfiles * sizeof(*srcfiles));
 	}
 	/* add the file to the list */
 	srcfiles[nsrcfiles++] = my_strdup(compath(path));
-	p = mymalloc(sizeof(struct listitem));
+	p = mymalloc(sizeof(*p));
 	p->text = my_strdup(compath(path));
 	i = hash(p->text) % HASHMOD;
 	p->next = srcnames[i];

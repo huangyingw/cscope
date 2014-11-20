@@ -35,7 +35,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "global.h"	/* pid_t, RETSIGTYPE, shell, and mybasename() */
+#include "global.h"	/* pid_t, shell, and mybasename() */
 
 #define	tst(a,b) (*mode == 'r'? (b) : (a))
 #define	RDR	0
@@ -52,10 +52,10 @@
 # include <io.h>		/* for setmode() */
 #endif
 
-static char const rcsid[] = "$Id: mypopen.c,v 1.13 2005/01/30 19:33:28 broeker Exp $";
+static char const rcsid[] = "$Id: mypopen.c,v 1.14 2006/04/21 10:40:29 broeker Exp $";
 
 static pid_t popen_pid[20];
-static RETSIGTYPE (*tstat)(int);
+static void (*tstat)(int);
 
 int
 myopen(char *path, int flag, int mode)
@@ -177,23 +177,23 @@ mypopen(char *cmd, char *mode)
 int
 mypclose(FILE *ptr)
 {
-	int f;
-	pid_t r;
-	int status;
-	sighandler_t hstat, istat, qstat;
-
 #ifdef __DJGPP__ 
 	/* HBB 20010705: This system has its own pclose(), which we
 	 * don't want to replace */
 	return (pclose)(ptr);
 #else
+	int f;
+	pid_t r;
+	int status = -1;
+	sighandler_t hstat, istat, qstat;
+
 	f = fileno(ptr);
 	(void) fclose(ptr);
 	istat = signal(SIGINT, SIG_IGN);
 	qstat = signal(SIGQUIT, SIG_IGN);
 	hstat = signal(SIGHUP, SIG_IGN);
 	while((r = wait(&status)) != popen_pid[f] && r != -1)
-		;
+		; /* nothing */
 	if(r == -1)
 		status = -1;
 	(void) signal(SIGINT, istat);

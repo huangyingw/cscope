@@ -30,19 +30,18 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: invlib.h,v 1.6 2001/07/09 14:00:25 broeker Exp $ */
+/* $Id: invlib.h,v 1.7 2004/02/12 18:14:05 broeker Exp $ */
 
 
 #ifndef CSCOPE_INVLIB_H
 #define CSCOPE_INVLIB_H
 
 #include <stdio.h>		/* need definition of FILE* */
-#include <limits.h>
+#include <limits.h>             /* need definition of CHAR_MAX */
 
 /* inverted index definitions */
 
 /* postings temporary file long number coding into characters */
-/* FIXME HBB: where would these definitions come from ? */
 #if CHAR_MAX==255
 # define	BASE		223	/* 255 - ' ' */
 # define	PRECISION	4	/* maximum digits after converting a long */

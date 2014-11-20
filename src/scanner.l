@@ -44,7 +44,7 @@
 
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 
-static char const rcsid[] = "$Id: scanner.l,v 1.9 2010/03/04 21:07:17 broeker Exp $";
+static char const rcsid[] = "$Id: scanner.l,v 1.10 2011/06/29 15:48:00 nhorman Exp $";
 
 int	first;	/* buffer index for first char of symbol */
 int	last;	/* buffer index for last char of symbol */
@@ -61,11 +61,11 @@ static	BOOL	external;		/* external definition */
 static	int	externalbraces;		/* external definition outer brace count */
 static	BOOL	fcndef;			/* function definition */
 static	BOOL	global;			/* file global scope (outside functions) */
-static	int	iflevel;		/* #if nesting level */
+static	size_t	iflevel;		/* #if nesting level */
 static	BOOL	initializer;		/* data initializer */
 static	int	initializerbraces;	/* data initializer outer brace count */
 static	BOOL	lex;			/* lex file */
-static	int	miflevel = IFLEVELINC;	/* maximum #if nesting level */
+static	size_t	miflevel = IFLEVELINC;	/* maximum #if nesting level */
 static	int	*maxifbraces;		/* maximum brace count within #if */
 static	int	*preifbraces;		/* brace count before #if */
 static	int	parens;			/* unmatched left parenthesis count */
@@ -215,8 +215,8 @@ number		\.?[0-9][.0-9a-fA-FlLuUxX]*
 			/* make sure there is room for the current brace count */
 			if (iflevel == miflevel) {
 				miflevel += IFLEVELINC;
-				maxifbraces = myrealloc(maxifbraces, miflevel * sizeof(int));
-				preifbraces = myrealloc(preifbraces, miflevel * sizeof(int));
+				maxifbraces = myrealloc(maxifbraces, miflevel * sizeof(*maxifbraces));
+				preifbraces = myrealloc(preifbraces, miflevel * sizeof(*preifbraces));
 			}
 			/* push the current brace count */
 			preifbraces[iflevel] = braces;
@@ -602,8 +602,8 @@ initscanner(char *srcfile)
 	char	*s;
 	
 	if (maxifbraces == NULL) {
-		maxifbraces = mymalloc(miflevel * sizeof(int));
-		preifbraces = mymalloc(miflevel * sizeof(int));
+		maxifbraces = mymalloc(miflevel * sizeof(*maxifbraces));
+		preifbraces = mymalloc(miflevel * sizeof(*preifbraces));
 	}
 	first = 0;		/* buffer index for first char of symbol */
 	last = 0;		/* buffer index for last char of symbol */

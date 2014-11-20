@@ -38,7 +38,7 @@
 
 #include "global.h" /* for postfatal() */
 
-static char const rcsid[] = "$Id: alloc.c,v 1.7 2006/04/21 10:45:48 broeker Exp $";
+static char const rcsid[] = "$Id: alloc.c,v 1.8 2006/07/23 20:59:20 broeker Exp $";
 
 static	void	*alloctest(void *p);
 
@@ -63,7 +63,7 @@ my_strdup(char *s)
 void *
 mymalloc(size_t size)
 {
-    return(alloctest(malloc((unsigned) size)));
+    return(alloctest(malloc(size)));
 }
 
 
@@ -71,7 +71,7 @@ mymalloc(size_t size)
 void *
 mycalloc(size_t nelem, size_t size)
 {
-    return(alloctest(calloc((unsigned) nelem, (unsigned) size)));
+    return(alloctest(calloc(nelem, size)));
 }
 
 
@@ -79,7 +79,7 @@ mycalloc(size_t nelem, size_t size)
 void *
 myrealloc(void *p, size_t size)
 {
-    return(alloctest(realloc(p, (unsigned) size)));
+    return(alloctest(realloc(p, size)));
 }
 
 

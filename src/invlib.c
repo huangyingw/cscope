@@ -56,7 +56,7 @@
 #define	FMTVERSION	1	/* inverted index format version */
 #define	ZIPFSIZE	200	/* zipf curve size */
 
-static char const rcsid[] = "$Id: invlib.c,v 1.20 2012/03/12 17:57:55 nhorman Exp $";
+static char const rcsid[] = "$Id: invlib.c,v 1.21 2012/07/10 20:01:40 nhorman Exp $";
 
 #if DEBUG
 /* FIXME HBB 20010705: nowhere in the source is `invbreak' ever set to
@@ -77,11 +77,11 @@ int	showzipf;	/* show postings per term distribution */
 #endif
 
 static	POSTING	*item, *enditem, *item1 = NULL, *item2 = NULL;
-static	unsigned setsize1, setsize2;
+static	unsigned int setsize1, setsize2;
 static	long	numitems, totterm, zerolong;
 static	char	*indexfile, *postingfile;
 static	FILE	*outfile, *fpost;
-static	unsigned supersize = SUPERINC, supintsize;
+static	size_t supersize = SUPERINC, supintsize;
 static  unsigned int numpost, numlogblk, amtused, nextpost;
 static  unsigned int lastinblk, numinvitems;
 static	POSTING	*POST, *postptr;
@@ -109,7 +109,7 @@ invmake(char *invname, char *invpost, FILE *infile)
 	long	num;
 	int	i;
 	long	fileindex = 0;	/* initialze, to avoid warning */
-	unsigned postsize = POSTINC * sizeof(POSTING);
+	unsigned postsize = POSTINC * sizeof(*POST);
 	unsigned long	*intptr;
 	char	line[TERMMAX];
 	long	tlong;
@@ -148,10 +148,10 @@ invmake(char *invname, char *invpost, FILE *infile)
 	}
 	supfing = SUPFING;
 	/* FIXME HBB: magic number alert (40) */
-	supintsize = supersize / 40;
+	supintsize = supersize / 40u;
 	/* also for the superfinger index */
-	if ((SUPINT = malloc(supintsize * sizeof(long))) == NULL) {
-		invcannotalloc(supintsize * sizeof(long));
+	if ((SUPINT = malloc(supintsize * sizeof(*SUPINT))) == NULL) {
+		invcannotalloc(supintsize * sizeof(*SUPINT));
 		return(0);
 	}
 	supint = SUPINT;
@@ -197,9 +197,9 @@ invmake(char *invname, char *invpost, FILE *infile)
 		fflush(stdout);
 #endif
 		if (strcmp(thisterm, line) == 0) {
-			if (postptr + 10 > POST + postsize / sizeof(POSTING)) {
+			if ((postptr + 10) > (POST + (postsize / sizeof(*POST)))) {
 				i = postptr - POST;
-				postsize += POSTINC * sizeof(POSTING);
+				postsize += POSTINC * sizeof(*POST);
 				if ((POST = realloc(POST, postsize)) == NULL) {
 					invcannotalloc(postsize);
 					return(0);
@@ -379,10 +379,10 @@ invnewterm(void)
     /* new block if at least 1 item in block */
     if (numinvitems && numwilluse + amtused > sizeof(t_logicalblk)) {
 	/* set up new block */
-	if (supfing + 500 > SUPFING + supersize) {
+	if (supfing + 500u > SUPFING + supersize) {
 	    i = supfing - SUPFING;
-	    supersize += 20000;
-	    if ((SUPFING = (char *)realloc(SUPFING, supersize)) == NULL) {
+	    supersize += 20000u;
+	    if ((SUPFING = realloc(SUPFING, supersize)) == NULL) {
 		invcannotalloc(supersize);
 		return(0);
 	    }
@@ -397,14 +397,13 @@ invnewterm(void)
 	if ((numlogblk + 10) > supintsize) {
 	    i = supint - SUPINT;
 	    supintsize += SUPERINC;
-	    if ((SUPINT = realloc(SUPINT, supintsize * sizeof(long))) == NULL) {
-		invcannotalloc(supintsize * sizeof(long));
+	    if ((SUPINT = realloc(SUPINT, supintsize * sizeof(*SUPINT))) == NULL) {
+		invcannotalloc(supintsize * sizeof(*SUPINT));
 		return(0);
 	    }
 	    supint = i + SUPINT;
 #if DEBUG
-	    printf("reallocated superfinger offset to %d, totpost = %ld\n",
-		   supintsize * sizeof(long), totpost);
+	    printf("reallocated superfinger offset to %d, totpost = %ld\n", supintsize * sizeof(*SUPINT), totpost);
 #endif
 	}
 	/* See if backup is efficatious  */
@@ -499,11 +498,11 @@ invnewterm(void)
     amtused += numwilluse;
     logicalblk.invblk[(lastinblk/sizeof(long))+wdlen] = nextpost;
     if ((i = postptr - POST) > 0) {
-	if (fwrite(POST, sizeof(POSTING), i, fpost) == 0) {
+	if (fwrite(POST, sizeof(*POST), i, fpost) == 0) {
 	    invcannotwrite(postingfile);
 	    return(0);
 	}
-	nextpost += i * sizeof(POSTING);
+	nextpost += i * sizeof(*POST);
     }
     logicalblk.invblk[3+2*numinvitems++] = iteminfo.packword[0];
     logicalblk.invblk[2+2*numinvitems] = iteminfo.packword[1];
@@ -533,65 +532,87 @@ invflipname(char * invname, const char *from, const char *to)
 	return 0;
 }
 
+/* small helper function to centralize handling of binary opening
+ * for reading, and use of the 'stat" flag */
+static FILE *
+open_for_reading(char *name, int stat)
+{
+	return vpfopen(name, ((stat == 0) ? "rb" : "r+b"));
+}
+
+/* handle opening of a file under a possibly "flipped" name */
+/* If db created without '-f', but now invoked with '-f cscope.out',
+ * we need to check for 'cscope.in.out', rather than 'cscope.out.in': 
+ * I.e, hack around our own violation of the inverse db naming convention */
+/* more silliness: if you create the db with '-f cscope', then try to open 
+ * it without '-f cscope', you'll fail unless we check for 'cscope.out.in'
+ * here. */
+static FILE *
+open_file_with_flipped_name(char *name, const char *flip_in, const char *flip_out, int stat)
+{
+	if (! invflipname(name, flip_in, flip_out)) {
+		FILE *fptr = open_for_reading(name, stat);
+		if (! fptr)
+			/* flip back for error message */
+			invflipname(name, flip_out, flip_in);
+		return fptr;
+	};
+	return 0;
+}
+
+static FILE *
+open_file_with_possibly_flipped_name(char *name, const char *flip1, const char *flip2, int stat)
+{
+	FILE *fptr = open_for_reading(name, stat);
+
+	if (! fptr)
+		fptr = open_file_with_flipped_name(name, flip2, flip1, stat);
+	if (! fptr)
+		fptr = open_file_with_flipped_name(name, flip1, flip2, stat);
+	return fptr;
+}
+
 int
 invopen(INVCONTROL *invcntl, char *invname, char *invpost, int stat)
 {
 	int	read_index;
 
-	if ((invcntl->invfile = vpfopen(invname, ((stat == 0) ? "rb" : "r+b"))) == NULL) {
-		/* If db created without '-f', but now invoked with '-f cscope.out',
-		 * we need to check for 'cscope.in.out', rather than 'cscope.out.in': 
-		 * I.e, hack around our own violation of the inverse db naming convention */
-		if (!invflipname(invname, INVNAME2, INVNAME)) {
-			if ((invcntl->invfile = vpfopen(invname, ((stat == 0) ? "rb" : "r+b")))) 
-				goto openedinvname;
-			invflipname(invname, INVNAME, INVNAME2); /* change back for err msg */
-		} 
-		/* more silliness: if you create the db with '-f cscope', then try to open 
-		 * it without '-f cscope', you'll fail unless we check for 'cscope.out.in'
-		 * here. */
-		else if (!invflipname(invname, INVNAME, INVNAME2)) {
-			if ((invcntl->invfile = vpfopen(invname, ((stat == 0) ? "rb" : "r+b")))) 
-				goto openedinvname;
-			invflipname(invname, INVNAME2, INVNAME); /* change back for err msg */
-		}	
+	invcntl->invfile = open_file_with_possibly_flipped_name(invname, INVNAME, INVNAME2, stat);
+	if (! invcntl->invfile) {
 		invcannotopen(invname);
 		return(-1);
 	}
-openedinvname:
 	if (fread(&invcntl->param, sizeof(invcntl->param), 1, invcntl->invfile) == 0) {
 		fprintf(stderr, "%s: empty inverted file\n", argv0);
-		goto closeinv;
+		fclose(invcntl->invfile);
+		return(-1);
 	}
 	if (invcntl->param.version != FMTVERSION) {
 		fprintf(stderr, "%s: cannot read old index format; use -U option to force database to rebuild\n", argv0);
-		goto closeinv;
+		fclose(invcntl->invfile);
+		return(-1);
 	}
 	assert(invcntl->param.sizeblk == sizeof(t_logicalblk));
 
 	if (stat == 0 && invcntl->param.filestat == INVALONE) {
 		fprintf(stderr, "%s: inverted file is locked\n", argv0);
-		goto closeinv;
+		fclose(invcntl->invfile);
+		return(-1);
 	}
-	if ((invcntl->postfile = vpfopen(invpost, ((stat == 0) ? "rb" : "r+b"))) == NULL) {
-		/* exact same naming convention hacks as above for invname */
-		if (!invflipname(invpost, INVPOST2, INVPOST)) {
-			if ((invcntl->postfile = vpfopen(invpost, ((stat == 0) ? "rb" : "r+b")))) 
-				goto openedinvpost;
-			invflipname(invpost, INVPOST, INVPOST2); /* change back for err msg */
-		} else if (!invflipname(invpost, INVPOST, INVPOST2)) {
-			if ((invcntl->postfile = vpfopen(invpost,((stat == 0)?"rb":"r+b")))) 
-				goto openedinvpost;
-			invflipname(invpost, INVPOST2, INVPOST); /* change back for err msg */
-		}
+
+	invcntl->postfile = open_file_with_possibly_flipped_name(invpost, INVPOST, INVPOST2, stat);
+	if (! invcntl->postfile) {
 		invcannotopen(invpost);
-		goto closeinv;
+		fclose(invcntl->invfile);
+		return(-1);
 	}
-openedinvpost:
+
 	/* allocate core for a logical block  */
-	if ((invcntl->logblk = malloc((unsigned) invcntl->param.sizeblk)) == NULL) {
-		invcannotalloc((unsigned) invcntl->param.sizeblk);
-		goto closeboth;
+	if ((invcntl->logblk = malloc((size_t) invcntl->param.sizeblk)) == NULL) {
+		invcannotalloc((size_t) invcntl->param.sizeblk);
+		fclose(invcntl->postfile);
+		fclose(invcntl->invfile);
+		return(-1);
 	}
 	/* allocate for and read in superfinger  */
 	read_index = 1;
@@ -625,13 +646,14 @@ openedinvpost:
 	}
 #endif
 	if (invcntl->iindex == NULL)
-	        /* FIXME HBB: magic number alert (4) */
-		invcntl->iindex = malloc((unsigned) invcntl->param.supsize
-					 + 4 *sizeof(long));
+	        /* FIXME HBB: magic number alert (4, sizeof(long)) */
+		invcntl->iindex = malloc((size_t) invcntl->param.supsize + 4 *sizeof(long));
 	if (invcntl->iindex == NULL) {
-		invcannotalloc((unsigned) invcntl->param.supsize);
+		invcannotalloc((size_t) invcntl->param.supsize);
 		free(invcntl->logblk);
-		goto closeboth;
+		fclose(invcntl->postfile);
+		fclose(invcntl->invfile);
+		return(-1);
 	}
 	if (read_index) {
 		fseek(invcntl->invfile, invcntl->param.startbyte, SEEK_SET);
@@ -640,9 +662,7 @@ openedinvpost:
 	}
 	invcntl->numblk = -1;
 	if (boolready() == -1) {
-	closeboth:
 		fclose(invcntl->postfile);
-	closeinv:
 		fclose(invcntl->invfile);
 		return(-1);
 	}
@@ -879,14 +899,14 @@ boolready(void)
 	if (item1 != NULL) 
 		free(item1);
 	setsize1 = SETINC;
-	if ((item1 = malloc(SETINC * sizeof(POSTING))) == NULL) {
+	if ((item1 = malloc(SETINC * sizeof(*item1))) == NULL) {
 		invcannotalloc(SETINC);
 		return(-1);
 	}
 	if (item2 != NULL) 
 		free(item2);
 	setsize2 = SETINC;
-	if ((item2 = malloc(SETINC * sizeof(POSTING))) == NULL) {
+	if ((item2 = malloc(SETINC * sizeof(*item2))) == NULL) {
 		invcannotalloc(SETINC);
 		return(-1);
 	}
@@ -945,9 +965,11 @@ boolfile(INVCONTROL *invcntl, long *num, int boolarg)
 		if (item == item2) {
 			if (u > setsize1) {
 				u += SETINC;
-				if ((item1 = realloc(
-				    item1, u * sizeof(POSTING))) == NULL) {
-					goto cannotalloc;
+				if ((item1 = realloc(item1, u * sizeof(*item1))) == NULL) {
+					invcannotalloc(u * sizeof(*item1));
+					boolready();
+					*num = -1;
+					return(NULL);
 				}
 				setsize1 = u;
 			}
@@ -956,10 +978,8 @@ boolfile(INVCONTROL *invcntl, long *num, int boolarg)
 		else {
 			if (u > setsize2) {
 				u += SETINC;
-				if ((item2 = realloc( 
-				    item2, u * sizeof(POSTING))) == NULL) {
-				cannotalloc:
-					invcannotalloc(u * sizeof(POSTING));
+				if ((item2 = realloc(item2, u * sizeof(*item2))) == NULL) {
+					invcannotalloc(u * sizeof(*item2));
 					boolready();
 					*num = -1;
 					return(NULL);
@@ -1152,8 +1172,8 @@ boolsave(int clear)		/* flag about whether to clear core  */
 		boolready();
 		return(ptr);
 	}
-	i = (enditem - item) * sizeof(POSTING) + 100;
-	if ((ptr = malloc(i))r == NULL) {
+	i = (enditem - item) * sizeof(*ptr) + 100;
+	if ((ptr = malloc(i)) == NULL) {
 		invcannotalloc(i);
 		return(ptr);
 	}
