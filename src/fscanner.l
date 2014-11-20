@@ -52,7 +52,7 @@
 #define	IFLEVELINC	5	/* #if nesting level size increment */
 #define YY_NO_TOP_STATE 1
 
-static char const rcsid[] = "$Id: fscanner.l,v 1.16 2011/06/29 15:47:59 nhorman Exp $";
+static char const rcsid[] = "$Id: fscanner.l,v 1.17 2012/08/02 21:48:08 broeker Exp $";
 
 int	first;	/* buffer index for first char of symbol */
 int	last;	/* buffer index for last char of symbol */
@@ -75,11 +75,11 @@ static	BOOL	external;		/* external definition */
 static	int	externalbraces;		/* external definition outer brace count */
 static	BOOL	fcndef;			/* function definition */
 static	BOOL	global;			/* file global scope (outside functions) */
-static	int	iflevel;		/* #if nesting level */
+static	size_t	iflevel;		/* #if nesting level */
 static	BOOL	initializer;		/* data initializer */
 static	int	initializerbraces;	/* data initializer outer brace count */
 static	BOOL	lex;			/* lex file */
-static	int	miflevel = IFLEVELINC;	/* maximum #if nesting level */
+static	size_t	miflevel = IFLEVELINC;	/* maximum #if nesting level */
 static	int	*maxifbraces;		/* maximum brace count within #if */
 static	int	*preifbraces;		/* brace count before #if */
 static	int	parens;			/* unmatched left parenthesis count */
@@ -96,36 +96,7 @@ static	int	typedefbraces = -1;	/* initial typedef brace count */
 static	int	token;			/* token found */
 static	int 	ident_start;		/* begin of preceding identifier */
 
-/* If this is defined to 1, use flex rules rather than the input
- * function to discard comments. The scanner gains quite a bit of
- * speed this way, because of a large reduction of the number of I/O
- * system/library calls.  The original skipcomment_input() called
- * getc() so often that the call overhead of shared libraries
- * vs. static linking, alone, already caused a sizeable performance
- * hit (up to 40% gross gain on a cscope -cub of its own source
- * dir). */
-#define COMMENTS_BY_FLEX 1
-
-#if !COMMENTS_BY_FLEX
-static	int	skipcomment_input(void);
-static	int	comment(void);
-static	int	insidestring_input(int);
-#endif
-
 static	void	my_yymore(void);
-
-#if COMMENTS_BY_FLEX
-# define skipcomment_input input
-#else
-
-# define YY_INPUT(buf,result,max_size)				\
-{								\
-	int c = skipcomment_input ();				\
-	result = (c == EOF) ? YY_NULL : (buf[0] = c, 1);	\
-}
-
-#endif /* !COMMENTS_BY_FLEX*/
-
 
 %}
 identifier	[a-zA-Z_$][a-zA-Z_0-9$]*
@@ -292,8 +263,8 @@ wsnl		[ \t\r\v\f\n]|{comment}
 			/* make sure there is room for the current brace count */
 			if (iflevel == miflevel) {
 				miflevel += IFLEVELINC;
-				maxifbraces = myrealloc(maxifbraces, miflevel * sizeof(int));
-				preifbraces = myrealloc(preifbraces, miflevel * sizeof(int));
+				maxifbraces = myrealloc(maxifbraces, miflevel * sizeof(*maxifbraces));
+				preifbraces = myrealloc(preifbraces, miflevel * sizeof(*preifbraces));
 			}
 			/* push the current brace count */
 			preifbraces[iflevel] = braces;
@@ -617,7 +588,7 @@ if{wsnl}*\(	{ 	/* ignore 'if' */
 				
 				/* skip to the end of the line */
 				warning("line too long");
-				while ((c = skipcomment_input()) > LEXEOF) { 
+				while ((c = input()) > LEXEOF) { 
 					if (c == '\n') {
 						unput(c);
 						break;
@@ -716,16 +687,16 @@ if{wsnl}*\(	{ 	/* ignore 'if' */
 				int	c, i;
 
 				/* FIXME HBB 20001007: should call input() instead */
-				switch (skipcomment_input()) {	/* tab and EOF just fall through */
+				switch (input()) {	/* tab and EOF just fall through */
 				case ' ':	/* breakpoint number line */
 				case '[':
-					for (i = 1; i < 8 && skipcomment_input() > LEXEOF; ++i)
+					for (i = 1; i < 8 && input() > LEXEOF; ++i)
 						;
 					break;
 				case '.':	/* header line */
 				case '/':
 					/* skip to the end of the line */
-					while ((c = skipcomment_input()) > LEXEOF) {
+					while ((c = input()) > LEXEOF) {
 						if (c == '\n') {
 							unput(c);
 							break;
@@ -849,8 +820,8 @@ initscanner(char *srcfile)
 	char	*s;
 	
 	if (maxifbraces == NULL) {
-		maxifbraces = mymalloc(miflevel * sizeof(int));
-		preifbraces = mymalloc(miflevel * sizeof(int));
+		maxifbraces = mymalloc(miflevel * sizeof(*maxifbraces));
+		preifbraces = mymalloc(miflevel * sizeof(*preifbraces));
 	}
 	first = 0;		/* buffer index for first char of symbol */
 	last = 0;		/* buffer index for last char of symbol */
@@ -918,136 +889,6 @@ initscanner(char *srcfile)
 	}
 }
 
-#if !COMMENTS_BY_FLEX
-
-/* A micro-scanner that serves as the input() function of the
- * scanner. It throws away any comments in the input, correctly
- * avoiding doing this inside string/character constants, and knows
- * about backslash sequences. Now that the main scanner doesn't use
- * yymore() any longer, this could be replaced by lex rules. Left for
- * trying later. */
-
-/* Status variable: If this is non-NUL, it's the character that
-* terminates a string we're currently in. */
-static int string_terminator = '\0';
-
-/* Helper routine: treat 'c' as a character found inside a
- * string. Check if this character might be the end of that
- * string. Backslashes have to be taken care of, for the sake of
- * "quotes like \"these\" found inside a string". */
-static int
-insidestring_input(int c)
-{
-	static BOOL was_backslash = NO;
-	
-	if ((c == '\\') && (was_backslash == NO)) {
-		/* escape character found --> treat next char specially */
-		/* FIXME HBB 20001003: need treatment of backslash in the main
-		 * scanner, too. It'll get false line counts in case of "\\'",
-		 * otherwise --- they can occur as part of a lex pattern */
-		was_backslash = YES;
-		return c;
-	}
-
-	if (((c == '\t') && (lex == YES))
-	    /* Note: "\\\n" is removed even inside strings! */
-	    || ((c == '\n') && (was_backslash == NO))
-		|| (c == EOF)
-		|| ((c == string_terminator) && (was_backslash == NO))
-	   ) {
-		/* Line ended, or end-of-string was found. That is a syntax
-		 * error.  To recover, stop treatment as a string constant: */
-		string_terminator = '\0';
-	} else if (!isprint((unsigned char)c)) {
-		/* mask unprintable characters */
-		c = ' ';
-	}
-	
-	was_backslash = NO;
-	return c;
-}
-
-/* Helper function: skip over input until end of comment is found (or
- * we find that it wasn't really comment, in the first place): */
-static int
-comment(void)
-{
-	int	c, lastc;
-
-	/* Coming here, we've just read in the opening '/' of a
-	 * comment. */
-	do {
-		if ((c = getc(yyin)) == '*') {	/* C comment */
-			lastc = '\0';
-			while ((c = getc(yyin)) != EOF
-				   /* fewer '/'s --> test them first! */
-			       && (c != '/' || lastc != '*')
-			      ) { 
-				if (c == '\n') {
-					/* keep the line number count */
-					/* FIXME HBB 20001008: this is not synchronized
-					 * properly with myylineno changes by the main
-					 * scanner. A strong point in favour of moving
-					 * this to lex-code that is, IMHO */
-					++myylineno;
-				}
-				lastc = c;
-			}
-			/* return a blank for Reiser cpp token concatenation */
-			/* FIXME HBB 20001008: what on earth is 'Reiser cpp'? ANSI
-			 * C defines cpp to explicitly replace any comment by a
-			 * blank. Pre-ANSI cpp's behaved differently, but do we
-			 * really want that? If at all, it should only ever be a
-			 * non-default option (like gcc's "-traditional-cpp")
-			 * */
-			if ((c = getc(yyin)) == '_' || isalnum(c)) {
-				(void) ungetc(c, yyin);
-				c = ' ';
-				break;
-			}
-		} else if (c == '/') {		/* C++ comment */
-			while ((c = getc(yyin)) != EOF && c != '\n') {
-				; /* do nothing else */
-			}
-			break;
-		} else {					/* not a comment */
-			(void) ungetc(c, yyin);
-			c = '/';
-			break;
-			/* NOTREACHED */
-		}
-		
-	/* there may be an immediately following comment */
-	} while (c == '/');
-	return(c);
-}
-
-/* The core of the actual input() function to be used by (f)lex. The
- * calling scheme between this and the actual input() redefinition is
- * a bit different for lex and flex. See the #ifdef FLEX_SCANNER part
- * in the head section. */
-static int
-skipcomment_input(void)
-{
-	int	c;
-
-	c = getc (yyin);
-	if (string_terminator != '\0') {
-		/* don't look for comments inside strings! */
-		return insidestring_input(c);
-	} else if (c == '/') {
-		/* swallow everything until end of comment, if this is one */
-		return comment (); 
-	} else if (c == '"' || c == '\'') {
-		/* a string is beginning here, so switch input method */
-		string_terminator = c;
-	}
-	
-	return c;
-}
-
-#endif /* !COMMENTS_BY_FLEX */
-
 #define MY_YY_ALLOCSTEP 1000
 static void
 my_yymore(void)
@@ -1057,8 +898,7 @@ my_yymore(void)
 	/* my_yytext is an ever-growing buffer. It will not ever
 	 * shrink, nor will it be freed at end of program, for now */
 	while (my_yyleng + yyleng + 1 >= yytext_size) {
-		my_yytext = myrealloc(my_yytext, 
-				      		  yytext_size += MY_YY_ALLOCSTEP);
+		my_yytext = myrealloc(my_yytext, yytext_size += MY_YY_ALLOCSTEP);
 	}
 	
 	strncpy (my_yytext + my_yyleng, yytext, yyleng+1);
