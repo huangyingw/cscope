@@ -1,3 +1,13 @@
+2015-04-04  Hans-Bernhard Broeker  <broeker@physik.rwth-aachen.de>
+
+	* configure.in: Add check to enable C system extensions (like
+	_GNU_SOURCE), if available.
+
+	* config.h.in, configure: Regenerated.
+
+	* contrib/cctree.txt: Format change: file had DOS line endings for
+	some reason.
+
 2015-03-31  Hans-Bernhard Broeker  <broeker@physik.rwth-aachen.de>
 
 	* src/version.h (FIXVERSION): Update version number.
