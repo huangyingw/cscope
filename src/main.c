@@ -67,7 +67,7 @@
 #define DFLT_INCDIR "/usr/include"
 #endif
 
-static char const rcsid[] = "$Id: main.c,v 1.56 2012/11/20 15:20:26 nhorman Exp $";
+static char const rcsid[] = "$Id: main.c,v 1.57 2014/11/20 21:12:54 broeker Exp $";
 
 /* note: these digraph character frequencies were calculated from possible 
    printable digraphs in the cross-reference for the C compiler */
@@ -796,10 +796,13 @@ cscope: cannot read source file name from file %s\n",
 	    case '9':	/* samuel only */
 		field = *buf - '0';
 		strcpy(Pattern, buf + 1);
-		search();
-		printf("cscope: %d lines\n", totallines);
-		while ((c = getc(refsfound)) != EOF) {
-		    putchar(c);
+		if (search() == NO) {
+			printf("Unable to search database\n");
+		} else {
+			printf("cscope: %d lines\n", totallines);
+			while ((c = getc(refsfound)) != EOF) {
+			    putchar(c);
+			}
 		}
 		break;
 
