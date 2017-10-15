@@ -1,3 +1,13 @@
+2017-10-15  Hans-Bernhard Broeker  <broeker@users.sourceforge.net>
+
+	* src/Makefile.in: Regenerated.
+
+	* src/Makefile.am (BUILT_SOURCES, AM_YFLAGS): Have bison generate
+	an egrep.h file, and tell automake to handle it.
+
+	* everywhere: Remove $Id$ tag lines and similar, in preparation to a move
+	away from CVS to git.
+
 2015-04-04  Hans-Bernhard Broeker  <broeker@physik.rwth-aachen.de>
 
 	* configure.in: Add check to enable C system extensions (like

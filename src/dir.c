@@ -46,8 +46,6 @@
 #include <sys/stat.h>	/* stat */
 #include <assert.h>
 
-static char const rcsid[] = "$Id: dir.c,v 1.32 2010/03/04 21:11:43 broeker Exp $";
-
 #define	DIRSEPS	" ,:"	/* directory list separators */
 #define	DIRINC	10	/* directory list size increment */
 #define HASHMOD	2003	/* must be a prime number */

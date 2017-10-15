@@ -30,8 +30,6 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: global.h,v 1.38 2012/03/05 19:28:13 nhorman Exp $ */
-
 /*	cscope - interactive C symbol cross-reference
  *
  *	global type, data, and function definitions

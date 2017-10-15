@@ -30,8 +30,6 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: version.h,v 1.11 2012/08/04 15:39:27 broeker Exp $ */
-
 /*	cscope - interactive C symbol cross-reference
  *
  *	Changing the cross-reference file part of the program version

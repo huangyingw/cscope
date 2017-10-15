@@ -30,9 +30,6 @@
 / DAMAGE. /
 / ========================================================================= /
 
-/ $Id: emacs.e,v 1.1.1.1 2000/04/18 13:16:42 petr Exp $ /
-
-
 / emacs menu for cscope /
 ((X) cscope (find current word [MACRO])
 	(extern symbol-character)

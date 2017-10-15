@@ -42,8 +42,6 @@
 #include <curses.h>
 #endif
 
-static char const rcsid[] = "$Id: edit.c,v 1.6 2006/08/20 15:00:34 broeker Exp $";
-
 /* edit this displayed reference */
 
 void

@@ -19,6 +19,9 @@ else
 LEXER_SOURCE=fscanner.l
 endif
 
+BUILT_SOURCES=egrep.h
+AM_YFLAGS=-d
+
 cscope_SOURCES = $(LEXER_SOURCE) egrep.y alloc.c alloc.h basename.c build.c \
 build.h command.c compath.c constants.h crossref.c dir.c display.c edit.c   \
 exec.c find.c global.h help.c history.c input.c invlib.c invlib.h library.h \

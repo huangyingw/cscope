@@ -30,9 +30,6 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id$ */
-
-
 #ifndef CSCOPE_LOOKUP_H
 #define CSCOPE_LOOKUP_H
 

@@ -62,8 +62,6 @@
 typedef jmp_buf sigjmp_buf;
 #endif
 
-static char const rcsid[] = "$Id: display.c,v 1.33 2012/05/20 12:24:17 broeker Exp $";
-
 int	booklen;		/* OGS book name display field length */
 int	*displine;		/* screen line of displayed reference */
 unsigned int disprefs;		/* displayed references */

@@ -31,8 +31,6 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: egrep.y,v 1.11 2006/04/21 10:45:48 broeker Exp $ */
-
 /*
  * egrep -- fine lines containing a regular expression
  */

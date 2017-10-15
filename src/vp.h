@@ -30,8 +30,6 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: vp.h,v 1.6 2003/09/15 10:59:05 broeker Exp $ */
-
 /*
  *	VPATH assumptions:
  *		VPATH is the environment variable containing the view path 

@@ -45,8 +45,6 @@ BOOL	unixpcmouse = NO;	/* running with a mouse on the Unix PC? */
 static int uw_hs, uw_vs;	/* character height and width */
 #endif
 
-static char const rcsid[] = "$Id: mouse.c,v 1.3 2000/05/03 22:02:10 petr Exp $";
-
 typedef	struct {			/* menu */
 	char	*text;
 	char	*value;

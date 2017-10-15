@@ -1,5 +1,3 @@
-/* $Id: snprintf.c,v 1.9 2008/01/20 14:02:00 holger Exp $ */
-
 /*
  * Copyright (c) 1995 Patrick Powell.
  *

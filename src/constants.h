@@ -30,8 +30,6 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: constants.h,v 1.18 2012/04/07 14:12:07 broeker Exp $ */
-
 /*	cscope - interactive C symbol cross-reference
  *
  *	preprocessor macro and constant definitions

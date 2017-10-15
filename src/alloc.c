@@ -38,8 +38,6 @@
 
 #include "global.h" /* for postfatal() */
 
-static char const rcsid[] = "$Id: alloc.c,v 1.8 2006/07/23 20:59:20 broeker Exp $";
-
 static	void	*alloctest(void *p);
 
 /* let autoconf find out if <stdlib.h> is available. This test will

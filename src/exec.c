@@ -49,8 +49,6 @@
 #include <curses.h>
 #endif
 
-static char const rcsid[] = "$Id: exec.c,v 1.12 2009/04/10 13:39:23 broeker Exp $";
-
 static	sighandler_t oldsigquit; /* old value of quit signal */
 static	sighandler_t oldsighup; /* old value of hangup signal */
 static	sighandler_t oldsigtstp; /* old value of SIGTSTP */

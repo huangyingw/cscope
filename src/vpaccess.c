@@ -30,8 +30,6 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: vpaccess.c,v 1.2 2000/05/03 22:02:10 petr Exp $ */
-
 /* vpaccess - view path version of the access system call */
 
 #include <stdio.h>

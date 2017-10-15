@@ -30,9 +30,6 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: scanner.h,v 1.4 2005/01/31 16:50:33 broeker Exp $ */
-
-
 #ifndef CSCOPE_SCANNER_H
 #define CSCOPE_SCANNER_H
 

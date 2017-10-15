@@ -30,9 +30,6 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: invlib.h,v 1.7 2004/02/12 18:14:05 broeker Exp $ */
-
-
 #ifndef CSCOPE_INVLIB_H
 #define CSCOPE_INVLIB_H
 

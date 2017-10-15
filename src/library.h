@@ -30,8 +30,6 @@
  DAMAGE. 
  =========================================================================*/
 
-/* $Id: library.h,v 1.10 2006/04/21 10:45:48 broeker Exp $ */
-
 #ifndef CSCOPE_LIBRARY_H
 #define CSCOPE_LIBRARY_H
 
