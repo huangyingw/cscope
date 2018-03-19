@@ -708,7 +708,7 @@ findinit(char *pattern)
 		return(NOERROR);
 	}
 	/* see if the pattern is a regular expression */
-	if (strpbrk(pattern, "^.[{*+$") != NULL) {
+	if (strpbrk(pattern, "^.[{*+$|(") != NULL) {
 		isregexp = YES;
 	} else {
 		/* check for a valid C symbol */
