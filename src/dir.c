@@ -359,6 +359,7 @@ cscope: Syntax error in namelist file %s: unfinished -I or -p option\n",
 		    break;
 		case 'I':	/* #include file directory */
 		case 'p':	/* file path components to display */
+		    /* coverity[overwrite_var] */
 		    s = path + 2;		/* for "-Ipath" */
 		    if (*s == '\0') {	/* if "-I path" */
 			unfinished_option = i;
@@ -432,6 +433,7 @@ cscope: Syntax error in namelist file %s: unfinished -I or -p option\n",
 		 * treat this name as the argument: */
 		HANDLE_OPTION_ARGUMENT(unfinished_option, newpath);
 		if (! done) {
+		    /* coverity[overwrite_var] */
 		    if ((s = inviewpath(newpath)) != NULL) {
 			addsrcfile(s);
 		    } else {
@@ -440,6 +442,7 @@ cscope: Syntax error in namelist file %s: unfinished -I or -p option\n",
 			errorsfound = YES;
 		    }
 		}
+		free(newpath);
 	    } /* if(quoted name) */
 	    else {
 		/* ... so this is an ordinary file name, unquoted */

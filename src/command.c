@@ -573,6 +573,7 @@ readrefs(char *filename)
 		return(NO);
 	}
 	if ((c = getc(file)) == EOF) {	/* if file is empty */
+		fclose(file);
 		return(NO);
 	}
 	totallines = 0;
@@ -590,7 +591,8 @@ readrefs(char *filename)
 			return(NO);
 		}
 		countrefs();
-	}
+	} else
+		fclose(file);
 	return(YES);
 }
 
@@ -801,6 +803,7 @@ changestring(void)
     }
     changing = NO;
     mousemenu();
+    fclose(script);
     free(change);
     return(anymarked);
 }

@@ -646,6 +646,7 @@ posterr(char *msg, ...)
         vsnprintf(errbuf, sizeof(errbuf), msg, ap);
         postmsg2(errbuf); 
     }
+    va_end(ap);
 }
 
 /* display a fatal error mesg -- stderr *after* shutting down curses */

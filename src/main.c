@@ -248,8 +248,10 @@ char ** parse_options(int *argc, char **argv)
 
 			s = path + strlen(path);
 			strcpy(s, ".in");
+			/*coverity[overwrite_var]*/
 			invname = my_strdup(path);
 			strcpy(s, ".po");
+			/*coverity[overwrite_var]*/
 			invpost = my_strdup(path);
 			break;
 

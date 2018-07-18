@@ -119,8 +119,11 @@ myfopen(char *path, char *mode)
 #endif
 	    return(fp);
 
-	else
+	else {
+	    if (fp)
+		fclose(fp);
 	    return(NULL);
+	}
 }
 
 FILE *

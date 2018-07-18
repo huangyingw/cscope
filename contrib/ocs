@@ -286,6 +286,8 @@ std_libs ${SYSDIR}$PWD
 DIR=$PWD
 if [ ! -n "${NOUPDATE}" -o -n "${SPECDEST}" ] ; then
 echo "Create new library? <(L)ocal, (H)ome, (S)ystem, (Q)uit> [q] \c"
+
+# shellcheck disable=SC2034
 read x y
 case $x in
     [Ll]* )	DIR=$PWD		;;
