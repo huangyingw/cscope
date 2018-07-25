@@ -32,4 +32,15 @@ config.h
 config.log
 config.status
 stamp-h1
-.cvsignore
+INSTALL
+Makefile.in
+compile
+config.guess
+config.h.in
+config.sub
+depcomp
+install-sh
+missing
+mkinstalldirs
+ylwrap
+configure
