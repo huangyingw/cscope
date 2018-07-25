@@ -1,0 +1,14 @@
+As of the time this file was created, the cscope source in
+Git revision control no longer carries any of the
+autotools-generated files.  That means you have to run
+some extra steps, compared to using a tarball or
+older check-out.
+
+In a nutshell, you need reasonably fresh autoconf and automake.
+Then you can run
+
+	autoreconf -i -s
+
+That should put things into a state where you can use the
+normal procedure described in the "INSTALL" file.
+
