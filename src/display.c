@@ -42,7 +42,6 @@
 #ifdef CCS
 #include "sgs.h"	/* ESG_PKG and ESG_REL */
 #else
-#include "version.h"	/* FILEVERSION and FIXVERSION */
 #endif
 
 #if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)

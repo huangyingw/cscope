@@ -40,7 +40,6 @@
 
 #include "build.h"
 #include "vp.h"
-#include "version.h"	/* FILEVERSION and FIXVERSION */
 #include "scanner.h" 
 #include "alloc.h"
 
