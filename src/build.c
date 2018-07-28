@@ -124,7 +124,7 @@ samelist(FILE *oldrefs, char **names, int count)
     }
     /* see if the name list is the same */
     for (i = 0; i < count; ++i) {
-	if ((1 != fscanf(oldrefs," %[^\n]",oldname)) ||
+	if ((1 != fscanf(oldrefs," %" PATHLEN_STR "[^\n]",oldname)) ||
 	    strnotequal(oldname, names[i])) {
 	    return(NO);
 	}
@@ -305,7 +305,7 @@ cscope: -q option mismatch between command line and old symbol database\n");
 	/* see if the list of source files is the same and
 	   none have been changed up to the included files */
 	for (i = 0; i < nsrcfiles; ++i) {
-	    if ((1 != fscanf(oldrefs," %[^\n]",oldname))
+	    if ((1 != fscanf(oldrefs, " %" PATHLEN_STR "[^\n]", oldname))
 		|| strnotequal(oldname, srcfiles[i])
 		|| (lstat(srcfiles[i], &statstruct) != 0)
 		|| (statstruct.st_mtime > reftime)
@@ -315,7 +315,7 @@ cscope: -q option mismatch between command line and old symbol database\n");
 	}
 	/* the old cross-reference is up-to-date */
 	/* so get the list of included files */
-	while (i++ < oldnum && fgets(oldname, sizeof(oldname), oldrefs)) {
+	while (i++ < oldnum && fscanf(oldrefs, "%" PATHLEN_STR "s", oldname)) {
 	    addsrcfile(oldname);
 	}
 	fclose(oldrefs);
