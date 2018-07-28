@@ -44,3 +44,4 @@ missing
 mkinstalldirs
 ylwrap
 configure
+aclocal.m4
