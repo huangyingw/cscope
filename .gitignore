@@ -45,3 +45,4 @@ mkinstalldirs
 ylwrap
 configure
 aclocal.m4
+src/cscope

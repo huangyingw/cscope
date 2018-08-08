@@ -5,4 +5,7 @@ cd "$SCRIPTPATH"
 
 automake \
     && ./configure \
+    && make clean \
+    && make \
+    && make install \
     && ~/loadrc/gitrc/g.sh
