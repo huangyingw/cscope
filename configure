@@ -717,6 +717,7 @@ infodir
 docdir
 oldincludedir
 includedir
+runstatedir
 localstatedir
 sharedstatedir
 sysconfdir
@@ -797,6 +798,7 @@ datadir='${datarootdir}'
 sysconfdir='${prefix}/etc'
 sharedstatedir='${prefix}/com'
 localstatedir='${prefix}/var'
+runstatedir='${localstatedir}/run'
 includedir='${prefix}/include'
 oldincludedir='/usr/include'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
@@ -1049,6 +1051,15 @@ do
   | -silent | --silent | --silen | --sile | --sil)
     silent=yes ;;
 
+  -runstatedir | --runstatedir | --runstatedi | --runstated \
+  | --runstate | --runstat | --runsta | --runst | --runs \
+  | --run | --ru | --r)
+    ac_prev=runstatedir ;;
+  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
+  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
+  | --run=* | --ru=* | --r=*)
+    runstatedir=$ac_optarg ;;
+
   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
     ac_prev=sbindir ;;
   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
@@ -1186,7 +1197,7 @@ fi
 for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 		datadir sysconfdir sharedstatedir localstatedir includedir \
 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
-		libdir localedir mandir
+		libdir localedir mandir runstatedir
 do
   eval ac_val=\$$ac_var
   # Remove trailing slashes.
@@ -1339,6 +1350,7 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
+  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -5456,7 +5468,7 @@ else
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -5502,7 +5514,7 @@ else
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -5526,7 +5538,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -5571,7 +5583,7 @@ else
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -5595,7 +5607,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -5980,7 +5992,7 @@ $as_echo "Please note that some screen refreshs may fail" >&6; }
 $as_echo_n "checking for ncurses version... " >&6; }
 	ncurses_version=unknown
 cat > conftest.$ac_ext <<EOF
-#line 5983 "configure"
+#line 5995 "configure"
 #include "confdefs.h"
 #ifdef RENAMED_NCURSES
 #include <curses.h>
@@ -6701,18 +6713,18 @@ else
 /* end confdefs.h.  */
 
   /* For now, do not test the preprocessor; as of 2007 there are too many
-	 implementations with broken preprocessors.  Perhaps this can
-	 be revisited in 2012.  In the meantime, code should not expect
-	 #if to work with literals wider than 32 bits.  */
+         implementations with broken preprocessors.  Perhaps this can
+         be revisited in 2012.  In the meantime, code should not expect
+         #if to work with literals wider than 32 bits.  */
       /* Test literals.  */
       long long int ll = 9223372036854775807ll;
       long long int nll = -9223372036854775807LL;
       unsigned long long int ull = 18446744073709551615ULL;
       /* Test constant expressions.   */
       typedef int a[((-9223372036854775807LL < 0 && 0 < 9223372036854775807ll)
-		     ? 1 : -1)];
+                     ? 1 : -1)];
       typedef int b[(18446744073709551615ULL <= (unsigned long long int) -1
-		     ? 1 : -1)];
+                     ? 1 : -1)];
       int i = 63;
 int
 main ()
@@ -6721,9 +6733,9 @@ main ()
       long long int llmax = 9223372036854775807ll;
       unsigned long long int ullmax = 18446744073709551615ull;
       return ((ll << 63) | (ll >> 63) | (ll < i) | (ll > i)
-	      | (llmax / ll) | (llmax % ll)
-	      | (ull << 63) | (ull >> 63) | (ull << i) | (ull >> i)
-	      | (ullmax / ull) | (ullmax % ull));
+              | (llmax / ll) | (llmax % ll)
+              | (ull << 63) | (ull >> 63) | (ull << i) | (ull >> i)
+              | (ullmax / ull) | (ullmax % ull));
   ;
   return 0;
 }
@@ -6898,33 +6910,33 @@ if ${ac_cv_type_long_long_int+:} false; then :
 else
   ac_cv_type_long_long_int=yes
       if test "x${ac_cv_prog_cc_c99-no}" = xno; then
-	ac_cv_type_long_long_int=$ac_cv_type_unsigned_long_long_int
-	if test $ac_cv_type_long_long_int = yes; then
-	  	  	  	  if test "$cross_compiling" = yes; then :
+        ac_cv_type_long_long_int=$ac_cv_type_unsigned_long_long_int
+        if test $ac_cv_type_long_long_int = yes; then
+                                        if test "$cross_compiling" = yes; then :
   :
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #include <limits.h>
-		 #ifndef LLONG_MAX
-		 # define HALF \
-			  (1LL << (sizeof (long long int) * CHAR_BIT - 2))
-		 # define LLONG_MAX (HALF - 1 + HALF)
-		 #endif
+                 #ifndef LLONG_MAX
+                 # define HALF \
+                          (1LL << (sizeof (long long int) * CHAR_BIT - 2))
+                 # define LLONG_MAX (HALF - 1 + HALF)
+                 #endif
 int
 main ()
 {
 long long int n = 1;
-		 int i;
-		 for (i = 0; ; i++)
-		   {
-		     long long int m = n << i;
-		     if (m >> i != n)
-		       return 1;
-		     if (LLONG_MAX / 2 < m)
-		       break;
-		   }
-		 return 0;
+                 int i;
+                 for (i = 0; ; i++)
+                   {
+                     long long int m = n << i;
+                     if (m >> i != n)
+                       return 1;
+                     if (LLONG_MAX / 2 < m)
+                       break;
+                   }
+                 return 0;
   ;
   return 0;
 }
@@ -6938,7 +6950,7 @@ rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
 fi
 
-	fi
+        fi
       fi
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_type_long_long_int" >&5
@@ -6961,18 +6973,18 @@ else
 /* end confdefs.h.  */
 
   /* For now, do not test the preprocessor; as of 2007 there are too many
-	 implementations with broken preprocessors.  Perhaps this can
-	 be revisited in 2012.  In the meantime, code should not expect
-	 #if to work with literals wider than 32 bits.  */
+         implementations with broken preprocessors.  Perhaps this can
+         be revisited in 2012.  In the meantime, code should not expect
+         #if to work with literals wider than 32 bits.  */
       /* Test literals.  */
       long long int ll = 9223372036854775807ll;
       long long int nll = -9223372036854775807LL;
       unsigned long long int ull = 18446744073709551615ULL;
       /* Test constant expressions.   */
       typedef int a[((-9223372036854775807LL < 0 && 0 < 9223372036854775807ll)
-		     ? 1 : -1)];
+                     ? 1 : -1)];
       typedef int b[(18446744073709551615ULL <= (unsigned long long int) -1
-		     ? 1 : -1)];
+                     ? 1 : -1)];
       int i = 63;
 int
 main ()
@@ -6981,9 +6993,9 @@ main ()
       long long int llmax = 9223372036854775807ll;
       unsigned long long int ullmax = 18446744073709551615ull;
       return ((ll << 63) | (ll >> 63) | (ll < i) | (ll > i)
-	      | (llmax / ll) | (llmax % ll)
-	      | (ull << 63) | (ull >> 63) | (ull << i) | (ull >> i)
-	      | (ullmax / ull) | (ullmax % ull));
+              | (llmax / ll) | (llmax % ll)
+              | (ull << 63) | (ull >> 63) | (ull << i) | (ull >> i)
+              | (ullmax / ull) | (ullmax % ull));
   ;
   return 0;
 }
@@ -7514,33 +7526,33 @@ if ${ac_cv_type_long_long_int+:} false; then :
 else
   ac_cv_type_long_long_int=yes
       if test "x${ac_cv_prog_cc_c99-no}" = xno; then
-	ac_cv_type_long_long_int=$ac_cv_type_unsigned_long_long_int
-	if test $ac_cv_type_long_long_int = yes; then
-	  	  	  	  if test "$cross_compiling" = yes; then :
+        ac_cv_type_long_long_int=$ac_cv_type_unsigned_long_long_int
+        if test $ac_cv_type_long_long_int = yes; then
+                                        if test "$cross_compiling" = yes; then :
   :
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #include <limits.h>
-		 #ifndef LLONG_MAX
-		 # define HALF \
-			  (1LL << (sizeof (long long int) * CHAR_BIT - 2))
-		 # define LLONG_MAX (HALF - 1 + HALF)
-		 #endif
+                 #ifndef LLONG_MAX
+                 # define HALF \
+                          (1LL << (sizeof (long long int) * CHAR_BIT - 2))
+                 # define LLONG_MAX (HALF - 1 + HALF)
+                 #endif
 int
 main ()
 {
 long long int n = 1;
-		 int i;
-		 for (i = 0; ; i++)
-		   {
-		     long long int m = n << i;
-		     if (m >> i != n)
-		       return 1;
-		     if (LLONG_MAX / 2 < m)
-		       break;
-		   }
-		 return 0;
+                 int i;
+                 for (i = 0; ; i++)
+                   {
+                     long long int m = n << i;
+                     if (m >> i != n)
+                       return 1;
+                     if (LLONG_MAX / 2 < m)
+                       break;
+                   }
+                 return 0;
   ;
   return 0;
 }
@@ -7554,7 +7566,7 @@ rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
 fi
 
-	fi
+        fi
       fi
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_type_long_long_int" >&5
@@ -7577,18 +7589,18 @@ else
 /* end confdefs.h.  */
 
   /* For now, do not test the preprocessor; as of 2007 there are too many
-	 implementations with broken preprocessors.  Perhaps this can
-	 be revisited in 2012.  In the meantime, code should not expect
-	 #if to work with literals wider than 32 bits.  */
+         implementations with broken preprocessors.  Perhaps this can
+         be revisited in 2012.  In the meantime, code should not expect
+         #if to work with literals wider than 32 bits.  */
       /* Test literals.  */
       long long int ll = 9223372036854775807ll;
       long long int nll = -9223372036854775807LL;
       unsigned long long int ull = 18446744073709551615ULL;
       /* Test constant expressions.   */
       typedef int a[((-9223372036854775807LL < 0 && 0 < 9223372036854775807ll)
-		     ? 1 : -1)];
+                     ? 1 : -1)];
       typedef int b[(18446744073709551615ULL <= (unsigned long long int) -1
-		     ? 1 : -1)];
+                     ? 1 : -1)];
       int i = 63;
 int
 main ()
@@ -7597,9 +7609,9 @@ main ()
       long long int llmax = 9223372036854775807ll;
       unsigned long long int ullmax = 18446744073709551615ull;
       return ((ll << 63) | (ll >> 63) | (ll < i) | (ll > i)
-	      | (llmax / ll) | (llmax % ll)
-	      | (ull << 63) | (ull >> 63) | (ull << i) | (ull >> i)
-	      | (ullmax / ull) | (ullmax % ull));
+              | (llmax / ll) | (llmax % ll)
+              | (ull << 63) | (ull >> 63) | (ull << i) | (ull >> i)
+              | (ullmax / ull) | (ullmax % ull));
   ;
   return 0;
 }
