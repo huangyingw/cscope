@@ -17,6 +17,9 @@ else
         flex
 fi
 
+commit=`git rev-list --branches -n 1 HEAD -- config.h.in`
+git show "$commit"^:config.h.in > config.h.in
+
 aclocal \
     && autoconf \
     && automake \
