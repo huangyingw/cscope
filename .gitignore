@@ -46,3 +46,10 @@ ylwrap
 configure
 aclocal.m4
 src/cscope
+Makefile.in
+contrib/Makefile.in
+doc/Makefile.in
+src/Makefile.in
+src/egrep.c
+src/egrep.h
+src/fscanner.c
