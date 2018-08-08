@@ -1,0 +1,18 @@
+[merge]
+    allow = true
+[commit]
+    message = n
+[remote "origin"]
+    url = git://git.code.sf.net/p/cscope/cscope
+    fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
+[gsync]
+    remote = origin
+    branch = master
+[remote "github"]
+    url = git@github.com:huangyingw/cscope.git
+    fetch = +refs/heads/*:refs/remotes/github/*
+[push]
+    remote = github
