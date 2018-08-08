@@ -19,3 +19,5 @@
     fetch = +refs/heads/*:refs/remotes/github/*
 [push]
     remote = github
+[vrun]
+    silent = false
