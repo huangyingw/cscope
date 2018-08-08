@@ -17,7 +17,9 @@ else
         flex
 fi
 
-automake \
+aclocal \
+    && autoconf \
+    && automake \
     && ./configure \
     && make clean \
     && make \
