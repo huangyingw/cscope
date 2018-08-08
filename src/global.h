@@ -416,4 +416,5 @@ int	execute(char *a, ...);
 long	dbseek(long offset);
 
 
+#define BUFSIZ  1024        /* size of buffer used by setbuf */
 #endif /* CSCOPE_GLOBAL_H */
