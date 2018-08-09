@@ -9,7 +9,9 @@ then
     apt-get install -y \
         bison \
         byacc \
-        flex
+        flex \
+        libncurses5-dev \
+        libncursesw5-dev
 else
     brew install \
         bison \
