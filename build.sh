@@ -9,13 +9,17 @@ then
     apt-get install -y \
         bison \
         byacc \
-        flex
+        flex \
+        libncurses5-dev \
+        libncursesw5-dev
 else
     brew install \
         bison \
         byacc \
         flex
 fi
+
+~/loadrc/gitrc/restore_deleted.sh config.h.in
 
 aclocal \
     && autoconf \
