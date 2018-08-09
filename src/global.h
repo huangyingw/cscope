@@ -224,7 +224,7 @@ extern	char	dicode2[];	/* digraph second character code */
    + dicode2[(unsigned char)(inchar2)])
 
 /* main.c global data */
-extern	char	*editor, *home, *shell, *lineflag;	/* environment variables */
+extern	char	*editor, *shell, *lineflag;	/* environment variables */
 extern	char	*home;		/* Home directory */
 extern 	BOOL	lineflagafterfile;
 extern	char	*argv0;		/* command name */
