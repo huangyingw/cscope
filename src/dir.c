@@ -616,8 +616,11 @@ incfile(char *file, char *type)
 	    snprintf(path, sizeof(path), "%.*s/%s",
 		    (int)(PATHLEN - 2 - file_len), incdirs[i],
 		    file);
-	    if (access(compath(path), READ) == 0) {
-		addsrcfile(path);
+            if (access(compath(path), READ) == 0) {
+                struct stat st;
+                if( 0 == stat(path,&st) && S_ISREG(st.st_mode) ) {
+                     addsrcfile(path);
+                }
 		break;
 	    }
 	}
