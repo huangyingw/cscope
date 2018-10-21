@@ -7,6 +7,8 @@ if [ $(uname) != "Darwin" ]
 then
     apt-get update
     apt-get install -y \
+        automake \
+        autotools-dev \
         bison \
         byacc \
         flex \
