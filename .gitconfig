@@ -2,9 +2,9 @@
     allow = true
 [commit]
     message = n
-[remote "origin"]
+[remote "code"]
     url = git://git.code.sf.net/p/cscope/cscope
-    fetch = +refs/heads/*:refs/remotes/origin/*
+    fetch = +refs/heads/*:refs/remotes/code/*
 [branch "dev"]
     remote = github
     merge = refs/heads/dev
@@ -12,12 +12,13 @@
     remote = origin
     merge = refs/heads/master
 [gsync]
-    remote = origin
+    remote = code
     branch = master
 [remote "github"]
     url = git@github.com:huangyingw/cscope.git
     fetch = +refs/heads/*:refs/remotes/github/*
 [push]
     remote = github
+    remote = origin
 [vrun]
     silent = false
