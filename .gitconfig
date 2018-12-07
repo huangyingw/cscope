@@ -6,7 +6,7 @@
     url = git://git.code.sf.net/p/cscope/cscope
     fetch = +refs/heads/*:refs/remotes/code/*
 [branch "dev"]
-    remote = github
+    remote = origin
     merge = refs/heads/dev
 [branch "master"]
     remote = origin
@@ -14,11 +14,7 @@
 [gsync]
     remote = code
     branch = master
-[remote "github"]
-    url = git@github.com:huangyingw/cscope.git
-    fetch = +refs/heads/*:refs/remotes/github/*
 [push]
-    remote = github
     remote = origin
 [vrun]
     silent = false
