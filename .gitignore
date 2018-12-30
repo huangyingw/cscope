@@ -55,3 +55,4 @@ src/egrep.h
 src/fscanner.c
 config.h.in
 configure
+.env.json
