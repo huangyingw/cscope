@@ -21,8 +21,6 @@ else
         flex
 fi
 
-~/loadrc/gitrc/restore_deleted.sh config.h.in
-
 aclocal && \
     autoconf && \
     automake && \
