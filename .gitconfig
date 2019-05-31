@@ -12,7 +12,8 @@
     remote = origin
     merge = refs/heads/master
 [gsync]
-    remote = code/master
+    remote = code
+    branch = master
 [push]
     remote = origin
 [vrun]
