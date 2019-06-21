@@ -29,4 +29,4 @@ aclocal && \
     make && \
     make install
 
-git co config.h.in
+git checkout config.h.in
