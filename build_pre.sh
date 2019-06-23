@@ -16,9 +16,12 @@ then \
     libncursesw5-dev
 else \
     brew install \
+    autoconf \
+    automake \
     bison \
     byacc \
-    flex
+    flex \
+    libtool
 fi
 
 aclocal && \
