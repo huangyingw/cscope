@@ -18,6 +18,3 @@
     remote = origin
 [vrun]
     silent = false
-[deploy]
-    host = localhost
-    path = ~/loadrc/cscope/
