@@ -786,6 +786,7 @@ changestring(void)
     }
     fprintf(script, "w\nq\n!\n");	/* write and quit */
     fclose(script);
+    script = NULL;
 
     /* if any line was marked */
     if (anymarked == YES) {
@@ -803,7 +804,9 @@ changestring(void)
     }
     changing = NO;
     mousemenu();
-    fclose(script);
+    if (script != NULL) {
+	fclose(script);
+    }
     free(change);
     return(anymarked);
 }
