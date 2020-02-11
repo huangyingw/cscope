@@ -28,6 +28,7 @@
     ignore = ./config.h.in
     ignore = ./config.sub
     ignore = ./depcomp
+    ignore = ./dev.gdio.diff
     ignore = ./install-sh
     ignore = ./missing
     ignore = ./mkinstalldirs
