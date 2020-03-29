@@ -86,7 +86,7 @@ if [ ! -d ${SYSDIR} ]; then
 fi
 
 # Check that cscope is in PATH
-type cscope 1>/dev/null 2>&1
+which cscope 1>/dev/null 2>&1
 
 if [ $? -ne 0 ]
 then
@@ -167,8 +167,8 @@ create_list()
 
 	if [ "${FORCE}" != "Y" ]
 	then
-	    echo "\n${LIST}"
-	    echo "Update the library? <(Y)es, (N)o, (Q)uit> [n] \c"
+	    printf "\n${LIST}\n"
+	    printf "Update the library? <(Y)es, (N)o, (Q)uit> [n] "
 	    read x y
 	    case $x in
 		[Yy]* )	;;
@@ -176,9 +176,9 @@ create_list()
 		*)	return	;;
 	    esac
 	fi
-	echo "Updating library:\n  ${LIST} \c"
+	printf "Updating library:\n  ${LIST} "
     else
-	echo "Creating library:\n  ${LIST} \c"
+	printf "Creating library:\n  ${LIST} "
     fi
 
     (
@@ -196,7 +196,7 @@ create_list()
 				  -print
    ) | grep -v SCCS | sort -u > ${LIST}
 
-    echo "\n`cat ${LIST} | wc -l` files listed"
+    printf "\n`cat ${LIST} | wc -l` files listed\n"
 }
 
 #
@@ -210,7 +210,7 @@ exp_inc()
     then
 	for i in `cat ${theInc}`
 	do
-	    echo "-I $i \c"
+	    printf "-I $i "
 	done
     fi
 }
@@ -285,7 +285,7 @@ std_libs ${SYSDIR}$PWD
 
 DIR=$PWD
 if [ ! -n "${NOUPDATE}" -o -n "${SPECDEST}" ] ; then
-echo "Create new library? <(L)ocal, (H)ome, (S)ystem, (Q)uit> [q] \c"
+    printf "Create new library? <(L)ocal, (H)ome, (S)ystem, (Q)uit> [q] "
 
 # shellcheck disable=SC2034
 read x y
