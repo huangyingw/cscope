@@ -1,7 +1,3 @@
-[merge]
-    allow = true
-[commit]
-    message = n
 [remote "code"]
     url = git://git.code.sf.net/p/cscope/cscope
     fetch = +refs/heads/*:refs/remotes/code/*
