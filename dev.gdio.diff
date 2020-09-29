@@ -1,7 +1,7 @@
-diff --git a/.gitignore b/.gitignore
+diff --git .gitignore .gitignore
 index e733d35..0f91e47 100644
---- ./.gitignore
-+++ ./.gitignore
+--- .gitignore
++++ .gitignore
 @@ -45,3 +45,14 @@ mkinstalldirs
  ylwrap
  configure
@@ -17,10 +17,10 @@ index e733d35..0f91e47 100644
 +config.h.in
 +configure
 +.env.json
-diff --git a/src/global.h b/src/global.h
+diff --git src/global.h src/global.h
 index a6f1486..7be1874 100644
---- ./src/global.h
-+++ ./src/global.h
+--- src/global.h
++++ src/global.h
 @@ -416,4 +416,5 @@ int	execute(char *a, ...);
  long	dbseek(long offset);
  
