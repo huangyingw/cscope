@@ -29,6 +29,4 @@ aclocal && \
     ./configure && \
     make clean && \
     make && \
-    make install
-
-git checkout config.h.in
+    sudo make install
