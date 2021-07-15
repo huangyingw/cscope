@@ -9,7 +9,7 @@
     merge = refs/heads/master
 [gsync]
     remote = code
-    branch = master
+    target = code/master
 [push]
     remote = origin
 [vrun]
