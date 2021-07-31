@@ -904,7 +904,6 @@ countrefs(void)
 	    || !isgraph((unsigned char) *function)
 	    || !isdigit((unsigned char) *linenum)
 	   ) {
-	    postmsg("File does not have expected format");
 	    totallines = 0;
 	    disprefs = 0;
 	    return;
