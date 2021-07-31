@@ -1,15 +1,3 @@
-diff --git a/.gitignore b/.gitignore
-index e733d35..43c24f9 100644
---- ./.gitignore
-+++ ./.gitignore
-@@ -45,3 +45,7 @@ mkinstalldirs
- ylwrap
- configure
- aclocal.m4
-+src/cscope
-+src/egrep.c
-+src/egrep.h
-+src/fscanner.c
 diff --git a/src/command.c b/src/command.c
 index dcb5278..2370933 100644
 --- ./src/command.c
@@ -23,7 +11,7 @@ index dcb5278..2370933 100644
  	    disprefs = 0;
  	    return;
 diff --git a/src/find.c b/src/find.c
-index d7a66f0..394c046 100644
+index d7a66f0..783d203 100644
 --- ./src/find.c
 +++ ./src/find.c
 @@ -587,7 +587,7 @@ findregexp(char *egreppat)
@@ -35,6 +23,15 @@ index d7a66f0..394c046 100644
  		posterr ("Cannot open file %s", file);
  	    }
  	}
+@@ -846,7 +846,7 @@ putref(int seemore, char *file, char *func)
+ 	else {
+ 		output = nonglobalrefs;
+ 	}
+-	(void) fprintf(output, "%s %s ", file, func);
++	(void) fprintf(output, "%s:", file, func);
+ 	putsource(seemore, output);
+ }
+ 
 diff --git a/src/global.h b/src/global.h
 index a6f1486..7be1874 100644
 --- ./src/global.h

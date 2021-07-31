@@ -846,7 +846,7 @@ putref(int seemore, char *file, char *func)
 	else {
 		output = nonglobalrefs;
 	}
-	(void) fprintf(output, "%s %s ", file, func);
+	(void) fprintf(output, "%s:", file, func);
 	putsource(seemore, output);
 }
 
