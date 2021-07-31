@@ -10,16 +10,6 @@ index e733d35..43c24f9 100644
 +src/egrep.c
 +src/egrep.h
 +src/fscanner.c
-diff --git a/README b/README
-index 70c8a6a..fc57656 100644
---- ./README
-+++ ./README
-@@ -29,3 +29,5 @@ used by developers, not administrators or anonymous users.
- 
- Browse to http://cscope.sourceforge.net for more current information
- 
-+src/dir.c <unknown> 97 		strcpy(currentdir, "<unknown>");
-+src/find.c <unknown> 590 	    if (egrep(file, refsfound, "%s <unknown> %ld ") < 0) {
 diff --git a/src/find.c b/src/find.c
 index d7a66f0..394c046 100644
 --- ./src/find.c
