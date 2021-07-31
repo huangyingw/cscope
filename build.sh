@@ -3,5 +3,9 @@ SCRIPT=$(realpath "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 cd "$SCRIPTPATH"
 
-./build_pre.sh && \
-    ~/loadrc/gitrc/g.sh
+if [ "$EUID" -ne 0 ]
+then
+    sudo ./do_build.sh
+else
+    ./do_build.sh
+fi
