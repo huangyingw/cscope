@@ -181,4 +181,4 @@
 "./src/vpopen.c"
 "./stamp-h1"
 "./ylwrap"
-"build.gdio.diff"
+"output.gdio.diff"
