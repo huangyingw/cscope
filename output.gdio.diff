@@ -10,6 +10,18 @@ index e733d35..43c24f9 100644
 +src/egrep.c
 +src/egrep.h
 +src/fscanner.c
+diff --git a/src/command.c b/src/command.c
+index dcb5278..2370933 100644
+--- ./src/command.c
++++ ./src/command.c
+@@ -904,7 +904,6 @@ countrefs(void)
+ 	    || !isgraph((unsigned char) *function)
+ 	    || !isdigit((unsigned char) *linenum)
+ 	   ) {
+-	    postmsg("File does not have expected format");
+ 	    totallines = 0;
+ 	    disprefs = 0;
+ 	    return;
 diff --git a/src/find.c b/src/find.c
 index d7a66f0..394c046 100644
 --- ./src/find.c
