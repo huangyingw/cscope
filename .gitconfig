@@ -16,15 +16,13 @@
     silent = false
 [gdif]
     ignore = ./*.sh
+    ignore = ./.gitignore
     ignore = ./INSTALL
-    ignore = ./INSTALL.gnu
     ignore = ./compile
     ignore = ./config.guess
     ignore = ./config.h.in
     ignore = ./config.sub
     ignore = ./depcomp
-    ignore = ./dev.gdio.diff
     ignore = ./install-sh
     ignore = ./missing
-    ignore = ./mkinstalldirs
     ignore = ./ylwrap
