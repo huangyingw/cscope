@@ -1,0 +1,10 @@
+diff --git a/src/global.h b/src/global.h
+index a6f1486..7be1874 100644
+--- ./src/global.h
++++ ./src/global.h
+@@ -416,4 +416,5 @@ int	execute(char *a, ...);
+ long	dbseek(long offset);
+ 
+ 
++#define BUFSIZ  1024        /* size of buffer used by setbuf */
+ #endif /* CSCOPE_GLOBAL_H */
