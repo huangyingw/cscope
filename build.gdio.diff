@@ -1,22 +1,15 @@
 diff --git a/.gitignore b/.gitignore
-index e733d35..0f91e47 100644
+index e733d35..43c24f9 100644
 --- ./.gitignore
 +++ ./.gitignore
-@@ -45,3 +45,14 @@ mkinstalldirs
+@@ -45,3 +45,7 @@ mkinstalldirs
  ylwrap
  configure
  aclocal.m4
 +src/cscope
-+Makefile.in
-+contrib/Makefile.in
-+doc/Makefile.in
-+src/Makefile.in
 +src/egrep.c
 +src/egrep.h
 +src/fscanner.c
-+config.h.in
-+configure
-+.env.json
 diff --git a/build_prerequisite.sh b/build_prerequisite.sh
 new file mode 100755
 index 0000000..7780973
