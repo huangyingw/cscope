@@ -9,6 +9,5 @@ aclocal && \
     autoconf && \
     automake && \
     ./configure && \
-    make clean && \
     make && \
     make install
