@@ -15,10 +15,9 @@
 [vrun]
     silent = false
 [gdif]
+    ignore = ./*.sh
     ignore = ./INSTALL
     ignore = ./INSTALL.gnu
-    ignore = ./build.sh
-    ignore = ./build_pre.sh
     ignore = ./compile
     ignore = ./config.guess
     ignore = ./config.h.in
