@@ -17,6 +17,57 @@ index e733d35..0f91e47 100644
 +config.h.in
 +configure
 +.env.json
+diff --git a/build_prerequisite.sh b/build_prerequisite.sh
+new file mode 100755
+index 0000000..7780973
+--- /dev/null
++++ ./build_prerequisite.sh
+@@ -0,0 +1,26 @@
++#!/bin/zsh
++SCRIPT=$(realpath "$0")
++SCRIPTPATH=$(dirname "$SCRIPT")
++cd "$SCRIPTPATH"
++
++if [ $(uname) != "Darwin" ]
++then
++    apt-get update
++    apt-get install -y \
++        automake \
++        autotools-dev \
++        bison \
++        byacc \
++        flex \
++        libncurses5-dev \
++        libncursesw5-dev
++
++else
++    brew install \
++        autoconf \
++        automake \
++        bison \
++        byacc \
++        flex \
++        libtool
++fi
+diff --git a/do_build.sh b/do_build.sh
+new file mode 100755
+index 0000000..bcf5fe1
+--- /dev/null
++++ ./do_build.sh
+@@ -0,0 +1,13 @@
++#!/bin/zsh
++SCRIPT=$(realpath "$0")
++SCRIPTPATH=$(dirname "$SCRIPT")
++cd "$SCRIPTPATH"
++
++./build_prerequisite.sh
++
++aclocal && \
++    autoconf && \
++    automake && \
++    ./configure && \
++    make && \
++    make install
 diff --git a/src/global.h b/src/global.h
 index a6f1486..7be1874 100644
 --- ./src/global.h
