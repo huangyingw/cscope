@@ -11,7 +11,7 @@ index dcb5278..2370933 100644
  	    disprefs = 0;
  	    return;
 diff --git a/src/find.c b/src/find.c
-index d7a66f0..783d203 100644
+index d7a66f0..a227d75 100644
 --- ./src/find.c
 +++ ./src/find.c
 @@ -587,7 +587,7 @@ findregexp(char *egreppat)
@@ -23,6 +23,15 @@ index d7a66f0..783d203 100644
  		posterr ("Cannot open file %s", file);
  	    }
  	}
+@@ -613,7 +613,7 @@ findfile(char *dummy)
+ 	    s = srcfiles[i];
+ 	}
+ 	if (regexec (&regexp, s, (size_t)0, NULL, 0) == 0) {
+-	    (void) fprintf(refsfound, "%s <unknown> 1 <unknown>\n", 
++	    (void) fprintf(refsfound, "%s\n", 
+ 			   srcfiles[i]);
+ 	}
+     }
 @@ -846,7 +846,7 @@ putref(int seemore, char *file, char *func)
  	else {
  		output = nonglobalrefs;
