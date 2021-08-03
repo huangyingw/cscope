@@ -899,15 +899,6 @@ countrefs(void)
 			     )
 	          )
 	  ) {
-	if (   (i != 4)
-	    || !isgraph((unsigned char) *file)
-	    || !isgraph((unsigned char) *function)
-	    || !isdigit((unsigned char) *linenum)
-	   ) {
-	    totallines = 0;
-	    disprefs = 0;
-	    return;
-	}
 	if ((i = strlen(pathcomponents(file, dispcomponents))) > filelen) {
 	    filelen = i;
 	}
