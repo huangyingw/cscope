@@ -587,7 +587,7 @@ findregexp(char *egreppat)
 	    char *file = filepath(srcfiles[i]);
 
 	    progress("Search", searchcount, nsrcfiles);
-	    if (egrep(file, refsfound, "%s:%ld ") < 0) {
+	    if (egrep(file, refsfound, "%s:%ld") < 0) {
 		posterr ("Cannot open file %s", file);
 	    }
 	}
