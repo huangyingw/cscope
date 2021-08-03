@@ -1,15 +1,24 @@
 diff --git a/src/command.c b/src/command.c
-index dcb5278..2370933 100644
+index dcb5278..3867c44 100644
 --- ./src/command.c
 +++ ./src/command.c
-@@ -904,7 +904,6 @@ countrefs(void)
- 	    || !isgraph((unsigned char) *function)
- 	    || !isdigit((unsigned char) *linenum)
- 	   ) {
+@@ -899,16 +899,6 @@ countrefs(void)
+ 			     )
+ 	          )
+ 	  ) {
+-	if (   (i != 4)
+-	    || !isgraph((unsigned char) *file)
+-	    || !isgraph((unsigned char) *function)
+-	    || !isdigit((unsigned char) *linenum)
+-	   ) {
 -	    postmsg("File does not have expected format");
- 	    totallines = 0;
- 	    disprefs = 0;
- 	    return;
+-	    totallines = 0;
+-	    disprefs = 0;
+-	    return;
+-	}
+ 	if ((i = strlen(pathcomponents(file, dispcomponents))) > filelen) {
+ 	    filelen = i;
+ 	}
 diff --git a/src/find.c b/src/find.c
 index d7a66f0..a227d75 100644
 --- ./src/find.c
