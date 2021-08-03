@@ -20,7 +20,7 @@ index dcb5278..3867c44 100644
  	    filelen = i;
  	}
 diff --git a/src/find.c b/src/find.c
-index d7a66f0..49fa2c8 100644
+index d7a66f0..eb32f21 100644
 --- ./src/find.c
 +++ ./src/find.c
 @@ -587,7 +587,7 @@ findregexp(char *egreppat)
@@ -28,7 +28,7 @@ index d7a66f0..49fa2c8 100644
  
  	    progress("Search", searchcount, nsrcfiles);
 -	    if (egrep(file, refsfound, "%s <unknown> %ld ") < 0) {
-+	    if (egrep(file, refsfound, "%s:%ld\t") < 0) {
++	    if (egrep(file, refsfound, "%s:%ld ") < 0) {
  		posterr ("Cannot open file %s", file);
  	    }
  	}
@@ -46,7 +46,7 @@ index d7a66f0..49fa2c8 100644
  		output = nonglobalrefs;
  	}
 -	(void) fprintf(output, "%s %s ", file, func);
-+	(void) fprintf(output, "%s:", file, func);
++	(void) fprintf(output, "%s:", file);
  	putsource(seemore, output);
  }
  
