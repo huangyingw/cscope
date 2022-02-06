@@ -24,3 +24,5 @@ else
         flex \
         libtool
 fi
+
+make clean
