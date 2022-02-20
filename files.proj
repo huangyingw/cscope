@@ -25,7 +25,6 @@
 "./config.sub"
 "./configure"
 "./configure.ac"
-"./configure~"
 "./contrib/.gitignore"
 "./contrib/Makefile"
 "./contrib/Makefile.am"
