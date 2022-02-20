@@ -5,4 +5,4 @@ cd "$SCRIPTPATH"
 
 ./build_prerequisite.sh
 ./build.sh
-git checkout config.h.in
+git checkout config.h.in || true
