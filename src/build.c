@@ -133,7 +133,7 @@ samelist(FILE *oldrefs, char **names, int count)
 }
 
 
-/* create the file name(s) used for a new cross-referene */
+/* create the file name(s) used for a new cross-reference */
 
 void setup_build_filenames(char *reffile)
 {

@@ -890,7 +890,7 @@ countrefs(void)
     filelen = 4;		/* strlen("File") */
     fcnlen = 8;		/* strlen("Function") */
     numlen = 0;
-    /* HBB NOTE 2012-04-07: it may look like we shouldn't assing tempstring here,
+    /* HBB NOTE 2012-04-07: it may look like we shouldn't assign tempstring here,
      * since it's not used.  But it has to be assigned just so the return value
      * of fscanf will actually reach 4. */
     while (EOF != (i = fscanf(refsfound, 

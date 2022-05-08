@@ -975,7 +975,7 @@ fetch_string_from_dbase(char *s, size_t length)
 }
 
 
-/* scan past the next occurence of this character in the cross-reference */
+/* scan past the next occurrence of this character in the cross-reference */
 char *
 scanpast(char c)
 {
@@ -1035,7 +1035,7 @@ lcasify(char *s)
 
 /* find the functions called by this function */
 
-/* HBB 2000/05/05: for consitency of calling interface between the
+/* HBB 2000/05/05: for consistency of calling interface between the
  * different 'find...()' functions, this now returns a char pointer,
  * too. Implemented as a pointer to static storage containing 'y' or
  * 'n', for the boolean result values YES and NO */
