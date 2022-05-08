@@ -1044,7 +1044,7 @@ char *
 findcalledby(char *pattern)
 {
 	char	file[PATHLEN + 1];	/* source file name */
-	static char found_caller = 'n'; /* seen calling function? */
+	static char found_caller[2] = "n"; /* seen calling function? */
 	BOOL	macro = NO;
 
 	if (invertedindex == YES) {
@@ -1057,12 +1057,12 @@ findcalledby(char *pattern)
 			case FCNDEF:
 				if (dbseek(p->lineoffset) != -1 &&
 				    scanpast('\t') != NULL) {	/* skip def */
-					found_caller = 'y';
+					found_caller[0] = 'y';
 					findcalledbysub(srcfiles[p->fileindex], macro);
 				}
 			}
 		}
-		return(&found_caller);
+		return(&found_caller[0]);
 	}
 	/* find the function definition(s) */
 	while (scanpast('\t') != NULL) {
@@ -1072,7 +1072,7 @@ findcalledby(char *pattern)
 			skiprefchar();	/* save file name */
 			fetch_string_from_dbase(file, sizeof(file));
 			if (*file == '\0') {	/* if end of symbols */
-				return(&found_caller);
+				return(&found_caller[0]);
 			}
 			progress("Search", searchcount, nsrcfiles);
 			break;
@@ -1087,14 +1087,14 @@ findcalledby(char *pattern)
 		case FCNDEF:
 			skiprefchar();	/* match name to pattern */
 			if (match()) {
-				found_caller = 'y';
+				found_caller[0] = 'y';
 				findcalledbysub(file, macro);
 			}
 			break;
 		}
 	}
 
-	return (&found_caller);
+	return (&found_caller[0]);
 }
 
 /* find this term, which can be a regular expression */
