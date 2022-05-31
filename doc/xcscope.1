@@ -1,6 +1,6 @@
 '\" t
 .\" The xcscope.el man page
-.\" Origionally written by Darryl Okahata, Apr 2000
+.\" Originally written by Darryl Okahata, Apr 2000
 .\" 
 .\" Converted to a man page July 20, 2004 by Neil Horman <nhorman@redhat.com>
 .\"
@@ -152,7 +152,7 @@ cscope database directories:
 .P
 If a search is initiated from a .c file in /users/jdoe/sources/proj1
 then (assuming the variable, `cscope-database-regexps', is not set)
-/users/jdoe/sources/proj1 will be used as the cscope data base directory.
+/users/jdoe/sources/proj1 will be used as the cscope database directory.
 Only matches in files in /users/jdoe/sources/proj1 will be found.  This
 can be remedied by typing "C-c s a" and then "M-del" to remove single
 path element in order to use a cscope database directory of
@@ -173,7 +173,7 @@ C-c s d       Find global definition.
 C-c s g       Find global definition (alternate binding).
 C-c s G       Find global definition without prompting.
 C-c s c       Find functions calling a function.
-C-c s C       Find called functions (list functions called
+C-c s C       Find called functions (list functions called)
 C-c s t       Find text string.
 C-c s e       Find egrep pattern.
 C-c s f       Find a file.
@@ -527,7 +527,7 @@ done.
 
 .P
 1. The script, "cscope-indexer", uses a sed command to determine
-what is and is not a C/C++/lex/yacc source file.  It's idea of a
+what is and is not a C/C++/lex/yacc source file.  Its idea of a
 source file may not correspond to yours.
 
 .P

@@ -328,7 +328,7 @@ putcrossref(void)
 	    if (c < ' ') {
 		++i;
 				
-		/* skip blanks before a preprocesor keyword */
+		/* skip blanks before a preprocessor keyword */
 		/* note: don't use isspace() because \f and \v
 		   are used for keywords */
 		while ((j = my_yytext[i]) == ' ' || j == '\t') {

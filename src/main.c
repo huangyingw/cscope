@@ -547,7 +547,7 @@ cscope: Could not create private temp dir %s\n",
 	/* put it in the home directory if the database may not be
 	 * up-to-date or doesn't exist in the relative directory,
 	 * so a database in the current directory will be
-	 * used instead of failing to open a non-existant database in
+	 * used instead of failing to open a non-existing database in
 	 * the home directory
 	 */
 	snprintf(path, sizeof(path), "%s/%s", home, reffile);
@@ -884,7 +884,7 @@ cscope: cannot read source file name from file %s\n",
 	    break;
 #endif
 	}
-	/* execute the commmand, updating the display if necessary */
+	/* execute the command, updating the display if necessary */
 	if (command(c) == YES) {
 	    display();
 	}
