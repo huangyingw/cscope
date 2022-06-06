@@ -40,7 +40,7 @@
  *
  *	WARNING: since pathname is altered by this function, it should
  *		 be located in a temporary buffer. This avoids the problem
- *		 of accidently changing strings obtained from makefiles
+ *		 of accidentally changing strings obtained from makefiles
  *		 and stored in global structures.
  */
 

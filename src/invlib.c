@@ -106,7 +106,7 @@ invmake(char *invname, char *invpost, FILE *infile)
 	unsigned char	*s;
 	long	num;
 	int	i;
-	long	fileindex = 0;	/* initialze, to avoid warning */
+	long	fileindex = 0;	/* initialize, to avoid warning */
 	unsigned postsize = POSTINC * sizeof(*POST);
 	unsigned long	*intptr;
 	char	line[TERMMAX];

@@ -17,7 +17,7 @@
  For HTML fragment generation:
      CHTM file.c > file.htm
 
- - Some input convertion required to use this
+ - Some input conversion required to use this
    code as CGI module. Will be done soon.
  - Optimization required for blocks of EOL
    comments
@@ -51,7 +51,7 @@
 #define MODE_STRING      8
 
 
-int is_delimeter(char c)
+int is_delimiter(char c)
 {
     int ii=0;
     char dlms[] =
@@ -318,7 +318,7 @@ int main(int _argc, char** _argv)
         {
             buf[bufidx++] = c;
             buf[bufidx]   = 0;
-            if (is_delimeter(c))
+            if (is_delimiter(c))
             {
                 kw = 0;
                 if (bufidx>2)

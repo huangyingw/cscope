@@ -94,7 +94,7 @@ mouseinit(void)
 		emacsviterm = YES;
 		mouse = YES;
 	}
-	/* the MOUSE enviroment variable is for 5620 terminal programs that have
+	/* the MOUSE environment variable is for 5620 terminal programs that have
 	   mouse support but the TERM environment variable is the same as a
 	   terminal without a mouse, such as myx */
 	else if (strcmp(mygetenv("MOUSE", ""), "myx") == 0) {
