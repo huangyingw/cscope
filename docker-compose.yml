@@ -1,0 +1,12 @@
+version: '2.1'
+
+services:
+    cscope:
+        build:
+            context: . 
+            dockerfile: archlinux/Dockerfile
+        image: huangyingw/cscope
+        volumes:
+            - ./var/logs/:/var/logs/
+            - ./:/root/neovim
+        command: /bin/sh -c "/root/neovim/install.sh 2>&1 | tee /var/logs/containner.log"
