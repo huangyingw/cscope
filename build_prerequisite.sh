@@ -28,5 +28,6 @@ pacman -Syy && \
     bison \
     byacc \
     flex \
+    gcc \
     libtool \
     make
