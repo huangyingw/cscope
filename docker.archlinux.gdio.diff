@@ -1,0 +1,80 @@
+diff --git a/docker-compose.yml b/docker-compose.yml
+new file mode 100644
+index 0000000..47b5b05
+--- /dev/null
++++ ./docker-compose.yml
+@@ -0,0 +1,12 @@
++version: '2.1'
++
++services:
++    cscope:
++        build:
++            context: . 
++            dockerfile: archlinux/Dockerfile
++        image: huangyingw/cscope
++        volumes:
++            - ./var/logs/:/var/logs/
++            - ./:/root/neovim
++        command: /bin/sh -c "/root/neovim/install.sh 2>&1 | tee /var/logs/containner.log"
+diff --git a/src/command.c b/src/command.c
+index 75fae6e..626a44d 100644
+--- ./src/command.c
++++ ./src/command.c
+@@ -899,16 +899,6 @@ countrefs(void)
+ 			     )
+ 	          )
+ 	  ) {
+-	if (   (i != 4)
+-	    || !isgraph((unsigned char) *file)
+-	    || !isgraph((unsigned char) *function)
+-	    || !isdigit((unsigned char) *linenum)
+-	   ) {
+-	    postmsg("File does not have expected format");
+-	    totallines = 0;
+-	    disprefs = 0;
+-	    return;
+-	}
+ 	if ((i = strlen(pathcomponents(file, dispcomponents))) > filelen) {
+ 	    filelen = i;
+ 	}
+diff --git a/src/find.c b/src/find.c
+index b2b4159..cf98d5c 100644
+--- ./src/find.c
++++ ./src/find.c
+@@ -587,7 +587,7 @@ findregexp(char *egreppat)
+ 	    char *file = filepath(srcfiles[i]);
+ 
+ 	    progress("Search", searchcount, nsrcfiles);
+-	    if (egrep(file, refsfound, "%s <unknown> %ld ") < 0) {
++	    if (egrep(file, refsfound, "%s:%ld ") < 0) {
+ 		posterr ("Cannot open file %s", file);
+ 	    }
+ 	}
+@@ -613,7 +613,7 @@ findfile(char *dummy)
+ 	    s = srcfiles[i];
+ 	}
+ 	if (regexec (&regexp, s, (size_t)0, NULL, 0) == 0) {
+-	    (void) fprintf(refsfound, "%s <unknown> 1 <unknown>\n", 
++	    (void) fprintf(refsfound, "%s\n", 
+ 			   srcfiles[i]);
+ 	}
+     }
+@@ -846,7 +846,7 @@ putref(int seemore, char *file, char *func)
+ 	else {
+ 		output = nonglobalrefs;
+ 	}
+-	(void) fprintf(output, "%s %s ", file, func);
++	(void) fprintf(output, "%s:", file);
+ 	putsource(seemore, output);
+ }
+ 
+diff --git a/src/global.h b/src/global.h
+index a6f1486..7be1874 100644
+--- ./src/global.h
++++ ./src/global.h
+@@ -416,4 +416,5 @@ int	execute(char *a, ...);
+ long	dbseek(long offset);
+ 
+ 
++#define BUFSIZ  1024        /* size of buffer used by setbuf */
+ #endif /* CSCOPE_GLOBAL_H */
