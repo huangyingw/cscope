@@ -1,6 +1,24 @@
+diff --git a/archlinux/Dockerfile b/archlinux/Dockerfile
+new file mode 100644
+index 0000000..8fa7439
+--- /dev/null
++++ ./archlinux/Dockerfile
+@@ -0,0 +1,12 @@
++FROM archlinux:latest
++
++ENV DEBIAN_FRONTEND noninteractive
++WORKDIR /root/cscope
++
++COPY ./*.sh /root/cscope/
++
++RUN pacman -Syy && \
++    pacman --noconfirm -Sy \
++    zsh
++
++RUN /root/cscope/build_prerequisite.sh
 diff --git a/docker-compose.yml b/docker-compose.yml
 new file mode 100644
-index 0000000..47b5b05
+index 0000000..d595f93
 --- /dev/null
 +++ ./docker-compose.yml
 @@ -0,0 +1,12 @@
@@ -15,7 +33,7 @@ index 0000000..47b5b05
 +        volumes:
 +            - ./var/logs/:/var/logs/
 +            - ./:/root/neovim
-+        command: /bin/sh -c "/root/neovim/install.sh 2>&1 | tee /var/logs/containner.log"
++        command: /bin/sh -c "/root/cscope/install-sh.sh 2>&1 | tee /var/logs/containner.log"
 diff --git a/src/command.c b/src/command.c
 index 75fae6e..626a44d 100644
 --- ./src/command.c
