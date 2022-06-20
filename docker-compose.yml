@@ -9,4 +9,4 @@ services:
         volumes:
             - ./var/logs/:/var/logs/
             - ./:/root/neovim
-        command: /bin/sh -c "/root/neovim/install.sh 2>&1 | tee /var/logs/containner.log"
+        command: /bin/sh -c "/root/cscope/install-sh.sh 2>&1 | tee /var/logs/containner.log"
