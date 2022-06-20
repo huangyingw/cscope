@@ -49,3 +49,4 @@ src/cscope
 src/egrep.c
 src/egrep.h
 src/fscanner.c
+var/
