@@ -1,8 +1,12 @@
 FROM archlinux:latest
 
 ENV DEBIAN_FRONTEND noninteractive
-WORKDIR /root/neovim
+WORKDIR /root/cscope
 
-COPY ./*.sh /root/neovim/
+COPY ./*.sh /root/cscope/
 
-RUN /root/neovim/install_prerequisite.sh
+RUN pacman -Syy && \
+    pacman --noconfirm -Sy \
+    zsh
+
+RUN /root/cscope/build_prerequisite.sh
