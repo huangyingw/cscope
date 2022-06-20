@@ -18,7 +18,7 @@ index 0000000..8fa7439
 +RUN /root/cscope/build_prerequisite.sh
 diff --git a/docker-compose.yml b/docker-compose.yml
 new file mode 100644
-index 0000000..d595f93
+index 0000000..e3c9d9d
 --- /dev/null
 +++ ./docker-compose.yml
 @@ -0,0 +1,12 @@
@@ -32,7 +32,7 @@ index 0000000..d595f93
 +        image: huangyingw/cscope
 +        volumes:
 +            - ./var/logs/:/var/logs/
-+            - ./:/root/neovim
++            - ./:/root/cscope
 +        command: /bin/sh -c "/root/cscope/install-sh.sh 2>&1 | tee /var/logs/containner.log"
 diff --git a/src/command.c b/src/command.c
 index 75fae6e..626a44d 100644
