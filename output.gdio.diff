@@ -20,7 +20,7 @@ index 75fae6e..626a44d 100644
  	    filelen = i;
  	}
 diff --git a/src/find.c b/src/find.c
-index b2b4159..cf98d5c 100644
+index b2b4159..a6e8a66 100644
 --- ./src/find.c
 +++ ./src/find.c
 @@ -587,7 +587,7 @@ findregexp(char *egreppat)
@@ -37,7 +37,7 @@ index b2b4159..cf98d5c 100644
  	}
  	if (regexec (&regexp, s, (size_t)0, NULL, 0) == 0) {
 -	    (void) fprintf(refsfound, "%s <unknown> 1 <unknown>\n", 
-+	    (void) fprintf(refsfound, "%s\n", 
++	    (void) fprintf(refsfound, "%s\n",
  			   srcfiles[i]);
  	}
      }
