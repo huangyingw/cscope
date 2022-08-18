@@ -613,7 +613,7 @@ findfile(char *dummy)
 	    s = srcfiles[i];
 	}
 	if (regexec (&regexp, s, (size_t)0, NULL, 0) == 0) {
-	    (void) fprintf(refsfound, "%s\n", 
+	    (void) fprintf(refsfound, "%s\n",
 			   srcfiles[i]);
 	}
     }
