@@ -1,5 +1,4 @@
 diff --git a/src/command.c b/src/command.c
-index 75fae6e..626a44d 100644
 --- ./src/command.c
 +++ ./src/command.c
 @@ -899,16 +899,6 @@ countrefs(void)
@@ -20,7 +19,6 @@ index 75fae6e..626a44d 100644
  	    filelen = i;
  	}
 diff --git a/src/find.c b/src/find.c
-index b2b4159..a6e8a66 100644
 --- ./src/find.c
 +++ ./src/find.c
 @@ -587,7 +587,7 @@ findregexp(char *egreppat)
@@ -51,7 +49,6 @@ index b2b4159..a6e8a66 100644
  }
  
 diff --git a/src/global.h b/src/global.h
-index a6f1486..7be1874 100644
 --- ./src/global.h
 +++ ./src/global.h
 @@ -416,4 +416,5 @@ int	execute(char *a, ...);
