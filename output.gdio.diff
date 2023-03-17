@@ -19,7 +19,7 @@ new file mode 100644
 +    remote = origin
 +[vrun]
 +    silent = false
-+[gdif]
++[gdio]
 +    ignore = ./*.sh
 +    ignore = ./.gitignore
 +    ignore = ./INSTALL
