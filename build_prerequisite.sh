@@ -5,13 +5,14 @@ cd "$SCRIPTPATH"
 
 if [ $(uname) != "Darwin" ]
 then
-    apt-get update
-    apt-get install -y \
+    sudo apt-get update
+    sudo apt-get install -y \
         automake \
         autotools-dev \
         bison \
         byacc \
         flex \
+        libncurses-dev \
         libncurses5-dev \
         libncursesw5-dev
 
