@@ -6,6 +6,6 @@ cd "$SCRIPTPATH"
 aclocal && \
     autoconf && \
     automake && \
-    ./configure && \
+    ./configure --prefix=/opt/homebrew && \
     make && \
     make install
