@@ -17,13 +17,14 @@ then
         libncursesw5-dev
 
 else
-    brew install \
+    /opt/homebrew/bin/brew install \
         autoconf \
         automake \
         bison \
         byacc \
         flex \
-        libtool
+        libtool \
+        ncurses
 fi
 
 make clean
